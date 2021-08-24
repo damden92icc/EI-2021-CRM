@@ -1,0 +1,279 @@
+
+
+@extends('adminlte::page')
+@section('title', 'Single quote')
+@section('content_header')
+<h1> {{$pageTitle}} </h1>
+@stop
+@section('content')
+<div class="container-fluid">
+<div class="row">
+   <div class="col-12">
+      <!-- Main content -->
+      <div class="invoice p-3 mb-3">
+         <!-- title row -->
+         <div class="row">
+            <div class="col-12">
+               <h4>
+                  <i class="fas fa-globe"></i> Label : {{$quote->label}}
+                  <small class="float-right">Created Date: {{$quote->created_at}}</small><br>
+                  <small class="float-right">Sended date: {{$quote->sended_date}}</small>
+               </h4>
+            </div>
+            <!-- /.col -->
+         </div>
+         <!-- info row -->
+         <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+               From
+               <address>
+                  <strong>{{$quote->company->name}}</strong><br>
+                  {{$quote->company->street_name}} , {{$quote->company->street_number}} <br>
+                  {{$quote->company->locality}} ,    {{$quote->company->zip_code}} <br>
+                  Email:   {{$quote->company->email}} <br>
+                  Phone :    {{$quote->company->mail}} 
+               </address>
+               <address>
+                  Representant : <br>
+                  <strong> {{$quote->users->name}} </strong>
+               </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+               To
+               <address>
+                  <strong>Damden CRM </strong><br>
+                  795 Folsom Ave, Suite 600<br>
+                  San Francisco, CA 94107<br>
+                  Phone: (555) 539-1037<br>
+                  Email: john.doe@example.com
+               </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+               <b>Quote Ref :  {{$quote->reference}}</b><br>
+               <br>
+               <b>Quote State :  {{$quote->quote_state}}</b><br>
+            </div>
+            <!-- /.col -->
+         </div>
+         <!-- /.row -->
+         <!-- Table row -->
+         <div class="row">
+            <div class="col-12 table-responsive">
+               <table class="table table-striped">
+                  <thead>
+                     <tr>
+                        <th>Quantity</th>
+                        <th>name</th>
+                        <th>Desc</th>
+                        <th>Is recurrent</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @forelse($quote->services as $data)
+                     <tr>
+                        <td> {{$data->quantity}} </td>
+                        <td>{{$data->service->label}}</td>
+                        <td>{{$data->service->description}}</td>
+                        <td>{{$data->service->recurrent}}</td>
+                        <td>
+                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" ))
+                           <div class="btn-group">
+                              <!--   Edit service -->
+                              <button type="button" data-toggle="modal"  class="btn btn-primary float-right btn-edit-service"  
+                                 data-servicelist='{{$data->id}}'     
+                                 data-name='{{ $data->service->label}}'     
+                                 data-quantity='{{ $data->quantity}}'
+                                 data-id='{{$data->service->id}}' 
+                                 >
+                              <i class="fa fa-download"></i> edit service 
+                              </button>
+                              <!--   /Edit service -->
+                              <!--  Remove service Quote -->
+                              <form method="post" action="{{route('remove-service-doc', $data->id )}}">
+                                 @csrf
+                                 <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                                 <i class="fa fa-download"></i>Remove  </button>
+                              </form>
+                              <!--  /Remove service Quote -->
+                           </div>
+                           @endif
+                        </td>
+                     </tr>
+                     @empty 
+                     <td> No service </td>
+                     @endforelse
+                  </tbody>
+               </table>
+            </div>
+            <!-- /.col -->
+         </div>
+         <!-- /.row -->
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-12">
+                  <h4> Description : </h4>
+                  <br>
+                  <p> {{$quote->description}} </p>
+               </div>
+               <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+               <div class="col-12">
+                  <div class="btn-group">
+                     
+                     @isManager
+                     <!--  Archive Quote -->
+                     <form method="post" action="{{route('traited-quote', $quote )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i>Mark as traited  </button>
+                     </form>
+                     <!--  /Archive Quote -->
+                     @endisManager
+                     @if($quote->quote_state != "SEND" &&  $quote->quote_state != "ARCHIVED" )
+                     <!--  Archive Quote -->
+                     <form method="post" action="{{route('archive-quote', $quote )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i>Archive  </button>
+                     </form>
+                     <!--  /Archive Quote -->
+                     <!--  Send Quote -->
+                     <form method="post" action="{{route('send-quote', $quote )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i>Send  </button>
+                     </form>
+                     <!--  /Send Quote -->
+                     <!--   Add service -->
+                     <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
+                     <i class="fa fa-download"></i> Add a new service 
+                     </button>
+                     <!--   /Add service -->
+                     <!--  Update Quote -->
+                     <form method="get" action="{{route('edit-quote', $quote )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i>Update  </button>
+                     </form>
+                     <!--  Update Quote -->
+                     @endif
+                  </div>
+                  <!-- end button group -->
+               </div>
+            </div>
+         </div>
+         <!-- /.invoice -->
+      </div>
+      <!-- /.col -->
+   </div>
+   <!-- /.row -->
+</div>
+<div class="modal fade" id="modal-default">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Add new service</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" role="form" action="{{ isset($qService) ? route('update-service-doc', $qService) : route('store-service-doc') }}">
+               @isset($qService)
+               @method('put')
+               @endisset
+               {{csrf_field()}}
+               <input type="hidden" id="quote_id" name="quote_id" value="{{$quote->id}}">
+               <div class="form-group  {{$errors->has('service_id') ? 'has-error' : ''}}">
+                  <label for="inputService">Service</label>
+                  <select class="form-control" id="selectCompanyValue" name="service_id">
+                     @forelse($servicesSelectable as $data)
+                     <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}}</option>
+                     @empty 
+                     <p> No service </p>
+                     @endforelse
+                  </select>
+               </div>
+               <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
+                  <label for="quantity">Quantity</label>
+                  <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
+                  @if($errors->has('quantity'))
+                  <strong> {{$errors->first('quantity')}}</strong>
+                  @endif
+               </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+         </div>
+         <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal edit Service Modal -->
+<div class="modal fade" id="modal-edit-service" style="display: none;">
+<div class="modal-dialog">
+   <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">×</span></button>
+         <h4 class="modal-title">Edit services</h4>
+      </div>
+      <!-- formService Modal -->
+      <form method="post" action="{{route('update-service-doc', $quote)}}">
+         @csrf
+         <div class="modal-body">
+            <div class="form-group">
+               <input type="hidden" id="sl_id" name="sl_id" value="sl_id">
+               <label for="serviceName">Service </label>
+               <select class="form-control " id="choose-service" name="service_id">                   
+               </select>
+            </div>
+            <div class="form-group">
+               <label for="quantity">Quantity</label>
+               <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
+            </div>
+         </div>
+         <!-- end Modal body -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="sumbit" class="btn btn-primary">Save changes</button>
+         </div>
+      </form>
+   </div>
+   <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+@stop
+@section('css')
+<link rel="stylesheet" href="../css/admin_custom.css">
+@stop
+@section('js')
+<script> 
+   $('.btn-edit-service').click(function() {
+   
+     $('#sl_id').val($(this).data('servicelist'));
+           $('#service_id').val($(this).data('id'));
+           $('#service_name').val($(this).data('name'));
+           $('#quantity').val($(this).data('quantity'));
+   
+           $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));
+   
+   
+             $('#modal-edit-service').modal('show');
+         });
+          
+   
+    
+</script>
+@stop
+
