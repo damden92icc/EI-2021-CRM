@@ -78,6 +78,29 @@ class UsersSeeder extends Seeder
                 'role_id' => 1
             ],
      
+            [
+                'name' => "Manager Test",
+                'firstname' => "Julien",
+                'email' => 'manager1@demo.com',
+                'phone' => '0032-489373721',
+                'mobile'=> '0032-489373721',
+                'gdpr_valided' => true,
+                'cgu_valided' => true,
+                'user_state' => 'in progress',
+                'role_id' => 3
+            ],
+
+            [
+                'name' => "Accountant Test",
+                'firstname' => "Julien",
+                'email' => 'accountant1@demo.com',
+                'phone' => '0032-489373721',
+                'mobile'=> '0032-489373721',
+                'gdpr_valided' => true,
+                'cgu_valided' => true,
+                'user_state' => 'in progress',
+                'role_id' => 4
+            ],
         ];
 
 
