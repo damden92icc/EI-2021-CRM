@@ -48,7 +48,8 @@
                   {{$offer->company->street_name}} , {{$offer->company->street_number}} <br>
                   {{$offer->company->locality}} ,    {{$offer->company->zip_code}} <br>
                   Email:   {{$offer->company->email}} <br>
-                  Phone :    {{$offer->company->mail}} 
+                  Phone :    {{$offer->company->mail}} <br>
+                  VAT :    {{$offer->company->vat}} 
                </address>
             </div>
             <!-- /.col -->
