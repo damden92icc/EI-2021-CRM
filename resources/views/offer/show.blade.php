@@ -17,7 +17,8 @@
          <div class="row">
             <div class="col-12">
                <h4>
-                  <i class="fas fa-globe"></i> Label : {{$offer->label}}
+                  <i class="fas fa-globe"></i> Label : {{$offer->label}} </i>
+                  <small class="float-right"> Ref:  {{$offer->reference}}</small><br>
                   <small class="float-right">Created Date: {{$offer->created_at}}</small><br>
                   <small class="float-right">Sended date: {{$offer->sended_date}}</small>
                </h4>
@@ -54,10 +55,13 @@
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-               <b>Offer Ref :  {{$offer->reference}}</b><br>
-               <b>Offer State :  {{$offer->offer_state}}</b><br>
-               <b>Offer Priority :  {{$offer->offer_priority_state}}</b><br>
-               <b>Offer Priority :  {{$offer->due_date}}</b><br>
+          
+
+               <b> Offer Status </b> <br>
+               <b>Offer State  : </b>   {{$offer->offer_state}}<br>
+               <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br>
+               <b>Offer due date : </b>  {{$offer->due_date}}<br>
+               <b>Offer validity delay :  {{$offer->validity_delay}}<br>
             </div>
             <!-- /.col -->
          </div>

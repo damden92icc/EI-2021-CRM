@@ -89,18 +89,21 @@ class OfferController extends Controller
             'required' => 'Ce champs ne peut etre vide',
         ];
 
+        $validityDelay = ( Carbon::today()->diffInDays(Carbon::parse($request->due_date)))  ;
+
         $rules = [
             'label' => 'required',        
             'description'=> 'required',
-            'offer_priority_state' => 'required',
-            'validity_delay' => 'required',
+            'offer_priority_state' => 'required',        
             'due_date' => 'required',
             'concerned_company' => 'required',
             'concerned_client' => 'required'
                     
         ];
 
-    $request->merge( ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
+
+
+    $request->merge( ['reference' =>  Str::random(20)] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
 
     $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    
