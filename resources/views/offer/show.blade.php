@@ -29,15 +29,15 @@
             <div class="col-sm-4 invoice-col">
                From
                <address>
-                  <strong>Damden CRM </strong><br>
-                  <br>
-                  San Francisco, CA 94107<br>
-                  Phone: (555) 539-1037<br>
-                  Email: john.doe@example.com
+                  <strong> {{$myCompany->name}} </strong><br>
+                  {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
+                  {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>            
+                  Phone :  <br>
+                  Email:    {{$myCompany->email}}<br>
+                  VAT :  {{$myCompany->vat}}<br>
                </address>
-               <address>
-                  Representant : <br>
-                  <strong>{{$offer->users->name}}</strong>
+               Representant : <br>
+               <strong>{{$offer->users->name}}</strong>
                </address>
             </div>
             <!-- /.col -->
@@ -236,8 +236,8 @@
       <i class="fa fa-download"></i>Archive  </button>
    </form>
    <!--  /Archive  -->
-      <!--  Archive  -->
-      <form method="post" action="{{route('archive-offer', $offer )}}">
+   <!--  Archive  -->
+   <form method="post" action="{{route('archive-offer', $offer )}}">
       @csrf
       <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Turn into Project  </button>

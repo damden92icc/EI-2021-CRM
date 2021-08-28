@@ -46,12 +46,14 @@ class OfferController extends Controller
 
 
         $selectableServices = Service::all();
+        $myCompany = Company::where('company_type', 'main_company')->first();
         return view('offer.show', [
             'pageTitle' => 'Single Offers',
             'pageTabTitle' => 'Listing services ',
             'servicesSelectable' =>  $selectableServices,
             'totalCost' =>$totalCP ,
             'totalSell' => $totalSP,
+            'myCompany' => $myCompany ,
             'offer'=>        $offer ,
       
         ]);
@@ -77,7 +79,6 @@ class OfferController extends Controller
             'offers'=> $myOffer ,      
         ]);
     }
-
 
 
 
