@@ -37,8 +37,8 @@
                   Email:    {{$myCompany->email}}<br>
                   VAT :  {{$myCompany->vat}}<br>
                </address>
-               Representant : <br>
-               <strong>{{$offer->users->name}}</strong>
+               <strong> Representant : </strong><br>
+               {{$offer->users->name}}
                </address>
             </div>
             <!-- /.col -->
@@ -55,18 +55,17 @@
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-          
-
                <b> Offer Status </b> <br>
                <b>Offer State  : </b>   {{$offer->offer_state}}<br>
                <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br>
                <b>Offer due date : </b>  {{$offer->due_date}}<br>
-               <b>Offer validity delay :  {{$offer->validity_delay}}<br>
+               <b>Offer validity delay : </b> {{$offer->validity_delay}}<br>
             </div>
             <!-- /.col -->
          </div>
          <!-- /.row -->
          <!-- Table row -->
+         <br>
          <div class="row">
             <div class="col-12 table-responsive">
                <table class="table table-striped">
