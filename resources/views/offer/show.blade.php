@@ -17,7 +17,8 @@
          <div class="row">
             <div class="col-12">
                <h4>
-                  <i class="fas fa-globe"></i> Label : {{$offer->label}}
+                  <i class="fas fa-globe"></i> Label : {{$offer->label}} </i>
+                  <small class="float-right"> Ref:  {{$offer->reference}}</small><br>
                   <small class="float-right">Created Date: {{$offer->created_at}}</small><br>
                   <small class="float-right">Sended date: {{$offer->sended_date}}</small>
                </h4>
@@ -29,15 +30,15 @@
             <div class="col-sm-4 invoice-col">
                From
                <address>
-                  <strong>Damden CRM </strong><br>
-                  <br>
-                  San Francisco, CA 94107<br>
-                  Phone: (555) 539-1037<br>
-                  Email: john.doe@example.com
+                  <strong> {{$myCompany->name}} </strong><br>
+                  {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
+                  {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>            
+                  Phone :  <br>
+                  Email:    {{$myCompany->email}}<br>
+                  VAT :  {{$myCompany->vat}}<br>
                </address>
-               <address>
-                  Representant : <br>
-                  <strong>{{$offer->users->name}}</strong>
+               <strong> Representant : </strong><br>
+               {{$offer->users->name}}
                </address>
             </div>
             <!-- /.col -->
@@ -48,20 +49,23 @@
                   {{$offer->company->street_name}} , {{$offer->company->street_number}} <br>
                   {{$offer->company->locality}} ,    {{$offer->company->zip_code}} <br>
                   Email:   {{$offer->company->email}} <br>
-                  Phone :    {{$offer->company->mail}} 
+                  Phone :    {{$offer->company->mail}} <br>
+                  VAT :    {{$offer->company->vat}} 
                </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-               <b>Offer Ref :  {{$offer->reference}}</b><br>
-               <b>Offer State :  {{$offer->offer_state}}</b><br>
-               <b>Offer Priority :  {{$offer->offer_priority_state}}</b><br>
-               <b>Offer Priority :  {{$offer->due_date}}</b><br>
+               <b> Offer Status </b> <br>
+               <b>Offer State  : </b>   {{$offer->offer_state}}<br>
+               <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br>
+               <b>Offer due date : </b>  {{$offer->due_date}}<br>
+               <b>Offer validity delay : </b> {{$offer->validity_delay}}<br>
             </div>
             <!-- /.col -->
          </div>
          <!-- /.row -->
          <!-- Table row -->
+         <br>
          <div class="row">
             <div class="col-12 table-responsive">
                <table class="table table-striped">
@@ -236,8 +240,8 @@
       <i class="fa fa-download"></i>Archive  </button>
    </form>
    <!--  /Archive  -->
-      <!--  Archive  -->
-      <form method="post" action="{{route('archive-offer', $offer )}}">
+   <!--  Archive  -->
+   <form method="post" action="{{route('archive-offer', $offer )}}">
       @csrf
       <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Turn into Project  </button>
@@ -296,21 +300,21 @@
                </div>
                <div class="form-group {{$errors->has('quantity') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($offer) ? $offer->quantity: old('quantity') }}" placeholder="service quantity">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($offer) ? $offer->quantity: old('quantity') }}" placeholder="service quantity">
                   @if($errors->has('quantity'))
                   <strong> {{$errors->first('quantity')}}</strong>
                   @endif
                </div>
                <div class="form-group {{$errors->has('unit_cost_ht') ? 'has-error' : ''}} ">
                   <label for="costPrice">Cost Price</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_cost_ht" value="{{ isset($offer) ? $offer->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
+                  <input class="form-control form-control-lg" type="number" min="0" id="edit-cp" name="unit_cost_ht" value="{{ isset($offer) ? $offer->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
                   @if($errors->has('unit_cost_price'))
                   <strong> {{$errors->first('unit_cost_ht')}}</strong>
                   @endif
                </div>
                <div class="form-group {{$errors->has('unit_sell_ht') ? 'has-error' : ''}} ">
                   <label for="sellPrice">sell Price</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_sell_ht" value="{{ isset($offer) ? $offer->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-cp" name="unit_sell_ht" value="{{ isset($offer) ? $offer->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
                   @if($errors->has('unit_sell_ht'))
                   <strong> {{$errors->first('unit_sell_ht')}}</strong>
                   @endif

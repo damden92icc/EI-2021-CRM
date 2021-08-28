@@ -46,12 +46,14 @@ class OfferController extends Controller
 
 
         $selectableServices = Service::all();
+        $myCompany = Company::where('company_type', 'main_company')->first();
         return view('offer.show', [
             'pageTitle' => 'Single Offers',
             'pageTabTitle' => 'Listing services ',
             'servicesSelectable' =>  $selectableServices,
             'totalCost' =>$totalCP ,
             'totalSell' => $totalSP,
+            'myCompany' => $myCompany ,
             'offer'=>        $offer ,
       
         ]);
@@ -59,7 +61,7 @@ class OfferController extends Controller
 
     public function create(){
 
-        $selectableCompanies = Company::all();
+        $selectableCompanies = Company::where([['active', true], ['company_type', 'client'] ])->get();
         return view('offer.form', [
             'pageTitle' => 'Create offer',
            'companies' => $selectableCompanies ,
@@ -80,7 +82,6 @@ class OfferController extends Controller
 
 
 
-
     public function store(Request $request){
      
  
@@ -88,23 +89,24 @@ class OfferController extends Controller
             'required' => 'Ce champs ne peut etre vide',
         ];
 
+        $validityDelay = ( Carbon::today()->diffInDays(Carbon::parse($request->due_date)))  ;
+
         $rules = [
-            'label' => 'required',        
+            'label' => 'required|string',        
             'description'=> 'required',
-            'offer_priority_state' => 'required',
-            'validity_delay' => 'required',
+            'offer_priority_state' => 'required|string',        
             'due_date' => 'required',
-            'concerned_company' => 'required',
-            'concerned_client' => 'required'
-                    
+            'concerned_company' => 'required|int',
+            'concerned_client' => 'required|int'                    
         ];
 
-    $request->merge( ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
 
-    $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-   
-    $newOffer =Offer::create($request->all());
-    return redirect()->intended('/offers/'.$newOffer->id);
+        $request->merge( ['reference' =>  Str::random(20)] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
+
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
+    
+        $newOffer =Offer::create($request->all());
+        return redirect()->intended('/offers/'.$newOffer->id);
     }
 
     public function edit(Offer $offer){
@@ -130,13 +132,17 @@ class OfferController extends Controller
         ];
 
         $rules = [
-            'label' => 'required',        
+            'label' => 'required|string',        
             'description'=> 'required',
-            'offer_priority_state' => 'required',
-            'validity_delay' => 'required',
-            'due_date' => 'required',                
+            'offer_priority_state' => 'required|string',        
+            'due_date' => 'required',
+            'concerned_company' => 'required|int',
+            'concerned_client' => 'required|int'           
         ];
 
+        $validityDelay = ( Carbon::today()->diffInDays(Carbon::parse($request->due_date)))  ;
+
+        $request->merge( [ ['validity_delay' => $validityDelay] ]);
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
 
@@ -153,9 +159,9 @@ class OfferController extends Controller
         ];
 
         $rules = [
-            'quantity' => 'required',        
-            'service_id'=> 'required',
-            'offer_id' => 'required',
+            'quantity' => 'required|int',        
+            'service_id'=> 'required|int',
+            'offer_id' => 'required|int',
                     
         ];
 
@@ -188,16 +194,15 @@ class OfferController extends Controller
             ];
     
             $rules = [
-                'quantity' => 'required',     
-                'unit_cost_ht' => 'required',     
-                'unit_sell_ht' => 'required',        
-                'service_id'=> 'required',
+                'quantity' => 'required|int',     
+                'unit_cost_ht' => 'required|double',     
+                'unit_sell_ht' => 'required|double',        
+                'service_id'=> 'required|int',
                         
             ];
     
             $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-       
-    
+           
             $sl->update($request->all());
     
             return redirect()->intended('/offers/'.$sl->offer_id);
@@ -207,6 +212,23 @@ class OfferController extends Controller
  * Change state
  */
 
+
+
+        // public function editStatu(Offer $offer, String $state){
+
+        //     if($state="SENDED"){
+        //         $offer->offer_state = $state;
+        //         $offer->sended_date =Carbon::now() ;
+        //     }
+
+        //     else{
+        //         $offer->offer_state = $state;
+        //     }
+           
+        //     $offer->save();    
+        //     return redirect()->intended('/offers/'.$offer->id);
+
+        // }
 
 
     public function sendDocument (Offer $offer){

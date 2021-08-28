@@ -30,8 +30,9 @@
                   <strong>{{$quote->company->name}}</strong><br>
                   {{$quote->company->street_name}} , {{$quote->company->street_number}} <br>
                   {{$quote->company->locality}} ,    {{$quote->company->zip_code}} <br>
+                  Phone :    {{$quote->company->mail}} <br>
                   Email:   {{$quote->company->email}} <br>
-                  Phone :    {{$quote->company->mail}} 
+                  VAT:   {{$quote->company->vat}} <br>
                </address>
                <address>
                   Representant : <br>
@@ -42,11 +43,12 @@
             <div class="col-sm-4 invoice-col">
                To
                <address>
-                  <strong>Damden CRM </strong><br>
-                  795 Folsom Ave, Suite 600<br>
-                  San Francisco, CA 94107<br>
-                  Phone: (555) 539-1037<br>
-                  Email: john.doe@example.com
+                  <strong> {{$myCompany->name}} </strong><br>
+                  {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
+                  {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>
+                  Phone :  <br>
+                  Email:    {{$myCompany->email}}<br>
+                  VAT :  {{$myCompany->vat}}<br>
                </address>
             </div>
             <!-- /.col -->
@@ -79,7 +81,7 @@
                         <td>{{$data->service->description}}</td>
                         <td>{{$data->service->recurrent}}</td>
                         <td>
-                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" ))
+                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" )
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal"  class="btn btn-primary float-right btn-edit-service"  
@@ -103,7 +105,7 @@
                         </td>
                      </tr>
                      @empty 
-                     <td> No service </td>
+                     <td> This quote has currently no service </td>
                      @endforelse
                   </tbody>
                </table>
@@ -125,7 +127,6 @@
             <div class="row no-print">
                <div class="col-12">
                   <div class="btn-group">
-                     
                      @isManager
                      <!--  Archive Quote -->
                      <form method="post" action="{{route('traited-quote', $quote )}}">
@@ -143,6 +144,7 @@
                         <i class="fa fa-download"></i>Archive  </button>
                      </form>
                      <!--  /Archive Quote -->
+                     @if ($quote->services()->exists())
                      <!--  Send Quote -->
                      <form method="post" action="{{route('send-quote', $quote )}}">
                         @csrf
@@ -150,6 +152,7 @@
                         <i class="fa fa-download"></i>Send  </button>
                      </form>
                      <!--  /Send Quote -->
+                     @endif
                      <!--   Add service -->
                      <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
                      <i class="fa fa-download"></i> Add a new service 
@@ -196,13 +199,13 @@
                      @forelse($servicesSelectable as $data)
                      <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}}</option>
                      @empty 
-                     <p> No service </p>
+                     <p> No service selectable </p>
                      @endforelse
                   </select>
                </div>
                <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
                   @if($errors->has('quantity'))
                   <strong> {{$errors->first('quantity')}}</strong>
                   @endif
@@ -240,7 +243,7 @@
             </div>
             <div class="form-group">
                <label for="quantity">Quantity</label>
-               <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
+               <input class="form-control " type="number" min="1" id="quantity"  name="quantity"  placeholder="Quantity">
             </div>
          </div>
          <!-- end Modal body -->
