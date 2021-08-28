@@ -44,14 +44,11 @@
                To
                <address>
                   <strong> {{$myCompany->name}} </strong><br>
-
                   {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
                   {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>
-            
-               Phone :  <br>
-              Email:    {{$myCompany->email}}<br>
-                 
-             VAT :  {{$myCompany->vat}}<br>
+                  Phone :  <br>
+                  Email:    {{$myCompany->email}}<br>
+                  VAT :  {{$myCompany->vat}}<br>
                </address>
             </div>
             <!-- /.col -->
@@ -84,7 +81,7 @@
                         <td>{{$data->service->description}}</td>
                         <td>{{$data->service->recurrent}}</td>
                         <td>
-                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" ))
+                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" )
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal"  class="btn btn-primary float-right btn-edit-service"  
@@ -130,7 +127,6 @@
             <div class="row no-print">
                <div class="col-12">
                   <div class="btn-group">
-                     
                      @isManager
                      <!--  Archive Quote -->
                      <form method="post" action="{{route('traited-quote', $quote )}}">
@@ -148,6 +144,7 @@
                         <i class="fa fa-download"></i>Archive  </button>
                      </form>
                      <!--  /Archive Quote -->
+                     @if ($quote->services()->exists())
                      <!--  Send Quote -->
                      <form method="post" action="{{route('send-quote', $quote )}}">
                         @csrf
@@ -155,6 +152,7 @@
                         <i class="fa fa-download"></i>Send  </button>
                      </form>
                      <!--  /Send Quote -->
+                     @endif
                      <!--   Add service -->
                      <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
                      <i class="fa fa-download"></i> Add a new service 
