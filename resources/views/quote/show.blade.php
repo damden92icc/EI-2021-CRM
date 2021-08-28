@@ -30,8 +30,9 @@
                   <strong>{{$quote->company->name}}</strong><br>
                   {{$quote->company->street_name}} , {{$quote->company->street_number}} <br>
                   {{$quote->company->locality}} ,    {{$quote->company->zip_code}} <br>
+                  Phone :    {{$quote->company->mail}} <br>
                   Email:   {{$quote->company->email}} <br>
-                  Phone :    {{$quote->company->mail}} 
+                  VAT:   {{$quote->company->vat}} <br>
                </address>
                <address>
                   Representant : <br>
@@ -42,11 +43,15 @@
             <div class="col-sm-4 invoice-col">
                To
                <address>
-                  <strong>Damden CRM </strong><br>
-                  795 Folsom Ave, Suite 600<br>
-                  San Francisco, CA 94107<br>
-                  Phone: (555) 539-1037<br>
-                  Email: john.doe@example.com
+                  <strong> {{$myCompany->name}} </strong><br>
+
+                  {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
+                  {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>
+            
+               Phone :  <br>
+              Email:    {{$myCompany->email}}<br>
+                 
+             VAT :  {{$myCompany->vat}}<br>
                </address>
             </div>
             <!-- /.col -->

@@ -26,6 +26,7 @@ class QuoteController extends Controller
 
     public function show($id){
 
+        $myCompany = Company::where('company_type', 'main_company')->first();
         $quote = Quote::where('id' , $id )->first();
 
         $selectableServices = Service::all();
@@ -33,7 +34,8 @@ class QuoteController extends Controller
         return view('quote.show', [
             'pageTitle' => 'Single quote',
             'pageTabTitle' => 'Listing service',
-            'quote'=>  $quote,            
+            'quote'=>  $quote,   
+            'myCompany' =>   $myCompany,         
             'servicesSelectable' =>  $selectableServices,
         ]);
     }
