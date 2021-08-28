@@ -17,13 +17,12 @@ class DatabaseSeeder extends Seeder
        
             CompanySeeder::class,      
             RoleSeeder::class,      
-            UsersSeeder::class,
-        
+            UsersSeeder::class,        
             EmployesSeeder::class,
             ServiceSeeder::class,
-
             QuoteSeeder::class,
-            OfferSeeder::class,
+            OfferSeeder::class,           
+            OfferServiceSeeder::class,
             ProjectSeeder::class,
             ProjectServiceSeeder::class,
             ServiceProvDetailsSeeder::class,

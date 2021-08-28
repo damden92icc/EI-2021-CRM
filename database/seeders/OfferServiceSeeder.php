@@ -36,18 +36,47 @@ class OfferServiceSeeder extends Seeder
             ],
 
             [
-                'quantity' => '1',
+                'quantity' => '7',
            
             ],
 
             [
-                'quantity' => '1',
+                'quantity' => '71',
            
             ],
+             [
+            'quantity' => '1',
+           
+        ],
+
+        [
+            'quantity' => '1',
+       
+        ],
+
+        [
+            'quantity' => '2',
+       
+        ],
+
+        [
+            'quantity' => '5',
+       
+        ],
+
+        [
+            'quantity' => '1',
+       
+        ],
+
+        [
+            'quantity' => '41',
+       
+        ],
           
         ];
 
-        $arrayFakeOffer = [ 2, 3, 4, 5];
+        $arrayFakeOffer = [ 2, 3, 4, 5,6,7];
         $arrayFakeService = [ 2, 3, 4, 5];
         foreach($offers as $data){
             DB::table('offer_services')->insert([

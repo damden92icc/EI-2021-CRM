@@ -27,22 +27,22 @@ class EmployesSeeder extends Seeder
 
             // Client 1
             [
-                'user_id' => 2 ,// Damien super Admin
+                'user_id' => 2 ,// Client 1
                 'company_id' => 2, // x company
                 'role_id' => 1,
             ],
 
-            // Client 2
+            // Client 1
             [
-                'user_id' =>  3,// Damien super Admin
+                'user_id' =>  2,// Client 1
                 'company_id' => 3, // x company
                 'role_id' => 1,
             ],
    
-            // Client 3
+            // Client 1
             [
-                'user_id' =>  3,// Damien super Admin
-                'company_id' => 3, // x company
+                'user_id' =>  2,// Client 1
+                'company_id' => 4, // x company
                 'role_id' => 1,
             ],
 

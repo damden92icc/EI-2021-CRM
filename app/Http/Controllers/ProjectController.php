@@ -308,8 +308,6 @@ class ProjectController extends Controller
             $projects = Project::where('concerned_company', $employ->company_id)->get();  
         }
 
-     //   dd($projects);
-      
 
         return view('project.index', [
             'pageTitle' => 'Listing projects',

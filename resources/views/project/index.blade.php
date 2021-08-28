@@ -26,8 +26,13 @@
                     </tr>
                   </thead>
                   <tbody>
+
+
+
                   @foreach($projects as $data)
                     <tr>
+
+                 <td> </td>
                       <td> {{$data->id}} </td>
                       <td> {{$data->label}} </td>
                       <td> {{$data->description}} </td>
