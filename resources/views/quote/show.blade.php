@@ -108,7 +108,7 @@
                         </td>
                      </tr>
                      @empty 
-                     <td> No service </td>
+                     <td> This quote has currently no service </td>
                      @endforelse
                   </tbody>
                </table>
@@ -201,7 +201,7 @@
                      @forelse($servicesSelectable as $data)
                      <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}}</option>
                      @empty 
-                     <p> No service </p>
+                     <p> No service selectable </p>
                      @endforelse
                   </select>
                </div>

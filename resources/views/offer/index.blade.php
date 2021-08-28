@@ -23,6 +23,7 @@
                       <th>Desc</th>
                       <th>State</th>
                       <th> Due Date </th>
+                      <th> Company </th>
                       <th></th>
                     </tr>
                   </thead>
@@ -34,6 +35,7 @@
                       <td> {{$data->description}} </td>
                       <td> {{$data->offer_state}} </td>
                       <td> {{$data->due_date}} </td>
+                      <td> {{$data->company->name}} </td>
                       
                      <td>
                          <a class="btn btn-block btn-info" href="{{route('single-offer', $data->id )}}">view</a>

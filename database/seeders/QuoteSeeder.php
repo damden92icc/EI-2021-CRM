@@ -44,14 +44,47 @@ class QuoteSeeder extends Seeder
             [
                 'label' => 'Devis 5',
                 'description' => ' Lorem Ipsum dolor',
-                'reference' => 'A00Z10',
+                'reference' => 'A0890Z10',
+                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'quote_state' => 'Draft'
+            ],
+
+            [
+                'label' => 'Devis 6',
+                'description' => ' Lorem Ipsum dolor',
+                'reference' => 'A00z10',
+                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'quote_state' => 'Draft'
+            ],
+
+            [
+                'label' => 'Devis Ecomm',
+                'description' => ' Lorem Ipsum dolor',
+                'reference' => 'A00AA15',
+                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'quote_state' => 'Draft'
+            ],
+
+            [
+                'label' => 'Devis 7',
+                'description' => ' Lorem Ipsum dolor',
+                'reference' => 'A00aDS41fg0',
+                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'quote_state' => 'Draft'
+            ],
+          
+            [
+                'label' => 'Devis 9',
+                'description' => ' Lorem Ipsum dolor',
+                'reference' => 'A00sqZ10',
                 'sended_date' => Carbon::parse('2000-01-01') ,             
                 'quote_state' => 'Draft'
             ],
         ];
 
 
-        $arrayFakeCompany = [ 2, 3, 4, 5];
+        $arrayFakeCompany = [ 2, 3];
+        $arrayFakeClients = [ 2, 3];
         foreach($quotes as $data){
             DB::table('quotes')->insert([
                 'label' => $data['label'],
@@ -59,7 +92,7 @@ class QuoteSeeder extends Seeder
                 'reference' => $data['reference'],
                 'sended_date' => $data['sended_date'],
                 'quote_state' => $data['quote_state'],
-                'owner_id' => 1,
+                'owner_id' =>  Arr::random($arrayFakeClients),    
                 'concerned_company' =>    Arr::random($arrayFakeCompany),                   
             ]);
         }

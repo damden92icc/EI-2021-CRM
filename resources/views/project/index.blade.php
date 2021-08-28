@@ -22,6 +22,7 @@
                       <th>name</th>
                       <th>Desc</th>
                       <th>State</th>
+                      <th>Company</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -31,7 +32,7 @@
                       <td> {{$data->label}} </td>
                       <td> {{$data->description}} </td>
                       <td> {{$data->project_state}} </td>
-                      
+                      <td> {{$data->company->name}} </td>
                      <td>
                          <a class="btn btn-block btn-info" href="{{route('single-project', $data->id )}}">view</a>
                     </td>

@@ -15,19 +15,21 @@
       <table class="table table-striped">
          <thead>
             <tr>
-               <th>ID</th>
+               <th>num</th>
                <th>name</th>
                <th>Desc</th>
                <th>State</th>
+               <th>Company</th>
             </tr>
          </thead>
          <tbody>
             @foreach($quotes as $data)
             <tr>
-               <td> {{$data->id}} </td>
+               <td> to do</td>
                <td> {{$data->label}} </td>
                <td> {{$data->description}} </td>
                <td> {{$data->quote_state}} </td>
+               <td> {{$data->company->name}} </td>
                <td>
                   <a class="btn btn-block btn-info" href="{{route('single-quote', $data->id )}}">view</a>
                </td>

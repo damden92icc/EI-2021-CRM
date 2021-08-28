@@ -30,4 +30,8 @@ class Project extends Model
         return $this->hasMany(ProjectService::class, 'project_id','id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'concerned_company', 'id');
+    }
 }
