@@ -207,7 +207,7 @@
                </div>
                <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
                   @if($errors->has('quantity'))
                   <strong> {{$errors->first('quantity')}}</strong>
                   @endif
@@ -245,7 +245,7 @@
             </div>
             <div class="form-group">
                <label for="quantity">Quantity</label>
-               <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
+               <input class="form-control " type="number" min="1" id="quantity"  name="quantity"  placeholder="Quantity">
             </div>
          </div>
          <!-- end Modal body -->

@@ -81,7 +81,7 @@
 </div>
 <!-- /.card-body -->
 </div>
-</form>
+
 @stop
 @section('css')
 <link rel="stylesheet" href="../css/admin_custom.css">

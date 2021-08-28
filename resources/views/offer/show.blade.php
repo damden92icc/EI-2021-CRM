@@ -300,21 +300,21 @@
                </div>
                <div class="form-group {{$errors->has('quantity') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($offer) ? $offer->quantity: old('quantity') }}" placeholder="service quantity">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($offer) ? $offer->quantity: old('quantity') }}" placeholder="service quantity">
                   @if($errors->has('quantity'))
                   <strong> {{$errors->first('quantity')}}</strong>
                   @endif
                </div>
                <div class="form-group {{$errors->has('unit_cost_ht') ? 'has-error' : ''}} ">
                   <label for="costPrice">Cost Price</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_cost_ht" value="{{ isset($offer) ? $offer->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
+                  <input class="form-control form-control-lg" type="number" min="0" id="edit-cp" name="unit_cost_ht" value="{{ isset($offer) ? $offer->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
                   @if($errors->has('unit_cost_price'))
                   <strong> {{$errors->first('unit_cost_ht')}}</strong>
                   @endif
                </div>
                <div class="form-group {{$errors->has('unit_sell_ht') ? 'has-error' : ''}} ">
                   <label for="sellPrice">sell Price</label>
-                  <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_sell_ht" value="{{ isset($offer) ? $offer->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
+                  <input class="form-control form-control-lg" type="number" min="1" id="edit-cp" name="unit_sell_ht" value="{{ isset($offer) ? $offer->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
                   @if($errors->has('unit_sell_ht'))
                   <strong> {{$errors->first('unit_sell_ht')}}</strong>
                   @endif

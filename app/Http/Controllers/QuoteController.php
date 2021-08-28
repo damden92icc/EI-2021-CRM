@@ -23,7 +23,6 @@ class QuoteController extends Controller
     }
 
 
-
     public function show($id){
 
         $myCompany = Company::where('company_type', 'main_company')->first();
@@ -42,7 +41,6 @@ class QuoteController extends Controller
 
     public function create(){
 
-        $selectableCompanies = Company::all();
         $user = Auth::user();
 
         return view('quote.form', [
@@ -52,18 +50,14 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function myQuote(){
-
+    public function myQuote(){     
      
-        $user = Auth::user();
-
-        $quotes = Quote::where('owner_id', $user->id)->where('quote_state',  '!=', 'ARCHIVED' )->get();  
-
+        $myQuotes = Quote::where('owner_id', Auth::user()->id)->where('quote_state',  '!=', 'ARCHIVED' )->get();  
 
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',
             'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $quotes ,      
+            'quotes'=>        $myQuotes ,      
         ]);
     }
 
@@ -75,18 +69,17 @@ class QuoteController extends Controller
         ];
 
         $rules = [
-            'label' => 'required',        
+            'label' => 'required|string',        
             'description'=> 'required',
-            'concerned_company' => 'required',
-                    
+            'concerned_company' => 'required|int',                    
         ];
 
 
-    $request->merge( ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
+        $request->merge( ['reference' =>  Str::random(10)] + [ 'owner_id' =>  Auth::user()->id] );
 
-    $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    
-    $newQuote =Quote::create($request->all());
+        $newQuote =Quote::create($request->all());
  
          return redirect()->intended('/quotes/'.$newQuote->id);
     }
@@ -111,9 +104,9 @@ class QuoteController extends Controller
         ];
 
         $rules = [
-            'label' => 'required',        
+            'label' => 'required|string',        
             'description'=> 'required',
-            'concerned_company' => 'required',
+            'concerned_company' => 'required|int',
                     
         ];
 
@@ -128,9 +121,6 @@ class QuoteController extends Controller
     
 
 
-
-
-
     public function storeServiceDoc (Request $request){
 
      
@@ -139,9 +129,9 @@ class QuoteController extends Controller
         ];
 
         $rules = [
-            'quantity' => 'required',        
-            'service_id'=> 'required',
-            'quote_id' => 'required',
+            'quantity' => 'required|int',        
+            'service_id'=> 'required|int',
+            'quote_id' => 'required|int',
                     
         ];
 
@@ -167,8 +157,8 @@ class QuoteController extends Controller
         ];
 
         $rules = [
-            'quantity' => 'required',        
-            'service_id'=> 'required',
+            'quantity' => 'required|int',        
+            'service_id'=> 'required|int',
                     
         ];
 
@@ -218,8 +208,9 @@ class QuoteController extends Controller
 
 
     public function sendedQuotes(){
+        
         $quotes = Quote::where('quote_state', 'SEND')->get();  
-       // return "hellow";
+       
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',
             'pageTabTitle' => 'Listing quotes',
