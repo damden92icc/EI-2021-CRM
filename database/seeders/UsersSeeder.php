@@ -19,74 +19,48 @@ class UsersSeeder extends Seeder
         $allUsers=
         [
             [
-                'name' => "SuperAdmin",
+                'name' => "Manager",
                 'firstname' => "Damien",
                 'email' => 'admin1@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
                 'cgu_valided' => true,
-                'user_state' => 'in progress',
                 'role_id' => 2
             ],
 
             [
-                'name' => "Client Test",
+                'name' => "Client Julie",
                 'firstname' => "Julie",
                 'email' => 'client1@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
                 'cgu_valided' => true,
-                'user_state' => 'in progress',
                 'role_id' => 1
             ],
 
             [
-                'name' => "Client Test",
+                'name' => "Client Pierre",
                 'firstname' => "Pierre",
                 'email' => 'client2@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
                 'cgu_valided' => true,
-                'user_state' => 'in progress',
                 'role_id' => 1
             ],
 
-            [
-                'name' => "Client Test",
-                'firstname' => "Marie",
-                'email' => 'client3@demo.com',
-                'phone' => '0032-489373721',
-                'mobile'=> '0032-489373721',
-                'gdpr_valided' => true,
-                'cgu_valided' => true,
-                'user_state' => 'in progress',
-                'role_id' => 1
-            ],
-
-            [
-                'name' => "Client Test",
-                'firstname' => "Julien",
-                'email' => 'client4@demo.com',
-                'phone' => '0032-489373721',
-                'mobile'=> '0032-489373721',
-                'gdpr_valided' => true,
-                'cgu_valided' => true,
-                'user_state' => 'in progress',
-                'role_id' => 1
-            ],
+            
      
             [
-                'name' => "Manager Test",
+                'name' => "Manager Julien",
                 'firstname' => "Julien",
                 'email' => 'manager1@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
                 'cgu_valided' => true,
-                'user_state' => 'in progress',
                 'role_id' => 3
             ],
 
@@ -98,7 +72,6 @@ class UsersSeeder extends Seeder
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
                 'cgu_valided' => true,
-                'user_state' => 'in progress',
                 'role_id' => 4
             ],
         ];
@@ -114,7 +87,7 @@ class UsersSeeder extends Seeder
             'mobile'=> $usr['mobile'],
             'gdpr_valided' => $usr['gdpr_valided'],
             'cgu_valided' => $usr['cgu_valided'],
-            'user_state' => $usr['user_state'],
+            'user_state' => 'ACTIVE',
             'role_id' => $usr['role_id'],
         ]);
     }
