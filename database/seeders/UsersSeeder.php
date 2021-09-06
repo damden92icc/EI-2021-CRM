@@ -19,9 +19,9 @@ class UsersSeeder extends Seeder
         $allUsers=
         [
             [
-                'name' => "Manager",
+                'name' => "Manager Dams",
                 'firstname' => "Damien",
-                'email' => 'admin1@demo.com',
+                'email' => 'manager1@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,
@@ -54,9 +54,10 @@ class UsersSeeder extends Seeder
             
      
             [
-                'name' => "Manager Julien",
+                'name' => "Admin Julien",
                 'firstname' => "Julien",
-                'email' => 'manager1@demo.com',
+            
+                'email' => 'admin1@demo.com',
                 'phone' => '0032-489373721',
                 'mobile'=> '0032-489373721',
                 'gdpr_valided' => true,

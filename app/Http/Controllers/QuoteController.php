@@ -14,7 +14,7 @@ class QuoteController extends Controller
 {
     public function index()
     {      
-        $quotes = Quote::all();  
+        $quotes = Quote::where('quote_state', 'SENDED')->orWhere('quote_state', 'TRAITED')->get();  
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',
             'pageTabTitle' => 'Listing quotes',
@@ -209,7 +209,7 @@ class QuoteController extends Controller
 
     public function sendedQuotes(){
         
-        $quotes = Quote::where('quote_state', 'SEND')->get();  
+        $quotes = Quote::where('quote_state', 'SENDED')->get();  
        
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',

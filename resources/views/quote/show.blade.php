@@ -128,6 +128,8 @@
                <div class="col-12">
                   <div class="btn-group">
                      @isManager
+                     
+                     @if($quote->quote_state != "TRAITED" &&  $quote->quote_state == "SENDED")
                      <!--  Archive Quote -->
                      <form method="post" action="{{route('traited-quote', $quote )}}">
                         @csrf
@@ -135,8 +137,12 @@
                         <i class="fa fa-download"></i>Mark as traited  </button>
                      </form>
                      <!--  /Archive Quote -->
+                     @endif
+
                      @endisManager
-                     @if($quote->quote_state != "SEND" &&  $quote->quote_state != "ARCHIVED" )
+
+                     @isClient
+                     @if($quote->quote_state != "SENDED" &&  $quote->quote_state != "ARCHIVED" && $quote->quote_state != "TRAITED"  )
                      <!--  Archive Quote -->
                      <form method="post" action="{{route('archive-quote', $quote )}}">
                         @csrf
@@ -166,6 +172,7 @@
                      </form>
                      <!--  Update Quote -->
                      @endif
+                     @endisClient
                   </div>
                   <!-- end button group -->
                </div>

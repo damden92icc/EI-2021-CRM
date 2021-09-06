@@ -20,13 +20,14 @@ class RoleSeeder extends Seeder
                 'description' => 'Role for all clients'
             ],
             [
-                'label' => 'Admin',
-                'description' => 'Role for all admin'
-            ],
-            [
                 'label' => 'Manager',
                 'description' => 'Role for all managers'
             ],
+            [
+                'label' => 'Admin',
+                'description' => 'Role for all admin'
+            ],
+         
             [
                 'label' => 'Accountant',
                 'description' => 'Role for all accountant'
