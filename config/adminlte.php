@@ -477,8 +477,18 @@ return [
                 'can'       => 'client-only',
             ],
             [
+                'text' => 'My quote archived ',
+                'route' => ['listing-my-quote-by-state', ['state' => 'ARCHIVED']],
+                'can'       => 'client-only',
+            ],
+            [
+                'text' => 'My quote sended ',
+                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
+                'can'       => 'client-only',
+            ],
+            [
                 'text' => 'Sended quote ',
-                'url'  => '/quotes/sended-quotes',
+                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
            

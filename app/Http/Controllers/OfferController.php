@@ -71,19 +71,6 @@ class OfferController extends Controller
 
 
 
-    public function myOfferByState(String $state){
-
-
-        $user = Auth::user();
-        $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
-    
-        return view('offer.index', [
-            'pageTitle' => 'Listing Offers',
-            'pageTabTitle' => 'Listing Offers',
-            'offers'=> $myOffer ,      
-        ]);
-    }
-
 
     public function store(Request $request){
      
@@ -208,10 +195,22 @@ class OfferController extends Controller
         }
 
 
+        public function documentByState(String $state){
 
 
+            $user = Auth::user();
+            $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
+        
+            return view('offer.index', [
+                'pageTitle' => 'Listing Offers',
+                'pageTabTitle' => 'Listing Offers',
+                'offers'=> $myOffer ,      
+            ]);
+        }
+    
     public function documentChangeState(Offer $offer , String $state){
   
+
         $offer->offer_state = $state;
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);

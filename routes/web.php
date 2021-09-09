@@ -130,7 +130,7 @@ Route::prefix('quotes')->group(function () {
     Route::post('/store', [App\Http\Controllers\QuoteController::class, 'store'])->name('store-quote');
     Route::get('/edit/{quote}', [App\Http\Controllers\QuoteController::class, 'edit'])->name('edit-quote');
     Route::put('/update/{quote}', [App\Http\Controllers\QuoteController::class, 'update'])->name('update-quote');
-    Route::post('/archive/{quote}', [App\Http\Controllers\QuoteController::class, 'archiveDocument'])->name('archive-quote');
+  
    
     // CRUD services 
 
@@ -144,7 +144,13 @@ Route::prefix('quotes')->group(function () {
     Route::post('/traited-quote/{quote}', [App\Http\Controllers\QuoteController::class, 'markasTraited'])->name('traited-quote');
    
 
-    Route::get('/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
+    Route::get('/states/{state}', [App\Http\Controllers\QuoteController::class, 'documentByState'])->name('listing-my-quote-by-state');
+
+
+    
+    Route::post('/action/{quote}/{state}', [App\Http\Controllers\QuoteController::class, 'documentChangeState'])->name('change-state-quote');
+
+    Route::get('/single/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
 
 
 });
@@ -179,17 +185,12 @@ Route::prefix('offers')->group(function () {
 
     // Listing own offer
     Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'myOffer'])->name('listing-my-offer');
-    Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('listing-my-offer-by-state');
+    Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('listing-my-offer-by-state');
 
 
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
     
-    // Action supp 
-    Route::prefix('action')->group(function () {       
-        Route::post('/accept/{offer}', [App\Http\Controllers\OfferController::class, 'acceptOffer'])->name('accept-offer');
-        Route::post('/decline/{offer}', [App\Http\Controllers\OfferController::class, 'declineOffer'])->name('decline-offer');
-        Route::post('/update/{offer}', [App\Http\Controllers\OfferController::class, 'askUpdate'])->name('ask-update-offer');
-    });
+   
 
 
 

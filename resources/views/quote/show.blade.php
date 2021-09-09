@@ -133,7 +133,7 @@
                      
                      @if($quote->quote_state != "TRAITED" &&  $quote->quote_state == "SENDED")
                      <!--  Archive Quote -->
-                     <form method="post" action="{{route('traited-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [$quote, 'TRAITED'] )}}">
                         @csrf
                         <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
                         <i class="fa fa-download"></i>Mark as traited  </button>
@@ -146,7 +146,7 @@
                      @isClient
                      @if($quote->quote_state != "SENDED" &&  $quote->quote_state != "ARCHIVED" && $quote->quote_state != "TRAITED"  )
                      <!--  Archive Quote -->
-                     <form method="post" action="{{route('archive-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [ $quote , 'ARCHIVED']  )}}">
                         @csrf
                         <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
                         <i class="fa fa-download"></i>Archive  </button>
@@ -154,7 +154,7 @@
                      <!--  /Archive Quote -->
                      @if ($quote->services()->exists())
                      <!--  Send Quote -->
-                     <form method="post" action="{{route('send-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [$quote, 'SENDED']  )}}">
                         @csrf
                         <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
                         <i class="fa fa-download"></i>Send  </button>
