@@ -195,12 +195,13 @@ class OfferController extends Controller
     
             $rules = [
                 'quantity' => 'required|int',     
-                'unit_cost_ht' => 'required|double',     
-                'unit_sell_ht' => 'required|double',        
+                'unit_cost_ht' => 'required',     
+                'unit_sell_ht' => 'required',        
                 'service_id'=> 'required|int',
                         
             ];
     
+          //  dd($request);
             $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
            
             $sl->update($request->all());
@@ -255,21 +256,21 @@ class OfferController extends Controller
 
     public function acceptOffer (Offer $offer){
 
-        $offer->offer_state = "Accepted";
+        $offer->offer_state = "ACCEPTED";
         $offer->save();    
         return redirect()->intended('/offers/'.$offer->id);
     }
 
     public function declineOffer (Offer $offer){
 
-        $offer->offer_state = "Refused";
+        $offer->offer_state = "DECLINED";
         $offer->save();    
         return redirect()->intended('/offers/'.$offer->id);
     }
 
     public function askUpdate (Offer $offer){
 
-        $offer->offer_state = "Accepted";
+        $offer->offer_state = "UPDATE ASKED";
         $offer->save();    
         return redirect()->intended('/offers/'.$offer->id);
     }

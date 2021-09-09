@@ -14,13 +14,14 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <table class="table table-striped" id="main-table">
+                <table class="table table-bordered table-striped dataTable dtr-inline" id="main-table">
                   <thead>
                     <tr>
-                     
-                      <th>ID</th>
+                    
+                      <th >ID</th>
                       <th>name</th>
                       <th>Desc</th>
+                      <th>Last update</th>
                       <th>State</th>
                       <th> Due Date </th>
                       <th> Company </th>
@@ -32,7 +33,9 @@
                     <tr>
                       <td> {{$data->id}} </td>
                       <td> {{$data->label}} </td>
-                      <td> {{$data->description}} </td>
+                      <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
+                      <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
+                    
                       <td> {{$data->offer_state}} </td>
                       <td> {{$data->due_date}} </td>
                       <td> {{$data->company->name}} </td>
