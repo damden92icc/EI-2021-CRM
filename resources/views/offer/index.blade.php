@@ -14,7 +14,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <table class="table table-striped">
+                <table class="table table-striped" id="main-table">
                   <thead>
                     <tr>
                      
@@ -38,7 +38,19 @@
                       <td> {{$data->company->name}} </td>
                       
                      <td>
+                     <div class="btn-group">
                          <a class="btn btn-block btn-info" href="{{route('single-offer', $data->id )}}">view</a>
+
+                         @isManager
+                          <!--  Update offer -->
+                     <form method="get" action="{{route('edit-offer', $data )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        Update  </button>
+                     </form>
+                     <!--  Update offer -->
+                         @endisManager
+</div>
                     </td>
 
                     </tr>
@@ -57,5 +69,12 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
+
+    <script> 
+    $(document).ready( function () {
+    $('#main-table').DataTable();
+} );
+</script>
+
 @stop

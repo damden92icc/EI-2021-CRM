@@ -267,6 +267,8 @@ Route::prefix('bills')->group(function () {
 
      Route::prefix('select2')->group(function () {
         Route::get('/services-billable',  [App\Http\Controllers\BillController::class, 'serviceBillable'])->name('services-billable');
+
+        Route::get('/selectable-client',  [App\Http\Controllers\UserController::class, 'selectableClient'])->name('selectable-client');
     });
 
     Route::get('/{bill}', [App\Http\Controllers\BillController::class, 'show'])->name('single-bill');

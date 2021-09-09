@@ -167,4 +167,33 @@ class UserController extends Controller
         return redirect()->intended('/users/'.$user->id);
 
     }
+
+
+
+
+
+
+
+    public function selectableClient(Request $request){
+
+        $id =  json_decode( $request->input('search'));
+        $company = Company::where('id', $id  )->first();
+ 
+        $workers = Employe::where('company_id', $company->id)->get();
+
+
+        $tabWorker = [];
+
+        foreach($workers as $data){
+            
+      
+            $data['name'] = $data->users->name; 
+            $data['firstname'] = $data->users->firstname; 
+            
+            array_push($tabWorker,$data) ;
+        }
+
+        return    $tabWorker ;
+    }
+
 }

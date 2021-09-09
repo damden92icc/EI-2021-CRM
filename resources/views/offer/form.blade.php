@@ -29,6 +29,7 @@
                <div class="form-group  {{$errors->has('concerned_company') ? 'has-error' : ''}}">
                   <label for="inputCompany">Company</label>
                   <select class="form-control" id="selectCompanyValue" name="concerned_company">
+                  <option value="" id=""> - </option>
                      @isset($currentCompany)
                      <option value="{{$currentCompany->id}}" id="{{$offer->concerned_company}}"> {{$currentCompany->name}}</option>
                      @endisset
@@ -38,11 +39,9 @@
                   </select>
                </div>
                <div class="form-group  {{$errors->has('concerned_client') ? 'has-error' : ''}}">
-                  <label for="inputCompany">Concerned client</label>
-                  <select class="form-control" id="concerned_client" name="concerned_client">
-                     @foreach ($companies as $company)
-                     <option value="{{$company->id}}" id="{{$company->id}}"> {{$company->name}}</option>
-                     @endforeach
+                  <label for="inputClient">Concerned client</label>
+                  <select class=" js-example-basic-single form-control  form-select" id="concerned_client" name="concerned_client">
+                     
                   </select>
                </div>
                <div class="form-group  {{$errors->has('offer_priority_state') ? 'has-error' : ''}}">
@@ -54,7 +53,7 @@
                   </select>
                </div>
                <div class="form-group {{$errors->has('due_date') ? 'has-error' : ''}} ">
-                  <label for="offerDesc">Offer due date</label>
+                  <label for="offerDueDate">Offer due date</label>
                   <input class="form-control form-control-lg" type="text" id="due_date" data-date-format="yyyy-mm-dd" name="due_date" value="{{ isset($offer) ? $offer->due_date: old('due_date') }}" placeholder="offer due date">
                   @if($errors->has('due_date'))
                   <strong> {{$errors->first('due_date')}}</strong>
@@ -90,6 +89,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 <script> 
+
+
+
+$('#concerned_client').select2({
+ 
+   ajax: {
+      url:"{{route('selectable-client' )}}",
+        //    datatype:'json',
+            data: function(param){
+               console.log($("#selectCompanyValue").val())
+               
+                var query = {
+                  search: JSON.stringify($("#selectCompanyValue").val()),
+                    type:'public'
+                }
+                return query;
+            },
+            processResults: function (data){
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            text : item.id + ' -  ' + item.name  + ' ' + item.firstname ,
+                            id: $.parseJSON(item.id ),
+                        }
+                    } )
+                }
+            }
+        }
+    });   
+
+
+
+
    $(function() {
      format: 'mm-dd-yyyy',
            $( "#due_date" ).datepicker();
