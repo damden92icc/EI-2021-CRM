@@ -6,7 +6,7 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
-<br>
+
 
 <div class="container">
 <div class="row">
@@ -181,7 +181,7 @@
    </form>
    <!--  /Update  -->
    <!--  Valide  -->
-   <form method="post" action="{{route('send-offer', $offer )}}">
+   <form method="post" action="{{route('change-state-offer', [$offer, 'SENDED'] )}}">
       @csrf
       <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Send offer </button>
@@ -195,7 +195,7 @@
    @endif
    @if($offer->offer_state == "ACCEPTED" )
       <!--  Valide  -->
-      <form method="post" action="{{route('valide-offer', $offer )}}">
+      <form method="post" action="{{route('change-state-offer', [$offer, 'VALIDED'] )}}">
       @csrf
       <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Valide offer </button>
@@ -203,7 +203,7 @@
    <!--  /Valide  -->
    @endif
    <!--  Archive  -->
-   <form method="post" action="{{route('archive-offer', $offer )}}">
+   <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
       @csrf
       <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Archive  </button>
@@ -223,21 +223,21 @@
    @isClient
    @if($offer->offer_state == "SENDED")
    <!--  Accept  -->
-   <form method="post" action="{{route('accept-offer', $offer )}}">
+   <form method="post" action="{{route('change-state-offer', [$offer, 'ACCEPTED'] )}}">
       @csrf
       <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Accept  </button>
    </form>
    <!--  /Accept   -->
    <!--  Decline  -->
-   <form method="post" action="{{route('decline-offer', $offer )}}">
+   <form method="post" action="{{route('change-state-offer', [$offer, 'DECLINED'] )}}">
       @csrf
       <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Decline  </button>
    </form>
    <!--  /Decline   -->
    <!--  Ask update  -->
-   <form method="post" action="{{route('ask-update-offer', $offer )}}">
+   <form method="post" action="{{route('change-state-offer', [$offer, 'UPDATE ASKED'] )}}">
       @csrf
       <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
       <i class="fa fa-download"></i>Ask update  </button>

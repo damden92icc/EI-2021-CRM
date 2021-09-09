@@ -159,37 +159,68 @@ Route::prefix('quotes')->group(function () {
  */
 
 Route::prefix('offers')->group(function () {    
+
+
+    /** 
+     * ==============================================
+     *              Multiples actors 
+     * ===============================================
+     */
+
     Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');
+    Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
+    
+
+    /** 
+     * ==============================================
+     *              Clients
+     * ===============================================
+     */
+
+    // Listing own offer
     Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'myOffer'])->name('listing-my-offer');
+    Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('listing-my-offer-by-state');
 
 
-    // CRUD Offer
-    Route::get('/create', [App\Http\Controllers\OfferController::class, 'create'])->name('create-offer');
-
-    Route::post('/store', [App\Http\Controllers\OfferController::class, 'store'])->name('store-offer');
-    Route::get('/edit/{offer}', [App\Http\Controllers\OfferController::class, 'edit'])->name('edit-offer');
-    Route::put('/update/{offer}', [App\Http\Controllers\OfferController::class, 'update'])->name('update-offer');
-    Route::post('/archive/{offer}', [App\Http\Controllers\OfferController::class, 'archiveDocument'])->name('archive-offer');
-  
-
+    Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
+    
     // Action supp 
-    Route::prefix('action')->group(function () {
-        Route::post('/send/{offer}', [App\Http\Controllers\OfferController::class, 'sendDocument'])->name('send-offer');
-        Route::post('/valide/{offer}', [App\Http\Controllers\OfferController::class, 'valideDocument'])->name('valide-offer');
+    Route::prefix('action')->group(function () {       
         Route::post('/accept/{offer}', [App\Http\Controllers\OfferController::class, 'acceptOffer'])->name('accept-offer');
         Route::post('/decline/{offer}', [App\Http\Controllers\OfferController::class, 'declineOffer'])->name('decline-offer');
         Route::post('/update/{offer}', [App\Http\Controllers\OfferController::class, 'askUpdate'])->name('ask-update-offer');
     });
 
-    
 
-    // Service 
+
+    /** 
+     * ==============================================
+     *                 Manager
+     * ===============================================
+     */
+
+
+    // CRUD Offer
+    Route::get('/create', [App\Http\Controllers\OfferController::class, 'create'])->name('create-offer');
+    Route::post('/store', [App\Http\Controllers\OfferController::class, 'store'])->name('store-offer');
+    Route::get('/edit/{offer}', [App\Http\Controllers\OfferController::class, 'edit'])->name('edit-offer');
+    Route::put('/update/{offer}', [App\Http\Controllers\OfferController::class, 'update'])->name('update-offer');
+    Route::post('/archive/{offer}', [App\Http\Controllers\OfferController::class, 'archiveDocument'])->name('archive-offer');
+
+    // Action supp 
+    Route::prefix('action')->group(function () {
+        Route::post('/send/{offer}', [App\Http\Controllers\OfferController::class, 'sendDocument'])->name('send-offer');
+        Route::post('/valide/{offer}', [App\Http\Controllers\OfferController::class, 'valideDocument'])->name('valide-offer');
+     
+    });
+
+
+    // CRUD Service s
     Route::post('/store-service-doc-offer', [App\Http\Controllers\OfferController::class, 'storeServiceDoc'])->name('store-service-doc-offer');    
     Route::post('/remove-service-doc-offer/{id}}', [App\Http\Controllers\OfferController::class, 'removeServiceDoc'])->name('remove-service-doc-offer');
     Route::post('/update-service-doc-offer/{offer}', [App\Http\Controllers\OfferController::class, 'updateServiceDoc'])->name('update-service-doc-offer');
 
 
-    Route::get('/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
 });
 
 

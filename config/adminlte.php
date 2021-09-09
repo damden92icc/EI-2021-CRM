@@ -492,8 +492,20 @@ return [
         'submenu' => [
           
             [
-                'text' => 'My Offer ',
-                'url'  => '/offers/my-offer',
+                'text' => ' Offer Waiting',
+                'route' => ['listing-my-offer-by-state', ['state' => 'SENDED']],
+                'can'       => 'client-only',
+            ],
+
+            [
+                'text' => 'Offer Archived',
+                'route' => ['listing-my-offer-by-state', ['state' => 'archived']],       
+                'can'       => 'client-only',
+            ],
+
+            [
+                'text' => 'Offer Accepted',
+                'route' => ['listing-my-offer-by-state', ['state' => 'ACCEPTED']],    
                 'can'       => 'client-only',
             ],
            
