@@ -63,34 +63,59 @@ Auth::routes();
 
 /** 
  * ==============================================
- *                  User  Management 
+ *                  User  Management  - Admin 
  * ===============================================
  */
 
 Route::prefix('users')->group(function () {    
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('listing-user');
-
-
     Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create-user');
     Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store-user');
     Route::get('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit-user');
-    Route::put('/update', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');
-
+    Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');
+    Route::put('/disable/{user}', [App\Http\Controllers\UserController::class, 'disableAccount'])->name('disable-user');
     Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
 });
 
 
 /** 
  * ==============================================
- *                  Profil Management 
+ *                  Services Management  - Admin 
+ * ===============================================
+ */
+
+Route::prefix('managements')->group(function () {    
+
+    Route::prefix('services')->group(function () {    
+        Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');        
+        Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
+        Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
+        Route::put('/update', [App\Http\Controllers\ServiceController::class, 'create'])->name('update-service');
+        Route::get('/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
+    });
+    
+});
+
+/** 
+ * ==============================================
+ *                  Profil Management  for all users
  * ===============================================
  */
 
 Route::prefix('my-profil')->group(function () {    
     Route::get('/', [App\Http\Controllers\UserController::class, 'myprofil'])->name('my-profil');
+    Route::get('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-profil');  
+    Route::put('/store', [App\Http\Controllers\UserController::class, 'updateMyProfil'])->name('store-my-profil');  
+    Route::put('/ask-remove-account/{user}', [App\Http\Controllers\UserController::class, 'askRemoveAccount'])->name('ask-remove-account');
 });
 
 
+
+/** 
+ * ==============================================
+ *                  Quotes Management 
+ * ===============================================
+ */
 
     
 
@@ -124,39 +149,6 @@ Route::prefix('quotes')->group(function () {
 
 });
 
-
-
-
-
-/** 
- * ==============================================
- *                  Services Management 
- * ===============================================
- */
-
-Route::prefix('managements')->group(function () {    
-
-    Route::prefix('services')->group(function () {    
-        Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');
-        
-
-        Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
-        Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
-        Route::put('/update', [App\Http\Controllers\ServiceController::class, 'create'])->name('update-service');
-
-        Route::get('/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
-    });
-    
-
-});
-
-
-
-/** 
- * ==============================================
- *                  Quotes Management 
- * ===============================================
- */
 
 
 

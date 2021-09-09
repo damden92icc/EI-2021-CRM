@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Models\Employe;
 use App\Models\Role;
 use App\Models\Company;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,13 +27,14 @@ class UserController extends Controller
 
     public function show($id){  
 
+
         $user = User::where('id' , $id )->first();
         $countEmploy= count( Employe::where('user_id', $id)->get() );
 
         if( $countEmploy > 0){
           
             $employes=  Employe::where('user_id', $id)->get();
-            $employes = $employes->load('role', 'company');
+            $employes = $employes->load( 'company');
 
         }
         else{
@@ -99,8 +100,6 @@ class UserController extends Controller
 
 
     public function myprofil(){
-
-
         $uID = auth()->user()->id;
 
         $user = User::where('id' ,     $uID  )->first();
@@ -122,5 +121,50 @@ class UserController extends Controller
             'pageTabTitle'=> 'Listing employements',
             'employements'=>  $employes=  Employe::where('user_id',     $uID )->get(),
         ]);
+    }
+
+
+    public function update($id){
+        $user = User::where('id' ,     $id  )->first();
+        return view('profil.update', [
+            'pageTitle' => 'Update Profil',
+            'user'=> $user ,           
+        ]);
+    }
+
+
+    public function updateMyProfil(Request $request){
+
+        $user = Auth::user();
+        $messages = [
+            'required' => 'Ce champs ne peut etre vide',
+        ];
+
+        $rules = [
+            'name'=> 'required',        
+            'firstname'=> 'required',       
+            'phone'=> 'required',
+            'mobile'=> 'required',     
+            'password'=> 'required',          
+        ];
+               
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
+
+        $user->update($request->all());
+        return redirect()->intended('/my-profil/');
+    }
+
+    public function askRemoveAccount(User $user){
+        $user->user_state ="Remove Asked";
+        $user->save();
+        return redirect()->intended('/my-profil/');
+    }
+
+
+    public function disableAccount(User $user){
+        $user->user_state ="Disable";
+        $user->save();
+        return redirect()->intended('/users/'.$user->id);
+
     }
 }

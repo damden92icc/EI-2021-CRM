@@ -20,7 +20,7 @@ class OfferSeeder extends Seeder
         $offers = [
             [
                 'label' => 'Offer Website Fimz',
-                'reference' => 'A201545',
+                'reference' => 'EDF695',
                 'offer_state'=>  "SENDED" ,
             ],
             [
@@ -48,7 +48,7 @@ class OfferSeeder extends Seeder
 
             [
                 'label' => 'Offer hosting Kassan',
-                'reference' => 'C7A201545',
+                'reference' => 'C7A20123R545',
                 'offer_state'=>  "DRAFT" ,
             ],
             
@@ -144,3 +144,4 @@ class OfferSeeder extends Seeder
         }
     }
 }
+

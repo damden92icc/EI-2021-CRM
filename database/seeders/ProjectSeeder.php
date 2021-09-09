@@ -24,29 +24,57 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'label' => 'Project Website XYZ',
-                'reference' => 'A2015445',
+                'reference' => 'A2015EZ445',
                 'project_state' => 'in progress'
             
             ],
             [
                 'label' => 'Project Website ATD',
-                'reference' => 'B201545',
+                'reference' => 'B20DS1545',
                 'project_state' => 'in progress'
   
             ],
             [
                 'label' => 'Project website Aristo',
-                'reference' => 'CA201545',
+                'reference' => 'CA89201545',
                 'project_state' => 'in progress'
             ],
             [
                 'label' => 'Project website Y&T ',
-                'reference' => 'CA2X01545',
+                'reference' => 'CA2X5601545',
+                'project_state' => 'in progress'
+            ],
+
+            [
+                'label' => 'Project Ecom. Hmz',
+                'reference' => 'A201AZA545',
+                'project_state' => 'in progress'
+            ],
+            [
+                'label' => 'Project Hosting CRM XYZ',
+                'reference' => 'A2015ZA445',
+                'project_state' => 'in progress'
+            
+            ],
+            [
+                'label' => 'Project Website XYZ',
+                'reference' => 'B20E1545',
+                'project_state' => 'in progress'
+  
+            ],
+            [
+                'label' => 'Project website Paula',
+                'reference' => 'CA201R545',
+                'project_state' => 'in progress'
+            ],
+            [
+                'label' => 'Project website G&T ',
+                'reference' => 'CA2AX01545',
                 'project_state' => 'in progress'
             ],
         ];
 
-        $arrayFakeCompany = [ 2, 3, 4, 5];
+        $arrayFakeCompany = [ 2, 3, 4];
         foreach($offers as $data){
             DB::table('projects')->insert([
                 'label' => $data['label'],

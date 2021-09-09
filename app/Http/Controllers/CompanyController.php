@@ -48,13 +48,13 @@ class CompanyController extends Controller
         ];
 
         $rules = [
-            'name'=> 'required',        
+            'name'=> 'required|string',        
             'vat'=> 'required',
             'street_name'=> 'required',
             'street_number'=> 'required',
             'zip_code'=> 'required',
             'locality'=> 'required',
-            'email'=> 'required',
+            'email'=> 'required|email',
             'company_type'=> 'required',
             'active' => 'required',
         ];
@@ -69,18 +69,19 @@ class CompanyController extends Controller
 
     public function store(Request $request){
      
+
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
 
         $rules = [
-            'name'=> 'required',        
+            'name'=> 'required|string',        
             'vat'=> 'required',
             'street_name'=> 'required',
             'street_number'=> 'required',
             'zip_code'=> 'required',
             'locality'=> 'required',
-            'email'=> 'required',
+            'email'=> 'required|email',
             'company_type'=> 'required',
             'active' => 'required',
         ];

@@ -225,7 +225,6 @@ return [
     */
 
 
-
     'menu' => [
         // Navbar items:
         [
@@ -269,41 +268,60 @@ return [
         ],
     ],
 
-        ['header' => 'account_settings',   'can'       => 'manager-only',],
-        
-    /**
-    * Company Nav
-    */       
-        [
-            'text'    => 'Company',
-            'icon'    => 'fas fa-fw fa-building',
-            'can'       => 'admin-only',
-            'submenu' => [
-                [
-                    'text' => 'Listing',
-                    'url'  => '/company',
-                    
-                ],
-                [
-                    'text' => 'Add new',
-                    'url'  => '/company/create',
-                  
-                ],
-                [
-                    'text' => 'Company clients',
-                    'url'  => '#',
-       
-                ],
-                [
-                    'text' => 'Provider',
-                    'url'  => '#',
-                 
-                ],
-                
-            ],
-        ],
+
 
         
+
+   
+
+
+
+
+
+    /**
+     * Nav Setting - Admin
+     */
+     
+    ['header' => 'SERVICES SETTINGS',         'can'       => 'admin-only',],
+    [
+        'text'    => 'Categories Services',
+        'icon'    => 'fas fa-fw fa-database',
+        'can'       => 'admin-only',
+        'submenu' => [
+            [
+                'text' => 'Listing',
+                'url'  => '/managements/services',
+                
+            ],
+            [
+                'text' => 'Add new',
+                'url'  => '/users/create',
+            ],
+           
+        ],
+    ],
+    [
+        'text'    => 'Services',
+        'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'admin-only',
+        'submenu' => [
+            [
+                'text' => 'Listing',
+                'url'  => '/managements/services',
+            ],
+            [
+                'text' => 'Add new',
+                'url'  => '/managements/services/create',
+                'can'       => 'admin-only',
+            ],
+           
+        ],
+    ],
+
+
+
+    ['header' => 'Company SETTINGS',         'can'       => 'admin-only',],
+
     /**
     * User Nav
     */       
@@ -323,54 +341,124 @@ return [
            
         ],
     ],
-    ['header' => 'SERVICES SETTINGS',         'can'       => 'admin-only',],
-       /**
-    * Services cat Nav
+
+        /**
+    * Company Nav
     */       
     [
-        'text'    => 'Categories Services',
-        'icon'    => 'fas fa-fw fa-user',
+        'text'    => 'Company',
+        'icon'    => 'fas fa-fw fa-building',
         'can'       => 'admin-only',
         'submenu' => [
             [
                 'text' => 'Listing',
-                'url'  => '/managements/services',
+                'url'  => '/company',
                 
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/users/create',
+                'url'  => '/company/create',
+              
             ],
-           
+
+            
         ],
     ],
+
 
     /**
-    * Services Nav
-    */       
-    [
-        'text'    => 'Services',
-        'icon'    => 'fas fa-fw fa-user',
-        'can'       => 'admin-only',
-        'submenu' => [
-            [
-                'text' => 'Listing',
-                'url'  => '/managements/services',
-            ],
-            [
-                'text' => 'Add new',
-                'url'  => '/managements/services/create',
-                'can'       => 'admin-only',
-            ],
-           
-        ],
-    ],
+     * Nav Setting - Manager
+     */
 
-    ['header' => 'Entity SETTINGS', ],
+    ['header' => 'Entity Managements',  'can'       => 'manager-only',],
           
     [
         'text'    => 'Quotes',
         'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'manager-only',
+        'submenu' => [
+            [
+                'text' => 'Listing all quote',
+                'can'       => 'manager-only',
+                'url'  => '/quotes',
+             
+            ],
+            [
+                'text' => 'Sended quote ',
+                'url'  => '/quotes/sended-quotes',
+                'can'       => 'manager-only',
+            ],
+           
+        ],
+        
+    ],
+    [
+        'text'    => 'Offers',
+        'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'manager-only',
+        'submenu' => [
+            [
+                'text' => 'Listing',
+                'url'  => '/offers',
+                'can'       => 'manager-only',
+            ],
+            [
+                'text' => 'Add new',
+                'url'  => '/offers/create',
+                'can'       => 'manager-only',
+            ],
+           
+        ],
+    ],
+    [
+        'text'    => 'Project',
+        'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'manager-only',
+        'submenu' => [
+            [
+                'text' => 'Listing',
+                'url'  => '/projects',
+                'can'       => 'manager-only',
+            ],
+            [
+                'text' => 'Add new',
+                'url'  => '/projects/create',
+                'can'       => 'manager-only',
+            ],
+     
+           
+        ],
+    ],
+    [
+        'text'    => 'Bills',
+        'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'manager-only',
+        'submenu' => [
+            [
+                'text' => 'Listing',
+                'url'  => '/bills',
+                'can'       => 'manager-only',
+            ],
+            [
+                'text' => 'Add new',
+                'url'  => '/bills/create',
+                'can'       => 'manager-only',
+            ],
+       
+           
+        ],
+    ],
+
+
+        /**
+     * Quote Setting - Client
+     */
+    ['header' => 'Entity SETTINGS',       'can'       => 'client-only',],
+          
+    [
+        'text'    => 'Quotes',
+        'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'client-only',
         'submenu' => [
             [
                 'text' => 'Listing all quote',
@@ -400,17 +488,9 @@ return [
     [
         'text'    => 'Offers',
         'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'client-only',
         'submenu' => [
-            [
-                'text' => 'Listing',
-                'url'  => '/offers',
-                'can'       => 'manager-only',
-            ],
-            [
-                'text' => 'Add new',
-                'url'  => '/offers/create',
-                'can'       => 'manager-only',
-            ],
+          
             [
                 'text' => 'My Offer ',
                 'url'  => '/offers/my-offer',
@@ -423,17 +503,9 @@ return [
     [
         'text'    => 'Project',
         'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'client-only',
         'submenu' => [
-            [
-                'text' => 'Listing',
-                'url'  => '/projects',
-                'can'       => 'manager-only',
-            ],
-            [
-                'text' => 'Add new',
-                'url'  => '/projects/create',
-                'can'       => 'manager-only',
-            ],
+        
             [
                 'text' => 'My Project',
                 'url'  => '/projects/my-project',
@@ -446,17 +518,9 @@ return [
     [
         'text'    => 'Bills',
         'icon'    => 'fas fa-fw fa-user',
+        'can'       => 'client-only',
         'submenu' => [
-            [
-                'text' => 'Listing',
-                'url'  => '/bills',
-                'can'       => 'manager-only',
-            ],
-            [
-                'text' => 'Add new',
-                'url'  => '/bills/create',
-                'can'       => 'manager-only',
-            ],
+          
             [
                 'text' => 'My Bills',
                 'url'  => '/bills',
@@ -518,6 +582,7 @@ return [
         ],
         */
     ],
+
 
     /*
     |--------------------------------------------------------------------------

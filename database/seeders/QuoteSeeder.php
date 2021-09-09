@@ -70,7 +70,7 @@ class QuoteSeeder extends Seeder
                 'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00aDS41fg0',
                 'sended_date' => Carbon::parse('2000-01-01') ,             
-                'quote_state' => 'Draft'
+                'quote_state' => 'SENDED'
             ],
           
             [
@@ -78,7 +78,7 @@ class QuoteSeeder extends Seeder
                 'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00sqZ10',
                 'sended_date' => Carbon::parse('2000-01-01') ,             
-                'quote_state' => 'Draft'
+                'quote_state' => 'SENDED'
             ],
         ];
 

@@ -18,47 +18,36 @@ class EmployesSeeder extends Seeder
         
         $seederDatas = [
      
-            // Super admin
+            // admin 
             [
                 'user_id' => 1 ,// Damien super Admin
                 'company_id' => 1, // main company
-                'role_id' => 2,
             ],
 
-            // Client 1
+            // Client 1 - company 2 
             [
-                'user_id' => 2 ,// Damien super Admin
+                'user_id' => 2 ,// Client 1
                 'company_id' => 2, // x company
-                'role_id' => 1,
             ],
 
-            // Client 2
+              // Client 1 - company 3
             [
-                'user_id' =>  3,// Damien super Admin
+                'user_id' =>  2,// Client 1
                 'company_id' => 3, // x company
-                'role_id' => 1,
             ],
    
-            // Client 3
-            [
-                'user_id' =>  3,// Damien super Admin
-                'company_id' => 3, // x company
-                'role_id' => 1,
-            ],
 
-            // Client 4
+            // Manager  
             [
                 'user_id' =>  4,// Damien super Admin
-                'company_id' => 3, // x company
-                'role_id' => 1,
+                'company_id' => 1, // x company
             ],
+            
 
-
-            // Client 5
+            // Accountant
             [
                 'user_id' =>  5,// Damien super Admin
-                'company_id' => 4, // x company
-                'role_id' => 1,
+                'company_id' => 1, // x company
             ]
         ];
 
