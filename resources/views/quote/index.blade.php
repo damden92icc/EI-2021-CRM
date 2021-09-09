@@ -12,7 +12,7 @@
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
-      <table class="table table-striped">
+   <table class="table table-striped" id="main-table">
          <thead>
             <tr>
                <th>num</th>
@@ -22,12 +22,13 @@
                <th> Created Date </th>
                <th>Last update</th>
                <th>State</th>
+               <th></th>
             </tr>
          </thead>
          <tbody>
             @foreach($quotes as $data)
             <tr>
-               <td> to do</td>
+            <td> {{$data->id}} </td>
                <td> {{$data->label}} </td>
                <td> {{$data->description}} </td>
                <td> {{$data->company->name}} </td>
@@ -60,6 +61,11 @@
 <link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
-<script> console.log('Hi!'); </script>
+
+<script> 
+    $(document).ready( function () {
+    $('#main-table').DataTable();
+} );
+</script>
 @stop
 

@@ -69,9 +69,13 @@ class OfferController extends Controller
     }
 
 
-    public function myOffer(){
+
+
+    public function myOfferByState(String $state){
+
+
         $user = Auth::user();
-        $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', 'SENDED']])->get();
+        $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
     
         return view('offer.index', [
             'pageTitle' => 'Listing Offers',
@@ -79,7 +83,6 @@ class OfferController extends Controller
             'offers'=> $myOffer ,      
         ]);
     }
-
 
 
     public function store(Request $request){
@@ -165,21 +168,17 @@ class OfferController extends Controller
                     
         ];
 
-    $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
 
-    $newService =OfferService::create($request->all());
+        $newService =OfferService::create($request->all());
 
         return redirect()->intended('/offers/'.$request->offer_id);
     }
 
     public function removeServiceDoc($id){
-
         $service = OfferService::where('id', $id)->first();
-
         $offer = $service->offer_id;
-
         $service->delete();
-
         return redirect()->route('single-offer', $offer);
        
     }
@@ -195,8 +194,8 @@ class OfferController extends Controller
     
             $rules = [
                 'quantity' => 'required|int',     
-                'unit_cost_ht' => 'required|double',     
-                'unit_sell_ht' => 'required|double',        
+                'unit_cost_ht' => 'required',     
+                'unit_sell_ht' => 'required',        
                 'service_id'=> 'required|int',
                         
             ];
@@ -208,69 +207,13 @@ class OfferController extends Controller
             return redirect()->intended('/offers/'.$sl->offer_id);
         }
 
-/**
- * Change state
- */
 
 
 
-        // public function editStatu(Offer $offer, String $state){
-
-        //     if($state="SENDED"){
-        //         $offer->offer_state = $state;
-        //         $offer->sended_date =Carbon::now() ;
-        //     }
-
-        //     else{
-        //         $offer->offer_state = $state;
-        //     }
-           
-        //     $offer->save();    
-        //     return redirect()->intended('/offers/'.$offer->id);
-
-        // }
-
-
-    public function sendDocument (Offer $offer){
-        $offer->offer_state = "SENDED";
-        $offer->sended_date =Carbon::now() ;
+    public function documentChangeState(Offer $offer , String $state){
+  
+        $offer->offer_state = $state;
         $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
-    }
-
-    public function valideDocument (Offer $offer){
-
-        $offer->offer_state = "VALIDED";
-        $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
-    }
-
-
-    public function archiveDocument (Offer $offer){
-
-        $offer->offer_state = "ARCHIVED";
-        $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
-    }
-
-    public function acceptOffer (Offer $offer){
-
-        $offer->offer_state = "Accepted";
-        $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
-    }
-
-    public function declineOffer (Offer $offer){
-
-        $offer->offer_state = "Refused";
-        $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
-    }
-
-    public function askUpdate (Offer $offer){
-
-        $offer->offer_state = "Accepted";
-        $offer->save();    
-        return redirect()->intended('/offers/'.$offer->id);
+        return redirect()->intended('/offers/single/'.$offer->id);
     }
 }
