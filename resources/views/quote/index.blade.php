@@ -18,8 +18,10 @@
                <th>num</th>
                <th>name</th>
                <th>Desc</th>
-               <th>State</th>
                <th>Company</th>
+               <th> Created Date </th>
+               <th>Last update</th>
+               <th>State</th>
             </tr>
          </thead>
          <tbody>
@@ -28,10 +30,23 @@
                <td> to do</td>
                <td> {{$data->label}} </td>
                <td> {{$data->description}} </td>
-               <td> {{$data->quote_state}} </td>
                <td> {{$data->company->name}} </td>
+               <td> {{$data->created_at}} </td>
+               <td> {{$data->updated_at}} </td>
+               <td> {{$data->quote_state}} </td>
                <td>
-                  <a class="btn btn-block btn-info" href="{{route('single-quote', $data->id )}}">view</a>
+                  <div class="btn-group">
+                     <a class="btn btn-block btn-info" href="{{route('single-quote', $data->id )}}">view</a>
+                     @isClient
+                     <!--  Update Quote -->
+                     <form method="get" action="{{route('edit-quote', $data )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        Update  </button>
+                     </form>
+                     <!--  Update Quote -->
+                     @endisClient
+                  </div>
                </td>
             </tr>
             @endforeach

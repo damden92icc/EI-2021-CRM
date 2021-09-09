@@ -173,7 +173,7 @@ class QuoteController extends Controller
 
     public function sendDocument (Quote $quote){
 
-        $quote->quote_state = "SEND";        
+        $quote->quote_state = "SENDED";        
         $quote->save();    
         return redirect()->intended('/quotes/'.$quote->id);
     }

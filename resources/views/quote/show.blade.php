@@ -81,7 +81,8 @@
                         <td>{{$data->service->description}}</td>
                         <td>{{$data->service->recurrent}}</td>
                         <td>
-                           @if($quote->quote_state != "SEND"  &&  $quote->quote_state != "ARCHIVED" )
+                           @isClient
+                           @if($quote->quote_state != "SENDED"  &&  $quote->quote_state != "ARCHIVED" )
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal"  class="btn btn-primary float-right btn-edit-service"  
@@ -100,6 +101,7 @@
                                  <i class="fa fa-download"></i>Remove  </button>
                               </form>
                               <!--  /Remove service Quote -->
+                              @endisClient
                            </div>
                            @endif
                         </td>
