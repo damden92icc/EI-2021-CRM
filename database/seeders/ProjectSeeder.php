@@ -19,59 +19,72 @@ class ProjectSeeder extends Seeder
         $offers = [
             [
                 'label' => 'Project Website Fimz',
-                'reference' => 'A201545',
+                'reference' => 'A201EPM545',
                 'project_state' => 'in progress'
             ],
             [
                 'label' => 'Project Website XYZ',
-                'reference' => 'A2015EZ445',
+                'reference' => 'A201578MEZ445',
                 'project_state' => 'in progress'
             
             ],
             [
                 'label' => 'Project Website ATD',
-                'reference' => 'B20DS1545',
+                'reference' => 'B2PMPGDS1545',
                 'project_state' => 'in progress'
   
             ],
             [
                 'label' => 'Project website Aristo',
-                'reference' => 'CA89201545',
+                'reference' => 'CA89785ZLP201545',
                 'project_state' => 'in progress'
             ],
             [
                 'label' => 'Project website Y&T ',
-                'reference' => 'CA2X5601545',
+                'reference' => 'CA2X54878601545',
                 'project_state' => 'in progress'
             ],
 
             [
                 'label' => 'Project Ecom. Hmz',
-                'reference' => 'A201AZA545',
+                'reference' => 'A201AZA745545',
                 'project_state' => 'in progress'
             ],
             [
                 'label' => 'Project Hosting CRM XYZ',
-                'reference' => 'A2015ZA445',
+                'reference' => 'A2015ZA7ZA445',
                 'project_state' => 'in progress'
             
             ],
             [
                 'label' => 'Project Website XYZ',
-                'reference' => 'B20E1545',
+                'reference' => '78MPB20E1545',
                 'project_state' => 'in progress'
   
             ],
             [
                 'label' => 'Project website Paula',
-                'reference' => 'CA201R545',
+                'reference' => 'CA201EJHYR545',
                 'project_state' => 'in progress'
             ],
             [
                 'label' => 'Project website G&T ',
-                'reference' => 'CA2AX01545',
+                'reference' => 'CA2AX01Z445545',
                 'project_state' => 'in progress'
             ],
+            [
+                'label' => 'Project Hosting CRM XYZ',
+                'reference' => 'A2015ZA785445',
+                'project_state' => 'in progress'
+            
+            ],
+            [
+                'label' => 'Project Website Atea',
+                'reference' => 'B27840E1545',
+                'project_state' => 'in progress'
+  
+            ],
+            
         ];
 
         $arrayFakeCompany = [ 2, 3, 4];

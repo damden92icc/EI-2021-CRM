@@ -6,7 +6,7 @@
 @stop
 @section('content')
 <br>
-<div class="card card-secondary">
+<div class="card card-primary">
    <div class="card-header">
       <h3 class="card-title">{{$pageTitle}} </h3>
    </div>

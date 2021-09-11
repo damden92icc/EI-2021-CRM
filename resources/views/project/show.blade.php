@@ -6,28 +6,151 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
-{{$project}}
+<div class="card">
+   <div class="card-header">
+      <h3 class="card-title"> Project : {{$project->label}} ({{$project->company->name}} )</h3>
+   </div>
+   <div class="card-body">
+      <div class="row">
+         <div class="col-3">
+            <strong>Projects description :</strong>
+            <br>
+            <p> {{$project->description}}</p>
+         </div>
+         <div class="col-9">
+            <div class="row">
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info">
+                     <div class="inner">
+                        <h3>{{$project->reference}} </h3>
+                        <p> Reference </p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-bag"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                     <div class="inner">
+                        <h3>{{$project->project_state}} <sup style="font-size: 20px">%</sup></h3>
+                        <p> State</p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-primary">
+                     <div class="inner">
+                        <h3>{{$project->start_date}}</h3>
+                        <p>Start Date </p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-primary">
+                     <div class="inner">
+                        <h3>65</h3>
+                        <p>Next Pay Date</p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+            </div>
+            <div class="row">
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                     <div class="inner">
+                        <h3>{{$countAS}}</h3>
+                        <p> Active Service </p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info">
+                     <div class="inner">
+                        <h3>{{$countRS}}</h3>
+                        <p>Reccurent Service </p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-bag"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-warning">
+                     <div class="inner">
+                        <h3>{{$sumReccService}}<sup style="font-size: 20px">€</sup> </h3>
+                        <p>Price reccurent Service </p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+               <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-danger">
+                     <div class="inner">
+                        <h3>65</h3>
+                        <p>Unique Visitors</p>
+                     </div>
+                     <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                     </div>
+                  </div>
+               </div>
+               <!-- ./col -->
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- /.card-body -->
+</div>
+<!-- /.card -->
 <br>
-<br> <br>
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
-      <table class="table table-striped">
+      <table class="table table-striped" id="main-table">
          <thead>
             <tr>
-               <th>Quantity - name  </th>
+               <th> name  </th>
+               <th>Quantity   </th>
                <th>Recurrency</th>
-               <th> Int. is rec </th>
                <th> Service State </th>
                @isManager
                <th> Cost price </th>
-             
                <th> Prov. Cost price </th>
                @endisManager
-               <th>Sell  price</th>
+               <th>Unit HT</th>
                <th> Start Date </th>
                <th> Next pay date </th>
                <th> Is billable </th>
@@ -38,17 +161,20 @@
          <tbody>
             @forelse($project->services as $data)       
             <tr>
-               <td> {{$data->quantity}} - {{$data->service->label}}  </td>
-               <td>{{$data->recurrency_payement}}</td>
-               <td>{{$data->service->recurrent}}</td>
+               <td>  {{$data->service->label}}  </td>
+               <td>{{$data->quantity}} </td>
+               <td>
+                  @isset($data->recurrency_payement)
+                  {{$data->recurrency_payement}}
+                  @else
+                  none
+                  @endisset
+               </td>
                <td>{{$data->service_state}}</td>
-            
-            @isManager
+               @isManager
                <td>{{$data->unit_cost_ht}} 
                </td>
-             
                <td>
-                
                   @if(isset($data->serviceProv ))
                   {{$data->serviceProv->spd_unit_cost_ht}}  
                   {{$data->serviceProv->provided->name}}
@@ -612,6 +738,11 @@
           $('#modal-edit-prov').modal('show');
          });
     
+   
+
+    $(document).ready( function () {
+    $('#main-table').DataTable();
+   } );
 </script>
 @stop
 

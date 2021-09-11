@@ -27,7 +27,7 @@ class CreateProjectServicesTable extends Migration
             $table->date('start_date');          
             $table->date('last_payement_date')->nullable();
             $table->string('payement_state')->nullable();
-            $table->string('recurrency_payement');
+            $table->string('recurrency_payement')->nullable();
             $table->date('next_payement_date');
             $table->boolean('is_billable')->default(0);
             $table->boolean('is_pay')->nullable();

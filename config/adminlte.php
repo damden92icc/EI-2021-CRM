@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -230,7 +230,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -238,43 +238,30 @@ return [
         ],
 
         // Sidebar items:
-        [
+    
+    /*    [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
+            
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        ['header' => 'PROFIL SETTINGS'],
+        */
+       
+        ['header' => 'PROFIL ', ],
                
     /**
     * Company Nav
-    */       
+    */   
     [
-        'text'    => 'Profile',
-        'icon'    => 'fas fa-fw fa-building',
-        'submenu' => [
-            [
-                'text' => 'My dashboard',
-                'url'  => '/',
-            ],
-                [
-                'text' => 'My Profil',
-                'url'  => 'my-profil/',
-            ],
-
-        ],
+        'text' => 'My dashboard',
+        'icon'    => 'fas fa-fw fa-tachometer-alt',
+        'url'  => '/',
     ],
-
-
-
-        
-
-   
-
-
+        [
+        'text' => 'My Profil',
+        'url'  => 'my-profil/',
+        'icon'    => 'fas fa-fw fa-user',
+    ],    
+  
 
 
 
@@ -451,13 +438,13 @@ return [
 
 
         /**
-     * Quote Setting - Client
+     * Doc & project Setting - Client
      */
-    ['header' => 'Entity SETTINGS',       'can'       => 'client-only',],
+    ['header' => 'Documents & Projects ',       'can'       => 'client-only',],
           
     [
         'text'    => 'Quotes',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file-alt',
         'can'       => 'client-only',
         'submenu' => [
             [
@@ -472,22 +459,22 @@ return [
                 'can'       => 'client-only',
             ],
             [
-                'text' => 'My quote ',
+                'text' => 'My quotes ',
                 'url'  => '/quotes/my-quote',
                 'can'       => 'client-only',
             ],
             [
-                'text' => 'My quote archived ',
+                'text' => 'My quotes archived ',
                 'route' => ['listing-my-quote-by-state', ['state' => 'ARCHIVED']],
                 'can'       => 'client-only',
             ],
             [
-                'text' => 'My quote sended ',
+                'text' => 'My quotes sended ',
                 'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'client-only',
             ],
             [
-                'text' => 'Sended quote ',
+                'text' => 'Sended quotes ',
                 'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
@@ -497,7 +484,7 @@ return [
 
     [
         'text'    => 'Offers',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file-alt',
         'can'       => 'client-only',
         'submenu' => [
           
@@ -524,7 +511,7 @@ return [
 
     [
         'text'    => 'Project',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-project-diagram',
         'can'       => 'client-only',
         'submenu' => [
         
@@ -539,7 +526,7 @@ return [
 
     [
         'text'    => 'Bills',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file-invoice-dollar',
         'can'       => 'client-only',
         'submenu' => [
           
@@ -551,58 +538,8 @@ return [
            
         ],
     ],
-    /*
 
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        */
+
     ],
 
 
