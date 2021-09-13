@@ -357,21 +357,16 @@ return [
      * Nav Setting - Manager
      */
 
-    ['header' => 'Entity Managements',  'can'       => 'manager-only',],
+    ['header' => 'Managements',  'can'       => 'manager-only',],
           
     [
         'text'    => 'Quotes',
         'icon'    => 'fas fa-fw fa-user',
         'can'       => 'manager-only',
         'submenu' => [
+       
             [
-                'text' => 'Listing all quote',
-                'can'       => 'manager-only',
-                'url'  => '/quotes',
-             
-            ],
-            [
-                'text' => 'Sended quote ',
+                'text' => 'Clients quotes ',
                 'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
@@ -385,10 +380,16 @@ return [
         'can'       => 'manager-only',
         'submenu' => [
             [
-                'text' => 'Listing',
+                'text' => 'Listing all offers',
                 'url'  => '/offers',
                 'can'       => 'manager-only',
             ],
+            [
+                'text' => 'Listing my offers',
+                'url'  => '/offers/manager',
+                'can'       => 'manager-only',
+            ],
+            
             [
                 'text' => 'Add new',
                 'url'  => '/offers/create',

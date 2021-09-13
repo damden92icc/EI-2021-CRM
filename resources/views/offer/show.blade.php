@@ -37,6 +37,8 @@
                   Phone :  <br>
                   Email:    {{$myCompany->email}}<br>
                   VAT :  {{$myCompany->vat}}<br>
+                  <strong> Representant : </strong><br>
+                  {{$offer->users->name}}       {{$offer->users->firstname}}
                </address>
      
             </div>

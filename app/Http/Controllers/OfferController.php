@@ -26,6 +26,20 @@ class OfferController extends Controller
         ]);
     }
 
+    public function indexManager()
+    {      
+
+        $offers = Offer::where('owner_id', auth()->user()->id)->get();  
+
+        return view('offer.index', [
+            'pageTitle' => 'Listing Offers',
+            'pageTabTitle' => 'Listing Offers',
+            'offers'=>        $offers ,
+      
+        ]);
+    }
+
+
     public function show($id)
     {      
         $offer = Offer::where('id', $id)->first();  
