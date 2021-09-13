@@ -20,7 +20,7 @@ class CreateServiceProvDetailsTable extends Migration
             // Additional info
             $table->boolean('spd_is_active');
             $table->date('spd_start_date')->nullable();     
-            $table->integer('spd_recurrency_payement');
+            $table->string('spd_recurrency_payement');
             $table->date('spd_last_payement_date')->nullable();
             $table->boolean('spd_is_pay')->nullable();
             $table->string('spd_service_state');            

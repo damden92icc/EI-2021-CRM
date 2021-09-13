@@ -60,7 +60,7 @@ class ProjectController extends Controller
     }
 
     public function create(){
-        $selectableCompanies = Company::all();
+        $selectableCompanies = Company::where('company_type', 'client')->where('active', true)->get();
 
         return view('project.form', [
             'pageTitle' => 'Create projects',
@@ -89,7 +89,7 @@ class ProjectController extends Controller
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
 
         $newProject =Project::create($request->all());
-        return redirect()->intended('/projects/'.$newProject->id);
+        return redirect()->intended('/projects/single/'.$newProject->id);
     }
 
     public function edit($id){
@@ -126,7 +126,7 @@ class ProjectController extends Controller
 
         $project->update($request->all());
 
-        return redirect()->intended('/projects/'.$project->id);
+        return redirect()->intended('/projects/single/'.$project->id);
 
         dd("oh hellow tities");
     }
@@ -147,6 +147,8 @@ class ProjectController extends Controller
 
         $rules = [
             'quantity' => 'required',        
+            'unit_cost_ht' => 'required',   
+            'unit_sell_ht' => 'required',   
             'service_id'=> 'required',
             'project_id' => 'required',
                     
@@ -178,16 +180,17 @@ class ProjectController extends Controller
                 'ps_id' =>    $newService->id,          
                 
             ]);
-
+         //   dd($request);
             $newProvService =ServiceProvDetails::create($request->all()); ; 
-      
+           
             }
             else{
+              
                 $newService =ProjectService::create($request->all());
             }
 
 
-        return redirect()->intended('/projects/'.$request->project_id);
+        return redirect()->intended('/projects/single/'.$request->project_id);
     }
 
 
@@ -257,7 +260,7 @@ class ProjectController extends Controller
         $project->project_state = "Archived";
         
         $project->save();    
-        return redirect()->intended('/projects/'.$project->id);
+        return redirect()->intended('/projects/single/'.$project->id);
     }
 
     public function askCancelServiceDoc ($id){
@@ -329,5 +332,4 @@ class ProjectController extends Controller
         }
     }
         
-
 }
