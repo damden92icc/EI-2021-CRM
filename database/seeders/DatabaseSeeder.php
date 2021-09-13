@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             EmployesSeeder::class,
             ServiceSeeder::class,
             QuoteSeeder::class,
+            QuoteServiceSeeder::class,
             OfferSeeder::class,           
             OfferServiceSeeder::class,
             ProjectSeeder::class,

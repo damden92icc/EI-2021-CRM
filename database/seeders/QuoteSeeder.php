@@ -19,66 +19,80 @@ class QuoteSeeder extends Seeder
         $quotes = [
             [
                 'label' => 'Devis 1',
-                'description' => ' Lorem Ipsum dolor',
+      
                 'reference' => 'A0010',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,             
                 'quote_state' => 'Draft'
             ],
 
             [
                 'label' => 'Devis 2',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A0015',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,            
                 'quote_state' => 'Draft'
             ],
 
             [
                 'label' => 'Devis 3',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00410',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,          
                 'quote_state' => 'Draft'
             ],
           
             [
                 'label' => 'Devis 5',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A0890Z10',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,          
                 'quote_state' => 'Draft'
             ],
 
             [
                 'label' => 'Devis 6',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00z10',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,             
                 'quote_state' => 'Draft'
             ],
 
             [
                 'label' => 'Devis Ecomm',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00AA15',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' =>null ,          
                 'quote_state' => 'Draft'
             ],
 
             [
                 'label' => 'Devis 7',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00aDS41fg0',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' => Carbon::parse('2021-03-01') ,             
                 'quote_state' => 'SENDED'
             ],
           
             [
                 'label' => 'Devis 9',
-                'description' => ' Lorem Ipsum dolor',
                 'reference' => 'A00sqZ10',
-                'sended_date' => Carbon::parse('2000-01-01') ,             
+                'sended_date' => Carbon::parse('2021-03-01') ,             
                 'quote_state' => 'SENDED'
+            ],
+
+            [
+                'label' => 'Devis 10',
+                'reference' => 'A0078KsqZ10',
+                'sended_date' => Carbon::parse('2021-03-01') ,             
+                'quote_state' => 'SENDED'
+            ],
+
+            [
+                'label' => 'Devis 11',
+                'reference' => 'A07Z0sqZ10',
+                'sended_date' => Carbon::parse('2021-03-01') ,             
+                'quote_state' => 'ARCHIVED'
+            ],
+
+            [
+                'label' => 'Devis 12',
+                'reference' => 'A00PMsqZ10',
+                'sended_date' => Carbon::parse('2021-03-01') ,             
+                'quote_state' => 'ARCHIVED'
             ],
         ];
 
@@ -88,7 +102,7 @@ class QuoteSeeder extends Seeder
         foreach($quotes as $data){
             DB::table('quotes')->insert([
                 'label' => $data['label'],
-                'description' => $data['description'],
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
                 'reference' => $data['reference'],
                 'sended_date' => $data['sended_date'],
                 'quote_state' => $data['quote_state'],
