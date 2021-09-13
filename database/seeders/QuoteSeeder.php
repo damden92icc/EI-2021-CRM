@@ -97,7 +97,7 @@ class QuoteSeeder extends Seeder
         ];
 
 
-        $arrayFakeCompany = [ 2, 3];
+        $arrayFakeCompany = [ 2, 3, 4];
         $arrayFakeClients = [ 2, 3];
         foreach($quotes as $data){
             DB::table('quotes')->insert([

@@ -73,9 +73,10 @@
                <table class="table table-striped">
                   <thead>
                      <tr>
-                        <th>ID   </th>
-                        <th>Quantity</th>
+                  
                         <th>name</th>
+                        <th>Quantity</th>
+                       
                         <th>Is recurrent</th>
                       
                       @isManager
@@ -89,14 +90,22 @@
                   <tbody>
                      @forelse($offer->services as $data)       
                      <tr>
-                        <td>{{$data->id}}</td>
-                        <td>{{$data->quantity}}</td>
                         <td>{{$data->service->label}}</td>
-                        <td>{{$data->service->recurrent}}</td>
+                        <td>{{$data->quantity}}</td>
+                     
+                        <td>
+
+                        @if($data->service->recurrent == true)
+                           True
+                           @else
+                           False
+                           @endif
+
+                        </td>
                         @isManager  <td>{{$data->unit_cost_ht}}</td> @endisManager
-                        <td>{{$data->unit_sell_ht}}</td>
+                        <td>{{$data->unit_sell_ht}} € </td>
                         
-                        <td> {{ $data->quantity * $data->unit_sell_ht }}  </td>
+                        <td> {{ $data->quantity * $data->unit_sell_ht }} € </td>
                         @isManager
                         <td>
                            @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED")
@@ -131,11 +140,23 @@
                   </tbody>
                   <tfoot>
                      <th>
+                        @isClient
                      <tr>
                         <th colspan="4"> Total HT</th>
-                       @isManager <td> {{$totalCost}} </td> @endisManager
-                        <td> {{$totalSell}} </td>
-                     </tr>
+                    
+                        <td> {{$totalSell}} € </td>
+
+                        @endisClient
+
+                     </tr>   
+                     @isManager
+                     <tr>
+                        <th colspan="5"> Total HT</th>
+                        <td> {{$totalCost}} €</td> 
+                        <td> {{$totalSell}} € </td>
+
+                        @endisManager
+                        
                      </th>      
                   </tfoot>
                </table>
