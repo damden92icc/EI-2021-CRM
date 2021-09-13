@@ -65,40 +65,47 @@
             <div class="col-12 table-responsive">
                <table class="table table-striped">
                   <thead>
-                     <tr>
-                        <th>Quantity</th>
+                     <tr>                   
                         <th>name</th>
-                        <th>Desc</th>
-                        <th>Is recurrent</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
+                        <th>This service recurrent</th>
                         <th></th>
                      </tr>
                   </thead>
                   <tbody>
                      @forelse($quote->services as $data)
                      <tr>
-                        <td> {{$data->quantity}} </td>
+            
                         <td>{{$data->service->label}}</td>
+                        <td> {{$data->quantity}} </td>
                         <td>{{$data->service->description}}</td>
-                        <td>{{$data->service->recurrent}}</td>
+                        <td>
+                           @if($data->service->recurrent == true)
+                           True
+                           @else
+                           False
+                           @endif
+                        </td>
                         <td>
                            @isClient
                            @if($quote->quote_state != "SENDED"  &&  $quote->quote_state != "ARCHIVED" )
                            <div class="btn-group">
                               <!--   Edit service -->
-                              <button type="button" data-toggle="modal"  class="btn btn-primary float-right btn-edit-service"  
+                              <button type="button" data-toggle="modal"  class="btn btn-primary  btn-edit-service"  
                                  data-servicelist='{{$data->id}}'     
                                  data-name='{{ $data->service->label}}'     
                                  data-quantity='{{ $data->quantity}}'
                                  data-id='{{$data->service->id}}' 
                                  >
-                              <i class="fa fa-download"></i> edit service 
+                              Edit 
                               </button>
                               <!--   /Edit service -->
                               <!--  Remove service Quote -->
                               <form method="post" action="{{route('remove-service-doc', $data->id )}}">
                                  @csrf
-                                 <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-                                 <i class="fa fa-download"></i>Remove  </button>
+                                 <button type="submit" class="btn btn-danger">
+                                Remove  </button>
                               </form>
                               <!--  /Remove service Quote -->
                               @endisClient
@@ -107,7 +114,7 @@
                         </td>
                      </tr>
                      @empty 
-                     <td> This quote has currently no service </td>
+                     <td colspan="4"> This quote has currently no service </td>
                      @endforelse
                   </tbody>
                </table>
@@ -133,7 +140,7 @@
                      
                      @if($quote->quote_state != "TRAITED" &&  $quote->quote_state == "SENDED")
                      <!--  Archive Quote -->
-                     <form method="post" action="{{route('traited-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [$quote, 'TRAITED'] )}}">
                         @csrf
                         <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
                         <i class="fa fa-download"></i>Mark as traited  </button>
@@ -146,17 +153,17 @@
                      @isClient
                      @if($quote->quote_state != "SENDED" &&  $quote->quote_state != "ARCHIVED" && $quote->quote_state != "TRAITED"  )
                      <!--  Archive Quote -->
-                     <form method="post" action="{{route('archive-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [ $quote , 'ARCHIVED']  )}}">
                         @csrf
-                        <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                        <button type="submit" class="btn btn-danger float-right ">
                         <i class="fa fa-download"></i>Archive  </button>
                      </form>
                      <!--  /Archive Quote -->
                      @if ($quote->services()->exists())
                      <!--  Send Quote -->
-                     <form method="post" action="{{route('send-quote', $quote )}}">
+                     <form method="post" action="{{route('change-state-quote', [$quote, 'SENDED']  )}}">
                         @csrf
-                        <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+                        <button type="submit" class="btn btn-primary float-right" >
                         <i class="fa fa-download"></i>Send  </button>
                      </form>
                      <!--  /Send Quote -->
@@ -283,9 +290,7 @@
    
              $('#modal-edit-service').modal('show');
          });
-          
-   
-    
+              
 </script>
 @stop
 

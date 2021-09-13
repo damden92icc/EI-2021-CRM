@@ -52,7 +52,7 @@
             <div class="col-sm-6">
                <div class="form-group {{$errors->has('start_date') ? 'has-error' : ''}} ">
                   <label for="quoteDesc">project start date</label>
-                  <input class="form-control form-control-lg" type="text" id="start_date" name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="start date">
+                  <input class="form-control form-control-lg" type="text" id="start_date" name="start_date"  data-date-format="yyyy-mm-dd"  value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="start date">
                   @if($errors->has('start_date'))
                   <strong> {{$errors->first('start_date')}}</strong>
                   @endif
@@ -87,6 +87,14 @@
 <link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
-<script> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<script> 
+
+$(function() {
+     format: 'mm-dd-yyyy',
+           $( "#start_date" ).datepicker();
+         });
+</script>
 @stop
 

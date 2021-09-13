@@ -41,28 +41,15 @@ class QuoteController extends Controller
 
     public function create(){
 
-        $user = Auth::user();
-
         return view('quote.form', [
             'pageTitle' => 'Create quote',
-            'user' => $user,
+            'user' =>  Auth::user(),
  
         ]);
     }
 
-    public function myQuote(){     
-     
-        $myQuotes = Quote::where('owner_id', Auth::user()->id)->where('quote_state',  '!=', 'ARCHIVED' )->get();  
-
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $myQuotes ,      
-        ]);
-    }
 
     public function store(Request $request){
-     
      
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
@@ -79,15 +66,14 @@ class QuoteController extends Controller
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    
-        $newQuote =Quote::create($request->all());
+        $newQuote = Quote::create($request->all());
  
-         return redirect()->intended('/quotes/'.$newQuote->id);
+        return redirect()->route('single-quote', $newQuote);
     }
 
     public function edit(Quote $quote){       
         
-     //   dd($quote->concerned_company);
-        $selectableCompanies = Company::all();
+        $selectableCompanies = Company::where(['active', true, 'company_type', 'client']);
 
         return view('quote.form', [
             'pageTitle' => 'Update quote',
@@ -114,8 +100,7 @@ class QuoteController extends Controller
    
         
         $quote->update($request->all());
-
-        return redirect()->intended('/quotes/'.$quote->id);
+        return redirect()->route('single-quote', $quote);
     }
 
     
@@ -131,8 +116,7 @@ class QuoteController extends Controller
         $rules = [
             'quantity' => 'required|int',        
             'service_id'=> 'required|int',
-            'quote_id' => 'required|int',
-                    
+            'quote_id' => 'required|int',                    
         ];
 
 
@@ -142,16 +126,17 @@ class QuoteController extends Controller
    
         $newService = QuoteService::create($request->all());
      
-        return redirect()->intended('/quotes/'.$quote);
+        return redirect()->route('single-quote', $quote);
     }
 
 
 
     public function updateServiceDoc(Request $request){
 
-    $sl = QuoteService::where('id', $request['sl_id'])->first();
+        // Get current Service listing + quote
+        $sl = QuoteService::where('id', $request['sl_id'])->first();
+        $quote = Quote::where('id', $sl->quote_id )->first();
 
-        
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -164,35 +149,56 @@ class QuoteController extends Controller
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    
-
         $sl->update($request->all());
 
-        return redirect()->intended('/quotes/'.$sl->quote_id);
+        return redirect()->route('single-quote', $quote);
     }
 
 
-    public function sendDocument (Quote $quote){
 
-        $quote->quote_state = "SENDED";        
+
+    public function myQuote(){     
+     
+        $myQuotes = Quote::where('owner_id', Auth::user()->id)->get();  
+
+        return view('quote.index', [
+            'pageTitle' => 'Listing Quote',
+            'pageTabTitle' => 'Listing quotes',
+            'quotes'=>        $myQuotes ,      
+        ]);
+    }
+
+
+
+    public function documentChangeState(Quote $quote , String $state){
+
+        $quote->quote_state  = $state;
         $quote->save();    
-        return redirect()->intended('/quotes/'.$quote->id);
-    }
-    
-
-    public function archiveDocument (Quote $quote){
-
-        $quote->quote_state = "ARCHIVED";
-        $quote->save();    
-        return redirect()->intended('/quotes/'.$quote->id);
+        return redirect()->route('single-quote', $quote);
     }
 
-    public function markasTraited (Quote $quote){
+    public function documentByState(String $state){
 
-        $quote->quote_state = "TRAITED";
-        $quote->save();    
-        return redirect()->intended('/quotes/'.$quote->id);
+
+        $user =Auth::user();
+
+        // check if user is client
+        if($user->checkRole(1) ){
+
+            $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
+        }
+        else{
+            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
+        }
+
+
+        return view('quote.index', [
+            'pageTitle' => 'Listing Quote ',
+            'pageTabTitle' => 'Listing quotes',
+            'quotes'=>          $listingQuotes  ,      
+        ]);
     }
-
+   
 
     public function removeServiceDoc($id){
 
@@ -207,16 +213,6 @@ class QuoteController extends Controller
     }
 
 
-    public function sendedQuotes(){
-        
-        $quotes = Quote::where('quote_state', 'SENDED')->get();  
-       
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $quotes ,      
-        ]);
-    }
 }
 
 

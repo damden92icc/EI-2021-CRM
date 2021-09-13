@@ -28,7 +28,6 @@ class OfferController extends Controller
 
     public function show($id)
     {      
-
         $offer = Offer::where('id', $id)->first();  
 
         $cptCost = count( OfferService::where('offer_id', $id)->get());
@@ -69,22 +68,6 @@ class OfferController extends Controller
     }
 
 
-
-
-    public function myOfferByState(String $state){
-
-
-        $user = Auth::user();
-        $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
-    
-        return view('offer.index', [
-            'pageTitle' => 'Listing Offers',
-            'pageTabTitle' => 'Listing Offers',
-            'offers'=> $myOffer ,      
-        ]);
-    }
-
-
     public function store(Request $request){
      
  
@@ -109,7 +92,7 @@ class OfferController extends Controller
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
     
         $newOffer =Offer::create($request->all());
-        return redirect()->intended('/offers/'.$newOffer->id);
+        return redirect()->intended('/offers/single/'.$newOffer->id);
     }
 
     public function edit(Offer $offer){
@@ -129,7 +112,6 @@ class OfferController extends Controller
 
         $offer= Offer::where('id', $offer->id)->first();
 
-    
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -151,7 +133,7 @@ class OfferController extends Controller
 
         $offer->update($request->all());
 
-        return redirect()->intended('/offers/'.$offer->id);
+        return redirect()->intended('/offers/single/'.$offer->id);
     }
 
 
@@ -172,7 +154,7 @@ class OfferController extends Controller
 
         $newService =OfferService::create($request->all());
 
-        return redirect()->intended('/offers/'.$request->offer_id);
+        return redirect()->intended('/offers/single/'.$request->offer_id);
     }
 
     public function removeServiceDoc($id){
@@ -204,14 +186,24 @@ class OfferController extends Controller
            
             $sl->update($request->all());
     
-            return redirect()->intended('/offers/'.$sl->offer_id);
+            return redirect()->intended('/offers/single/'.$sl->offer_id);
         }
 
 
+        public function documentByState(String $state){
 
 
+            $user = Auth::user();
+            $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
+        
+            return view('offer.index', [
+                'pageTitle' => 'Listing Offers',
+                'pageTabTitle' => 'Listing Offers',
+                'offers'=> $myOffer ,      
+            ]);
+        }
+    
     public function documentChangeState(Offer $offer , String $state){
-  
         $offer->offer_state = $state;
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);

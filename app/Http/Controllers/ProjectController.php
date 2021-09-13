@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    //
 
     public function index(){
 
@@ -30,26 +29,33 @@ class ProjectController extends Controller
 
     public function show($id){
         
-        $project = Project::where('id', $id)->first();  
+        $currentProject = Project::where('id', $id)->first();  
 
+        // Get active service
+        $queryAS = ProjectService::where('project_id', $id)->where('is_active', true)->get();
+        // get active reccurent service
+        $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', null)->where('is_active', true)->get();
+       
+        // somme all price * qt foreach active recc service
+        $totalPriceASR=0.0;
 
-
-        foreach($project->services as $data) {
-        
-
-        }
-
-
-
+        foreach($queryARS  as $data){
+             $totalPriceASR  += $data->unit_sell_ht * $data->quantity;
+        }     
+ 
+        // Get all service available and providers
         $selectableServices = Service::all();
         $selectableProviders = Company::where('company_type', "provider")->get();  
      
         return view('project.show', [
-            'pageTitle' => 'Single projects',
+            'pageTitle' => 'Project details',
             'pageTabTitle' => 'Listing service',
+            'project'=>         $currentProject ,      
             'servicesSelectable' =>  $selectableServices,
             'selectableProviders' => $selectableProviders,
-            'project'=>        $project ,      
+            'countAS' => count(   $queryAS ), 
+            'countRS' => count($queryARS), 
+            'sumReccService' =>  $totalPriceASR,        
         ]);
     }
 

@@ -16,43 +16,107 @@ class ServiceSeeder extends Seeder
     {
         $services = [
         [
-            'label' => 'Hosting CMS',
-            'description' => 'Lorem ipsum dolor sed at vetrus',          
+            'label' => 'Hosting CMS Plateform',
+            'description' => 'Hosting for Wordpress, Joomla, ... and other cms without e-commerce',          
             'recurrent' => 1,
             'active' => 1,
-            'validity_delay' => 30
+            'validity_delay' => 365
         ],
         [
-            'label' => 'Hosting E-commerce',
-            'description' => 'Lorem ipsum dolor sed at vetrus',          
+            'label' => 'Hosting CMS E-commerce',
+            'description' => 'Hosting for e-commerce plateform like Wocoomerce , Prestashop , .... ',          
             'recurrent' => 1,
             'active' => 1,
-            'validity_delay' => 30
+            'validity_delay' => 365
         ],
 
         [
             'label' => 'Hosting Odoo Plateform',
-            'description' => 'Lorem ipsum dolor sed at vetrus',          
+            'description' => 'Hosting Odoo Community plateforme',          
             'recurrent' => 1,
             'active' => 1,
-            'validity_delay' => 30
+            'validity_delay' => 365
         ],
 
         [
             'label' => 'DNS - name ',
-            'description' => 'Lorem ipsum dolor sed at vetrus',          
+            'description' => 'Domaine name serveur ',          
             'recurrent' => 1,
             'active' => 1,
-            'validity_delay' => 30
+            'validity_delay' => 365
         ],
        
         [
-            'label' => 'DNS - Email addresse ',
-            'description' => 'Lorem ipsum dolor sed at vetrus',          
+            'label' => 'DNS - Email addresse - 5 Go ',
+            'description' => 'Adresse email linked with the DNS ',          
             'recurrent' => 1,
             'active' => 1,
-            'validity_delay' => 30
+            'validity_delay' => 365
         ],
+        [
+            'label' => 'DNS - Email addresse - 50 Go ',
+            'description' => 'Adresse email linked with the DNS ',          
+            'recurrent' => 1,
+            'active' => 1,
+            'validity_delay' => 365
+        ],
+
+        [
+            'label' => 'DNS - Email addresse (Microsoft - 100 Go )  ',
+            'description' => 'Adresse email linked with the DNS ',          
+            'recurrent' => 1,
+            'active' => 1,
+            'validity_delay' => 365
+        ],
+
+        [
+            'label' => 'Debugging Website (Qt = hours )  ',
+            'description' => 'Handle website issues on a plateforme   ',          
+            'recurrent' => 0,
+            'active' => 1,
+            'validity_delay' => 0
+        ],
+
+        [
+            'label' => 'Update Website (Qt = hours )  ',
+            'description' => 'Update website  on a plateforme   ',          
+            'recurrent' => 0,
+            'active' => 1,
+            'validity_delay' =>0
+        ],
+
+        [
+            'label' => ' Transfert Website to this company  ',
+            'description' => 'Transfert your website on DamDen CRM  ',          
+            'recurrent' => 0,
+            'active' => 1,
+            'validity_delay' => 0
+        ],
+
+        [
+            'label' => 'Transfert Website from A register to another ',
+            'description' => 'Adresse email linked with the DNS ',          
+            'recurrent' => 0,
+            'active' => 1,
+            'validity_delay' =>0
+        ],
+
+        [
+            'label' => 'SSL Certificate ( Standards)  ',
+            'description' => 'SLL certificate for all webplateforme except e-commerce',          
+            'recurrent' => 1,
+            'active' => 1,
+            'validity_delay' =>0
+        ],
+
+        [
+            'label' => 'SSL Certificate ( E-commerce)  ',
+            'description' => 'SLL certificate for e-commerce',          
+            'recurrent' => 1,
+            'active' => 1,
+            'validity_delay' => 365
+        ],
+      
     ];
 
 

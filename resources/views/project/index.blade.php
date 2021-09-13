@@ -14,7 +14,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <table class="table table-striped">
+              <table class="table table-striped" id="main-table">
                   <thead>
                     <tr>
                      
@@ -23,16 +23,14 @@
                       <th>Desc</th>
                       <th>State</th>
                       <th>Company</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
 
-
-
                   @foreach($projects as $data)
                     <tr>
 
-                 <td> </td>
                       <td> {{$data->id}} </td>
                       <td> {{$data->label}} </td>
                       <td> {{$data->description}} </td>
@@ -58,5 +56,10 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+  
+<script> 
+    $(document).ready( function () {
+    $('#main-table').DataTable();
+} );
+</script>
 @stop

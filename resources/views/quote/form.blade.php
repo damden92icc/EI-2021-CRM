@@ -6,7 +6,7 @@
 @stop
 @section('content')
 <br>
-<div class="card card-secondary">
+<div class="card card-primary">
    <div class="card-header">
       <h3 class="card-title">{{$pageTitle}} </h3>
    </div>
@@ -26,8 +26,14 @@
          </div>
          <div class="form-group {{$errors->has('description') ? 'has-error' : ''}} ">
             <label for="quoteDesc">Quote description</label>
-            <textarea class="form-control form-control-lg" rows="3" type="text" id="description" name="description" value="{{ isset($quote) ? $quote->description: old('description') }}" placeholder="quote desc">
-            </textarea>
+        
+            <textarea class="form-control form-control-lg" rows="3" type="text" id="description" name="description" value="{{ isset($quote) ? $quote->description: old('description') }}" placeholder="quote description">
+            
+            
+            @isset($quote)
+            {{$quote->description}}
+            @endisset
+         </textarea>
             @if($errors->has('description'))
             <strong> {{$errors->first('description')}}</strong>
             @endif

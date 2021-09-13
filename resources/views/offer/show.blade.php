@@ -73,9 +73,10 @@
                <table class="table table-striped">
                   <thead>
                      <tr>
-                        <th>ID   </th>
-                        <th>Quantity</th>
+                  
                         <th>name</th>
+                        <th>Quantity</th>
+                       
                         <th>Is recurrent</th>
                       
                       @isManager
@@ -89,17 +90,25 @@
                   <tbody>
                      @forelse($offer->services as $data)       
                      <tr>
-                        <td>{{$data->id}}</td>
-                        <td>{{$data->quantity}}</td>
                         <td>{{$data->service->label}}</td>
-                        <td>{{$data->service->recurrent}}</td>
+                        <td>{{$data->quantity}}</td>
+                     
+                        <td>
+
+                        @if($data->service->recurrent == true)
+                           True
+                           @else
+                           False
+                           @endif
+
+                        </td>
                         @isManager  <td>{{$data->unit_cost_ht}}</td> @endisManager
-                        <td>{{$data->unit_sell_ht}}</td>
+                        <td>{{$data->unit_sell_ht}} € </td>
                         
-                        <td> {{ $data->quantity * $data->unit_sell_ht }}  </td>
+                        <td> {{ $data->quantity * $data->unit_sell_ht }} € </td>
                         @isManager
                         <td>
-                           @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED")
+                           @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED" && $offer->offer_state != "ARCHIVED")
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal" data-target="modal-edit-service" class="btn btn-primary float-right btn-edit-service"  
@@ -116,7 +125,7 @@
                               <!--  Remove service Quote -->
                               <form method="post" action="{{route('remove-service-doc-offer', $data->id )}}">
                                  @csrf
-                                 <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                                 <button type="submit" class="btn btn-danger float-right">
                                  <i class="fa fa-download"></i>Remove  </button>
                               </form>
                               <!--  /Remove service Quote -->
@@ -131,11 +140,23 @@
                   </tbody>
                   <tfoot>
                      <th>
+                        @isClient
                      <tr>
-                        <th colspan="4"> Total HT</th>
-                       @isManager <td> {{$totalCost}} </td> @endisManager
-                        <td> {{$totalSell}} </td>
-                     </tr>
+                        <th colspan="4"> Total HT</th>                    
+                        <td> {{$totalSell}} € </td>                       
+                     </tr>   
+                     @endisClient
+                     @isManager
+                     <tr>
+                        <th colspan="2"> </th>
+                        <th colspan=""> Total cost HT</th>
+                        <td> {{$totalCost}} €</td> 
+                        <th colspan=""> Total sell HT</th>
+                        <td> {{$totalSell}} € </td>
+                        <td> <strong>  Balance : </strong>  {{$totalSell - $totalCost }} €</td>
+</tr>
+                        @endisManager
+                        
                      </th>      
                   </tfoot>
                </table>
@@ -170,24 +191,30 @@
    </div>
    <!-- /.row -->
 </div>
+
+<div class="card">
+<div class="card-body">
 <div class="btn-group">
    @isManager
-   @if($offer->offer_state != "SENDED" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "DECLINED")
+   @if($offer->offer_state != "SENDED" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
    <!--  Update  -->
    <form method="get" action="{{route('edit-offer', $offer->id )}}">
       @csrf
-      <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-primary float-right">
       <i class="fa fa-download"></i>Update Offer  </button>
    </form>
    <!--  /Update  -->
-   <!--  Valide  -->
+   @if ($offer->services()->exists())
+   <!--  SEND  -->
    <form method="post" action="{{route('change-state-offer', [$offer, 'SENDED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-success float-right">
       <i class="fa fa-download"></i>Send offer </button>
    </form>
+      <!--  /SEND  -->
+      @endif
    <!--   Add service -->
-   <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
+   <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
    <i class="fa fa-download"></i> Add a new service 
    </button>
    <!--   /Add service -->
@@ -197,27 +224,30 @@
       <!--  Valide  -->
       <form method="post" action="{{route('change-state-offer', [$offer, 'VALIDED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-success float-right">
       <i class="fa fa-download"></i>Valide offer </button>
    </form>
    <!--  /Valide  -->
    @endif
    <!--  Archive  -->
+
+   @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENDED" )
    <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-danger float-right">
       <i class="fa fa-download"></i>Archive  </button>
    </form>
    <!--  /Archive  -->
-
+   @endif 
    @if($offer->offer_state == "VALIDED")
    <!--  Turn into project  -->
    <form method="post" action="{{route('archive-offer', $offer )}}">
       @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-danger float-right">
       <i class="fa fa-download"></i>Turn into Project  </button>
    </form>
    <!--  /Turn into projec  -->
+   
    @endif
    @endisManager
    @isClient
@@ -225,27 +255,29 @@
    <!--  Accept  -->
    <form method="post" action="{{route('change-state-offer', [$offer, 'ACCEPTED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-success float-right">
       <i class="fa fa-download"></i>Accept  </button>
    </form>
    <!--  /Accept   -->
    <!--  Decline  -->
    <form method="post" action="{{route('change-state-offer', [$offer, 'DECLINED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-danger float-right">
       <i class="fa fa-download"></i>Decline  </button>
    </form>
    <!--  /Decline   -->
    <!--  Ask update  -->
    <form method="post" action="{{route('change-state-offer', [$offer, 'UPDATE ASKED'] )}}">
       @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+      <button type="submit" class="btn btn-danger float-right">
       <i class="fa fa-download"></i>Ask update  </button>
    </form>
    <!--  /Ask update   -->
    @endif
    @endisClient
 </div>
+</div> <!-- end card body -->
+</div> <!-- end card -->
 <div class="modal fade" id="modal-default">
    <div class="modal-dialog">
       <div class="modal-content">
