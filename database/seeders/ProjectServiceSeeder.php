@@ -78,7 +78,7 @@ class ProjectServiceSeeder extends Seeder
                 'unit_cost_ht' => 100, 
                 'unit_sell_ht' => 250, 
                 'is_active' => 1,
-                'service_state' => 'ACTIVE',
+                'service_state' => 'RUNNING',
                 'payement_state' => 'PAY',
                 'recurrency_payement' => null ,
                 'project_id' => 1,

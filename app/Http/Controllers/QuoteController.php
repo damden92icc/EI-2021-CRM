@@ -133,8 +133,10 @@ class QuoteController extends Controller
 
     public function updateServiceDoc(Request $request){
 
+        // Get current Service listing + quote
         $sl = QuoteService::where('id', $request['sl_id'])->first();
-        
+        $quote = Quote::where('id', $sl->quote_id )->first();
+
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -147,7 +149,6 @@ class QuoteController extends Controller
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    
-
         $sl->update($request->all());
 
         return redirect()->route('single-quote', $quote);

@@ -1,5 +1,3 @@
-
-
 @extends('adminlte::page')
 @section('title', 'Single project')
 @section('content_header')
@@ -8,18 +6,21 @@
 @section('content')
 <div class="card">
    <div class="card-header">
-      <h3 class="card-title"> Project : {{$project->label}} ({{$project->company->name}} )</h3>
+      <h3 class="card-title"> Project : {{$project->label}}</h3>
    </div>
    <div class="card-body">
       <div class="row">
-         <div class="col-3">
+         <div class="col-5">
+         <strong>Project Owner :</strong>
+         <br>
+            <p> {{$project->company->name}}</p>
             <strong>Projects description :</strong>
             <br>
             <p> {{$project->description}}</p>
          </div>
-         <div class="col-9">
+         <div class="col-7">
             <div class="row">
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-info">
                      <div class="inner">
@@ -32,11 +33,11 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-success">
                      <div class="inner">
-                        <h3>{{$project->project_state}} <sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{$project->project_state}} </h3>
                         <p> State</p>
                      </div>
                      <div class="icon">
@@ -45,7 +46,7 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-primary">
                      <div class="inner">
@@ -58,22 +59,10 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-primary">
-                     <div class="inner">
-                        <h3>65</h3>
-                        <p>Next Pay Date</p>
-                     </div>
-                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                     </div>
-                  </div>
-               </div>
-               <!-- ./col -->
+     
             </div>
             <div class="row">
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-success">
                      <div class="inner">
@@ -86,7 +75,7 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-info">
                      <div class="inner">
@@ -99,7 +88,7 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
+               <div class="col-lg-4 col-6">
                   <!-- small box -->
                   <div class="small-box bg-warning">
                      <div class="inner">
@@ -112,19 +101,7 @@
                   </div>
                </div>
                <!-- ./col -->
-               <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-danger">
-                     <div class="inner">
-                        <h3>65</h3>
-                        <p>Unique Visitors</p>
-                     </div>
-                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                     </div>
-                  </div>
-               </div>
-               <!-- ./col -->
+
             </div>
          </div>
       </div>
@@ -143,18 +120,25 @@
          <thead>
             <tr>
                <th> name  </th>
-               <th>Quantity   </th>
+               <th>QT.   </th>
                <th>Recurrency</th>
-               <th> Service State </th>
+               <th> State </th>
                @isManager
-               <th> Cost price </th>
-               <th> Prov. Cost price </th>
+               <th> Unit Cost HT </th>
+               <th> Total cost HT </th>
+            
                @endisManager
                <th>Unit HT</th>
-               <th> Start Date </th>
-               <th> Next pay date </th>
+               <th> Total </th>
+
+               
+               <th  class="collapse accordion"> Start Date </th>
+               <th  class="collapse accordion"> Next pay date </th>
+               <th  class="collapse accordion"> Last Payement date </th>
                <th> Is billable </th>
-               <th> Last Payement date </th>
+               @isManager
+               <th> Benefits </th>
+               @endisManager
                <th></th>
             </tr>
          </thead>
@@ -172,34 +156,55 @@
                </td>
                <td>{{$data->service_state}}</td>
                @isManager
-               <td>{{$data->unit_cost_ht}} 
+               <td>{{$data->unit_cost_ht}} €
                </td>
                <td>
                   @if(isset($data->serviceProv ))
-                  {{$data->serviceProv->spd_unit_cost_ht}}  
-                  {{$data->serviceProv->provided->name}}
+                  {{ (  $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity) }} € <br/>
+                  ( <strong>   {{$data->serviceProv->spd_unit_cost_ht}}  € from : {{$data->serviceProv->provided->name}} </strong>)
                   @else 
-                  <p> - </p>
-                  @endif
+                  {{ (  $data->unit_cost_ht ) * ($data->quantity) }} €
+                  @endif      
                </td>
+
                @endisManager
-               <td>{{$data->unit_sell_ht}}</td>
-               <td>{{$data->start_date}}</td>
-               <td>{{$data->next_payement_date}}</td>
-               <td>{{$data->is_billable}}</td>
+               <td>{{$data->unit_sell_ht}} €</td>
                <td>
+               {{$data->unit_sell_ht * $data->quantity }} €
+               </td>
+               <td  class="collapse accordion">{{$data->start_date}}</td>
+               <td  class="collapse accordion">{{$data->next_payement_date}}</td>
+               <td  class="collapse accordion">
                   @if(isset($data->last_payement_date ))
                   {{$data->last_payement_date}}
                   @else 
                   <p> Never billed </p>
                   @endif
                </td>
+               <td>{{$data->is_billable}}</td>
+               @isManager
+
                <td>
+                  @if(isset($data->serviceProv ))
+                  {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity)) }} € <br/>
+         
+                  @else 
+                  {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
+                  @endif      
+               </td>
+               @endisManager
+               <td>
+               <div class="btn-group">
+                     <!--   Show date service -->
+                     <button type="button" data-toggle="collapse" data-target=".accordion"  class="btn btn-success clickable ">
+                     Show date  </button>
+                     <!--   /Show date service -->
+
                   @isManager
-                  <div class="btn-group">
+               
                      @isset($data->serviceProv )       
                      <!--   Edit service -->
-                     <button type="button" data-toggle="modal" data-target="modal-edit-prov" class="btn btn-primary float-right btn-edit-service-prov"   
+                     <button type="button" data-toggle="modal" data-target="modal-edit-prov" class="btn btn-primary  btn-edit-service-prov"   
                         data-servicelist='{{$data->id}}'  
                         data-slp-id='{{$data->serviceProv->id}}'   
                         data-service-name='{{ $data->service->label}}'     
@@ -214,13 +219,13 @@
                         data-spd-state='{{$data->serviceProv->spd_service_state}}'
                         data-spd-id='{{$data->serviceProv->id}}' 
                         >
-                     <i class="fa fa-download"></i> Edit
+                     Edit
                      </button>
                      <!--   /Edit service -->
                      @endisset 
                      @empty($data->serviceProv )
                      <!--   Edit service -->
-                     <button type="button" data-toggle="modal" data-target="modal-edit-prov" class="btn btn-primary float-right btn-edit-service"  
+                     <button type="button" data-toggle="modal" data-target="modal-edit-prov" class="btn btn-primary  btn-edit-service"  
                         data-servicelist='{{$data->id}}'     
                         data-name='{{ $data->service->label}}'     
                         data-quantity='{{ $data->quantity}}'
@@ -230,24 +235,27 @@
                         data-recurrency='{{$data->recurrency_payement}}'
                         data-id='{{$data->service->id}}' 
                         >
-                     <i class="fa fa-download"></i> Edit 
+                     Edit 
                      </button>
                      <!--   /Edit service -->
                      @endempty
-                     <!--  Remove service Quote -->
+
+                     
+
+                     <!--  Remove service project -->
                      <form method="post" action="{{route('remove-service-doc-project', $data->id )}}">
                         @csrf
                         <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-                        <i class="fa fa-download"></i>Remove  </button>
+                        Remove  </button>
                      </form>
-                     <!--  /Remove service Quote -->
+                     <!--  /Remove service project -->
                      @endisManager
                      @isClient
                      <!--  Ask cancellation  -->
                      <form method="post" action="{{route('cancel-service-doc-project', $data->id )}}">
                         @csrf
                         <button type="submit" class="btn btn-warning float-right" style="margin-right: 5px;">
-                        <i class="fa fa-download"></i>Ask cancellation  </button>
+                        Ask cancellation  </button>
                      </form>
                      <!--  / Ask cancellation e -->
                      @endisClient
@@ -255,7 +263,7 @@
                </td>
             </tr>
             @empty
-            <td> no service currently </td>
+            <td colspan="10"> no service currently </td>
             @endforelse
          </tbody>
       </table>
@@ -303,7 +311,7 @@
                {{csrf_field()}}
                <input type="hidden" id="project_id" name="project_id" value="{{$project->id}}">
                <div class="row">
-                  <div class="col-6  {{$errors->has('service_id') ? 'has-error' : ''}}">
+                  <div class="col-3  {{$errors->has('service_id') ? 'has-error' : ''}}">
                      <label for="inputService">Service</label>
                      <select class="form-control" id="selectCompanyValue" name="service_id">
                         @forelse($servicesSelectable as $data)
@@ -313,30 +321,29 @@
                         @endforelse
                      </select>
                   </div>
-                  <div class="col-6 {{$errors->has('quantity') ? 'has-error' : ''}} ">
+                  <div class="col-3 {{$errors->has('quantity') ? 'has-error' : ''}} ">
                      <label for="quantity">Quantity</label>
-                     <input class="form-control form-control-lg" type="text" id="edit-quantity" name="quantity" value="{{ isset($project) ? $project->quantity: old('quantity') }}" placeholder="service quantity">
+                     <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($project) ? $project->quantity: old('quantity') }}" placeholder="service quantity">
                      @if($errors->has('quantity'))
                      <strong> {{$errors->first('quantity')}}</strong>
                      @endif
                   </div>
-               </div>
-               <div class="row">
-                  <div class="col-6 {{$errors->has('unit_cost_ht') ? 'has-error' : ''}} ">
+                  <div class="col-3 {{$errors->has('unit_cost_ht') ? 'has-error' : ''}} ">
                      <label for="costPrice">Cost Price</label>
-                     <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_cost_ht" value="{{ isset($project) ? $project->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
+                     <input class="form-control form-control-lg" type="number" id="edit-cp" name="unit_cost_ht" value="{{ isset($project) ? $project->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
                      @if($errors->has('unit_cost_price'))
                      <strong> {{$errors->first('unit_cost_ht')}}</strong>
                      @endif
                   </div>
-                  <div class="col-6 {{$errors->has('unit_sell_ht') ? 'has-error' : ''}} ">
+                  <div class="col-3 {{$errors->has('unit_sell_ht') ? 'has-error' : ''}} ">
                      <label for="sellPrice">sell Price</label>
-                     <input class="form-control form-control-lg" type="text" id="edit-cp" name="unit_sell_ht" value="{{ isset($project) ? $project->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
+                     <input class="form-control form-control-lg" type="number" id="edit-cp" name="unit_sell_ht" value="{{ isset($project) ? $project->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
                      @if($errors->has('unit_sell_ht'))
                      <strong> {{$errors->first('unit_sell_ht')}}</strong>
                      @endif
                   </div>
                </div>
+            
                <!-- end roow -->
                <div class="custom-control custom-switch">
                   <input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="checkFormSwitch()">
@@ -356,7 +363,7 @@
                            </div>
                            <div class="col-4 {{$errors->has('spd_unit_cost_ht') ? 'has-error' : ''}} ">
                               <label for="costPrice">Provider Cost Price</label>
-                              <input class="form-control form-control-lg" type="text" id="edit-cp" name="spd_unit_cost_ht" value="{{ isset($project) ? $project->spd_unit_cost_ht: old('spd_unit_cost_ht') }}" placeholder="Cost Provider HT">
+                              <input class="form-control form-control-lg" type="number" min="1" id="edit-cp" name="spd_unit_cost_ht" value="{{ isset($project) ? $project->spd_unit_cost_ht: old('spd_unit_cost_ht') }}" placeholder="Cost Provider HT">
                               @if($errors->has('spd_unit_cost_ht'))
                               <strong> {{$errors->first('spd_unit_cost_ht')}}</strong>
                               @endif
@@ -372,7 +379,7 @@
                         <div class="row">
                            <div class="col-4 {{$errors->has('spd_start_date') ? 'has-error' : ''}} ">
                               <label for="startDate">Start date</label>
-                              <input class="form-control form-control-lg" type="text" id="edit-cstp" name="spd_start_date" value="{{ isset($project) ? $project->spd_start_date: old('spd_start_date') }}" placeholder="service start date">
+                              <input class="form-control form-control-lg" type="text" id="edit-cstp"  data-date-format="yyyy-mm-dd"  name="spd_start_date" value="{{ isset($project) ? $project->spd_start_date: old('spd_start_date') }}" placeholder="service start date">
                               @if($errors->has('spd_start_date'))
                               <strong> {{$errors->first('spd_start_date')}}</strong>
                               @endif
@@ -392,8 +399,9 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                                 <option value="1" id="1"> True</option>
-                                 <option value="0" id="0"> False</option>
+                              <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
                               </select>
                            </div>
                         </div>
@@ -412,8 +420,9 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                        <option value="1" id="1"> True</option>
-                        <option value="0" id="0"> False</option>
+                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
                   </div>
                </div>
@@ -421,7 +430,7 @@
                <div class="row">
                   <div class="col-6 {{$errors->has('start_date') ? 'has-error' : ''}} ">
                      <label for="startDate">Start date</label>
-                     <input class="form-control form-control-lg" type="text" id="edit-cstp" name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="service start date">
+                     <input class="form-control form-control-lg" type="text" id="start_date"  data-date-format="yyyy-mm-dd"  name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="service start date">
                      @if($errors->has('start_date'))
                      <strong> {{$errors->first('start_date')}}</strong>
                      @endif
@@ -470,7 +479,7 @@
                </div>
                <div class="form-group">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
+                  <input class="form-control " type="number" id="quantity"  name="quantity"  placeholder="Quantity">
                </div>
                <div class="form-group">
                   <label for="cost-ht">Cost price ht</label>
@@ -491,8 +500,9 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                        <option value="RUNNING" id="RUNNING"> Running</option>
-                        <option value="0" id="0"> END</option>
+                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
                   </div>
                </div>
@@ -500,7 +510,7 @@
                <div class="row">
                   <div class="col-6 {{$errors->has('start_date') ? 'has-error' : ''}} ">
                      <label for="startDate">Start date</label>
-                     <input class="form-control form-control-lg" type="text" id="start-date" name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="service start date">
+                     <input class="form-control form-control-lg" type="text" id="start-date"  data-date-format="yyyy-mm-dd" name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="service start date">
                      @if($errors->has('start_date'))
                      <strong> {{$errors->first('start_date')}}</strong>
                      @endif
@@ -627,8 +637,9 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                                 <option value="1" id="1"> True</option>
-                                 <option value="0" id="0"> False</option>
+                              <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
                               </select>
                            </div>
                         </div>
@@ -647,6 +658,7 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
+                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
@@ -683,6 +695,8 @@
 <link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 <script> 
    $('#form-external').hide();
    
@@ -738,9 +752,31 @@
           $('#modal-edit-prov').modal('show');
          });
     
+         $(function() {
+            format: 'mm-dd-yyyy',
+           $( "#spd-start-date" ).datepicker();
+      
+         });
+
+         $(function() {
+            format: 'mm-dd-yyyy',
+            console.log("HELLO");
+           $( "#edit-cstp" ).datepicker();
+       
+      
+         });
+
+         $(function() {
+            format: 'mm-dd-yyyy',
+            $( "#start_date" ).datepicker();
+      
+         });
    
+      
+
 
     $(document).ready( function () {
+
     $('#main-table').DataTable();
    } );
 </script>
