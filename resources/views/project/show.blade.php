@@ -1,3 +1,5 @@
+
+
 @extends('adminlte::page')
 @section('title', 'Single project')
 @section('content_header')
@@ -11,8 +13,8 @@
    <div class="card-body">
       <div class="row">
          <div class="col-5">
-         <strong>Project Owner :</strong>
-         <br>
+            <strong>Project Owner :</strong>
+            <br>
             <p> {{$project->company->name}}</p>
             <strong>Projects description :</strong>
             <br>
@@ -59,7 +61,6 @@
                   </div>
                </div>
                <!-- ./col -->
-     
             </div>
             <div class="row">
                <div class="col-lg-4 col-6">
@@ -101,7 +102,6 @@
                   </div>
                </div>
                <!-- ./col -->
-
             </div>
          </div>
       </div>
@@ -126,12 +126,9 @@
                @isManager
                <th> Unit Cost HT </th>
                <th> Total cost HT </th>
-            
                @endisManager
-               <th>Unit HT</th>
-               <th> Total </th>
-
-               
+               <th>Unit @isManager sell @endisManager HT</th>
+               <th> Total HT </th>
                <th  class="collapse accordion"> Start Date </th>
                <th  class="collapse accordion"> Next pay date </th>
                <th  class="collapse accordion"> Last Payement date </th>
@@ -156,21 +153,24 @@
                </td>
                <td>{{$data->service_state}}</td>
                @isManager
-               <td>{{$data->unit_cost_ht}} €
+               @if(isset($data->serviceProv ))
+               <td> {{$data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht}} €<br>
+                  <strong>   {{$data->unit_cost_ht}} + {{$data->serviceProv->spd_unit_cost_ht}}€  ({{$data->serviceProv->provided->name}} ) </strong>
                </td>
+               @else
+               <td>{{$data->unit_cost_ht}} €  </td>
+               @endif
                <td>
                   @if(isset($data->serviceProv ))
-                  {{ (  $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity) }} € <br/>
-                  ( <strong>   {{$data->serviceProv->spd_unit_cost_ht}}  € from : {{$data->serviceProv->provided->name}} </strong>)
+                  {{($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * $data->quantity}}€ <br>
                   @else 
                   {{ (  $data->unit_cost_ht ) * ($data->quantity) }} €
                   @endif      
                </td>
-
                @endisManager
                <td>{{$data->unit_sell_ht}} €</td>
                <td>
-               {{$data->unit_sell_ht * $data->quantity }} €
+                  {{$data->unit_sell_ht * $data->quantity }} €
                </td>
                <td  class="collapse accordion">{{$data->start_date}}</td>
                <td  class="collapse accordion">{{$data->next_payement_date}}</td>
@@ -183,25 +183,21 @@
                </td>
                <td>{{$data->is_billable}}</td>
                @isManager
-
                <td>
                   @if(isset($data->serviceProv ))
                   {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity)) }} € <br/>
-         
                   @else 
                   {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
                   @endif      
                </td>
                @endisManager
                <td>
-               <div class="btn-group">
+                  <div class="btn-group">
                      <!--   Show date service -->
                      <button type="button" data-toggle="collapse" data-target=".accordion"  class="btn btn-success clickable ">
                      Show date  </button>
                      <!--   /Show date service -->
-
-                  @isManager
-               
+                     @isManager
                      @isset($data->serviceProv )       
                      <!--   Edit service -->
                      <button type="button" data-toggle="modal" data-target="modal-edit-prov" class="btn btn-primary  btn-edit-service-prov"   
@@ -239,9 +235,6 @@
                      </button>
                      <!--   /Edit service -->
                      @endempty
-
-                     
-
                      <!--  Remove service project -->
                      <form method="post" action="{{route('remove-service-doc-project', $data->id )}}">
                         @csrf
@@ -343,7 +336,6 @@
                      @endif
                   </div>
                </div>
-            
                <!-- end roow -->
                <div class="custom-control custom-switch">
                   <input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="checkFormSwitch()">
@@ -386,11 +378,11 @@
                            </div>
                            <div class="col-4 {{$errors->has('spd_recurrency_payement') ? 'has-error' : ''}} ">
                               <label for="recurrency">Reccurency payement</label>
-                              <select class="form-control" id="recurrency" name="recurrency_payement">
-                                 <option value="YEARLY" id="YEARLY"> YEARLY</option>
-                                 <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
-                                 <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
-                                 <option value="MONTHLY" id="MONTHLY"> Montlhy</option>
+                              <select class="form-control" id="spd-recurrency" name="spd_recurrency_payement">
+                              <option value="YEARLY" id="YEARLY"> YEARLY</option>
+                        <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
+                        <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
+                        <option value="MONTHLY" id="MONTHLY"> Montlhy</option>
                               </select>
                               @if($errors->has('recurrency_payement'))
                               <strong> {{$errors->first('recurrency_payement')}}</strong>
@@ -399,9 +391,9 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                              <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                                 <option value="TO PAY" id="TO PAY"> TO PAY</option>
                               </select>
                            </div>
                         </div>
@@ -420,7 +412,7 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
@@ -500,7 +492,7 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
@@ -578,7 +570,7 @@
                <div class="row">
                   <div class="col-6 {{$errors->has('unit_cost_ht') ? 'has-error' : ''}} ">
                      <label for="costPrice"> Internal Cost Price</label>
-                     <input class="form-control form-control-lg" type="text" id="edit-cost-ht" name="unit_cost_ht" value="{{ isset($project) ? $project->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
+                     <input class="form-control form-control-lg" type="text" id="edit-cost-ht" min="0" name="unit_cost_ht" value="{{ isset($project) ? $project->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
                      @if($errors->has('unit_cost_price'))
                      <strong> {{$errors->first('unit_cost_ht')}}</strong>
                      @endif
@@ -629,7 +621,7 @@
                            </div>
                            <div class="col-4 {{$errors->has('spd_recurrency_payement') ? 'has-error' : ''}} ">
                               <label for="recurrency">Reccurency payement</label>
-                              <input class="form-control form-control-lg" type="text" id="edit-prov-reccurency" name="spd_recurrency_payement" value="{{ isset($project) ? $project->spd_recurrency_payement: old('spd_recurrency_payement') }}" placeholder="service reccurency">
+                              <input class="form-control form-control-lg" type="text" id="spd-recurrency" name="spd_recurrency_payement" value="{{ isset($project) ? $project->spd_recurrency_payement: old('spd_recurrency_payement') }}" placeholder="service reccurency">
                               @if($errors->has('spd_recurrency_payement'))
                               <strong> {{$errors->first('spd_recurrency_payement')}}</strong>
                               @endif
@@ -637,9 +629,9 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                              <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                                 <option value="TO PAY" id="TO PAY"> TO PAY</option>
                               </select>
                            </div>
                         </div>
@@ -658,7 +650,7 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
@@ -744,7 +736,7 @@
             $('#edit-cost-ht').val($(this).data('cost-ht'));
             $('#edit-spd-sp').val($(this).data('sell-ht'));
             $('#edit-prov-start-date').val($(this).data('spd-start-date'));
-            $('#edit-prov-reccurency').val($(this).data('spd-recurrency'));
+            $('#spd-recurrency').val($(this).data('spd_recurrency_payement'));
             $('#edit-spd-cost-ht').val($(this).data('spd-cost-ht'));
             $('#edit-reccurency').val($(this).data('reccurency'));          
            
@@ -757,7 +749,7 @@
            $( "#spd-start-date" ).datepicker();
       
          });
-
+   
          $(function() {
             format: 'mm-dd-yyyy',
             console.log("HELLO");
@@ -765,7 +757,7 @@
        
       
          });
-
+   
          $(function() {
             format: 'mm-dd-yyyy',
             $( "#start_date" ).datepicker();
@@ -773,10 +765,10 @@
          });
    
       
-
-
+   
+   
     $(document).ready( function () {
-
+   
     $('#main-table').DataTable();
    } );
 </script>

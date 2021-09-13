@@ -5,6 +5,7 @@
 @section('content_header')
 @stop
 @section('content')
+
 <div class="card card-primary">
    <div class="card-header">
       <h3 class="card-title">{{$pageTitle}} </h3>

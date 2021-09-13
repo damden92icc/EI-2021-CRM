@@ -18,13 +18,13 @@ class CreateProjectServicesTable extends Migration
 
             // Field qt + price
             $table->integer('quantity');
-            $table->double('unit_cost_ht');
+            $table->double('unit_cost_ht')->nullable();
             $table->double('unit_sell_ht');
 
             // Additional info
             $table->boolean('is_active');
             $table->string('service_state');
-            $table->date('start_date');          
+            $table->date('start_date');           
             $table->date('last_payement_date')->nullable();
             $table->string('payement_state')->nullable();
             $table->string('recurrency_payement')->nullable();

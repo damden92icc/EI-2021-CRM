@@ -3,9 +3,10 @@
 @extends('adminlte::page')
 @section('title', 'Create Project')
 @section('content_header')
-<h1> </h1>
+
 @stop
 @section('content')
+
 <div class="card card-primary">
    <div class="card-header">
       <h3 class="card-title">{{$pageTitle}} </h3>
