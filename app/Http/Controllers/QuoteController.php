@@ -178,12 +178,24 @@ class QuoteController extends Controller
     }
 
     public function documentByState(String $state){
-        $myQuotes = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
-       
+
+
+        $user =Auth::user();
+
+        // check if user is client
+        if($user->checkRole(1) ){
+
+            $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
+        }
+        else{
+            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
+        }
+
+
         return view('quote.index', [
             'pageTitle' => 'Listing Quote ',
             'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $myQuotes ,      
+            'quotes'=>          $listingQuotes  ,      
         ]);
     }
    

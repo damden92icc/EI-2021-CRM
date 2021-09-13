@@ -372,7 +372,7 @@ return [
             ],
             [
                 'text' => 'Sended quote ',
-                'url'  => '/quotes/sended-quotes',
+                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
            
