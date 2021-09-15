@@ -82,9 +82,9 @@
                         <td>{{$data->service->description}}</td>
                         <td>
                            @if($data->service->recurrent == true)
-                           True
+                          Yes 
                            @else
-                           False
+                       No
                            @endif
                         </td>
                         <td>

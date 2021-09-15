@@ -203,12 +203,21 @@ class QuoteController extends Controller
 
         $state = $request->state;
 
+
+
         $user =Auth::user();
 
         // check if user is client
         if($user->checkRole(1) ){
 
-            $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
+            if($state == "ALL" ){
+                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->get();  
+            }
+            else{
+                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
+            }
+                
+                   
         }
         else{
             $listingQuotes = Quote::where( 'quote_state',   $state)->get();  

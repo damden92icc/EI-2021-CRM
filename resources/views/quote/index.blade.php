@@ -7,31 +7,34 @@
 @stop
 @section('content')
 <div class="card">
-   <div class="card-header">
-      <h3 class="card-title">{{$pageTabTitle}}</h3>
-      @isClient
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6">
+        <h3 class="card-title">{{$pageTabTitle}}</h3>
+</div>
+<div class="col-6">
+@isClient
       
-   <form method="get" action="{{route('my-quote-by-state')}}">
-                        @csrf
+   <form method="GET" id="doc-filter" action="{{route('my-quote-by-state')}}">
+
                         <select class="form-control" id="state" name="state">
+                        
+                                 <option value="ALL" id="ALL"> ALL</option>
                                  <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                                  <option value="DRAFT" id="DRAFT"> DRAFT</option>         
                                  <option value="SENDED" id="SENDED"> SENDED</option>                            
                               </select>
-                              <button type="submit" class="btn btn-primary">Submit</button>
+                 
                      </form>
                      @endisClient
-
+</div>
+</div>
 
            
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
       
-
-
-
-
    <table class="table table-striped" id="main-table">
          <thead>
             <tr>
@@ -73,6 +76,8 @@
             @endforeach
          </tbody>
       </table>
+      <button type="text" id="btnFiterSubmitSearch" class="btn btn-info">Submit</button>
+    </div>
    </div>
    <!-- /.card-body -->
 </div>
@@ -83,9 +88,42 @@
 @section('js')
 
 <script> 
+
+
+var e = document.getElementById("state");
+
     $(document).ready( function () {
     $('#main-table').DataTable();
+
+if( document.URL == 'http://127.0.0.1:8000/quotes/my-quote'){
+
+}
+else{
+   var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/get?state=', ''));
+   console.log(param);
+   $("#state").val(param);
+}
+
+ 
+
 } );
+
+
+
+
+
+
+$(function() {
+   $(e).change(function() {
+     $("#doc-filter").submit();
+
+      e.options[e.selectedIndex].text;
+      e.val($param);
+   
+   });
+ });
+
+
 </script>
 @stop
 
