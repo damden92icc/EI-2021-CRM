@@ -55,9 +55,9 @@ class QuoteSeeder extends Seeder
 
             [
                 'label' => 'Devis Ecomm',
-                'reference' => 'A00AA15',
-                'sended_date' =>null ,          
-                'quote_state' => 'Draft'
+                'reference' => 'A00aDS4za1fg0',
+                'sended_date' => Carbon::parse('2021-03-01') ,             
+                'quote_state' => 'SENDED'
             ],
 
             [
@@ -104,6 +104,8 @@ class QuoteSeeder extends Seeder
                 'label' => $data['label'],
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
                 'reference' => $data['reference'],
+                'created_at' => Carbon::now()->subdays(15), 
+                'updated_at' => Carbon::now()->subdays(1), 
                 'sended_date' => $data['sended_date'],
                 'quote_state' => $data['quote_state'],
                 'owner_id' =>  Arr::random($arrayFakeClients),    

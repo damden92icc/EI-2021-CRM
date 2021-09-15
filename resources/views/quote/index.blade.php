@@ -30,10 +30,12 @@
             <tr>
             <td> {{$data->id}} </td>
                <td> {{$data->label}} </td>
-               <td> {{$data->description}} </td>
+               <td> {{ \Illuminate\Support\Str::limit($data->description, 20, $end='') }}</td>
                <td> {{$data->company->name}} </td>
-               <td> {{$data->created_at}} </td>
-               <td> {{$data->updated_at}} </td>
+      
+               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
+               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
+           
                <td> {{$data->quote_state}} </td>
                <td>
                   <div class="btn-group">
