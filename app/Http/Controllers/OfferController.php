@@ -5,6 +5,7 @@ use App\Models\Offer;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\OfferService;
+use App\Models\OfferComment;
 use App\Models\Employe;
 use Carbon\Carbon;
 
@@ -221,5 +222,26 @@ class OfferController extends Controller
         $offer->offer_state = $state;
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);
+    }
+
+
+    public function commentOffer(Request $request, Offer $offer){
+
+        // construct new query 
+        $request->merge( [ 'offer_id' => $offer->id ]);        
+        $request->merge( ['send_date' => Carbon::now()] );
+        
+        // change state
+
+        $offer->offer_state = "UPDATE ASKED";
+        $offer->save();            
+       
+        // create comment
+
+       // dd($request);
+        $newComment = OfferComment::create($request->all());
+
+        return redirect()->intended('/offers/single/'.$offer->id);
+
     }
 }

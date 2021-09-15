@@ -40,6 +40,12 @@ class Offer extends DocumentPriced
         return $this->hasMany(OfferService::class, 'offer_id','id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(OfferComment::class, 'offer_id','id');
+    }
+
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'concerned_company', 'id');

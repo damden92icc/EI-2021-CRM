@@ -6,8 +6,6 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
-
-
 <div class="container">
 <div class="row">
    <div class="col-12">
@@ -20,7 +18,6 @@
                   <i class="fas fa-globe"></i> Label : {{$offer->label}} </i>
                   <small class="float-right"> Ref:  {{$offer->reference}}</small><br>
                   <small class="float-right">Created Date: {{$offer->created_at}}</small><br>
-                
                   <small class="float-right">Sended date: {{$offer->sended_date}}</small>
                </h4>
             </div>
@@ -40,7 +37,6 @@
                   <strong> Representant : </strong><br>
                   {{$offer->users->name}}       {{$offer->users->firstname}}
                </address>
-     
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
@@ -53,15 +49,15 @@
                   Phone :    {{$offer->company->mail}} <br>
                   VAT :    {{$offer->company->vat}} <br>
                   <strong> Representant : </strong><br>
-    {{$offer->client->name}}  {{$offer->client->firstname}}
+                  {{$offer->client->name}}  {{$offer->client->firstname}}
                </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                <b> Offer Status </b> <br>
                <b>Offer State  : </b>   {{$offer->offer_state}}<br>
-           @isManager    <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br> @endisManager
-           <b>Last update Date:</b> {{$offer->updated_at}}  <br>
+               @isManager    <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br> @endisManager
+               <b>Last update Date:</b> {{$offer->updated_at}}  <br>
                <b>Offer due date : </b>  {{$offer->due_date}}<br>
                <b>Offer validity delay : </b> {{$offer->validity_delay}}<br>
             </div>
@@ -75,18 +71,17 @@
                <table class="table table-striped">
                   <thead>
                      <tr>
-                  
                         <th>name</th>
                         <th>Quantity</th>
-                       
                         <th>Is recurrent</th>
-                      
-                      @isManager
+                        @isManager
                         <th>Unit Cost  HT</th>
                         @endisManager
                         <th>Unit HT</th>
                         <th> Total HT </th>
-                    @isManager    <th></th> @endisManager
+                        @isManager    
+                        <th></th>
+                        @endisManager
                      </tr>
                   </thead>
                   <tbody>
@@ -94,23 +89,21 @@
                      <tr>
                         <td>{{$data->service->label}}</td>
                         <td>{{$data->quantity}}</td>
-                     
                         <td>
-
-                        @if($data->service->recurrent == true)
+                           @if($data->service->recurrent == true)
                            True
                            @else
                            False
                            @endif
-
                         </td>
-                        @isManager  <td>{{$data->unit_cost_ht}}</td> @endisManager
+                        @isManager  
+                        <td>{{$data->unit_cost_ht}}</td>
+                        @endisManager
                         <td>{{$data->unit_sell_ht}} € </td>
-                        
                         <td> {{ $data->quantity * $data->unit_sell_ht }} € </td>
                         @isManager
                         <td>
-                           @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED" && $offer->offer_state != "ARCHIVED")
+                           @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED"   && $offer->offer_state != "VALIDED" && $offer->offer_state != "ACCEPTED" && $offer->offer_state != "ARCHIVED")
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal" data-target="modal-edit-service" class="btn btn-primary float-right btn-edit-service"  
@@ -144,21 +137,20 @@
                      <th>
                         @isClient
                      <tr>
-                        <th colspan="4"> Total HT</th>                    
-                        <td> {{$totalSell}} € </td>                       
-                     </tr>   
+                        <th colspan="4"> Total HT</th>
+                        <td> {{$totalSell}} € </td>
+                     </tr>
                      @endisClient
                      @isManager
                      <tr>
                         <th colspan="2"> </th>
                         <th colspan=""> Total cost HT</th>
-                        <td> {{$totalCost}} €</td> 
+                        <td> {{$totalCost}} €</td>
                         <th colspan=""> Total sell HT</th>
                         <td> {{$totalSell}} € </td>
                         <td> <strong>  Balance : </strong>  {{$totalSell - $totalCost }} €</td>
-</tr>
-                        @endisManager
-                        
+                     </tr>
+                     @endisManager
                      </th>      
                   </tfoot>
                </table>
@@ -168,10 +160,24 @@
          <!-- /.row -->
          <div class="container-fluid">
             <div class="row">
-               <div class="col-12">
+               <div class="col-6">
                   <h4> Description : </h4>
                   <br>
                   <p> {{$offer->description}} </p>
+               </div>
+               <!-- /.col -->
+               <div class="col-6">
+                  <h4> Comments : </h4>
+          
+                  @if($offer->comments)
+                  <ol>
+                     @foreach ($offer->comments as $data )
+                     <li>  {{$data->message}} </li>
+                     @endforeach
+</ol>
+                  @else
+                  <p>No comments</p>
+                  @endif
                </div>
                <!-- /.col -->
             </div>
@@ -193,93 +199,89 @@
    </div>
    <!-- /.row -->
 </div>
-
 <div class="card">
-<div class="card-body">
-<div class="btn-group">
-   @isManager
-   @if($offer->offer_state != "SENDED" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
-   <!--  Update  -->
-   <form method="get" action="{{route('edit-offer', $offer->id )}}">
-      @csrf
-      <button type="submit" class="btn btn-primary float-right">
-      <i class="fa fa-download"></i>Update Offer  </button>
-   </form>
-   <!--  /Update  -->
-   @if ($offer->services()->exists())
-   <!--  SEND  -->
-   <form method="post" action="{{route('change-state-offer', [$offer, 'SENDED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-success float-right">
-      <i class="fa fa-download"></i>Send offer </button>
-   </form>
-      <!--  /SEND  -->
-      @endif
-   <!--   Add service -->
-   <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
-   <i class="fa fa-download"></i> Add a new service 
-   </button>
-   <!--   /Add service -->
-
-   @endif
-   @if($offer->offer_state == "ACCEPTED" )
-      <!--  Valide  -->
-      <form method="post" action="{{route('change-state-offer', [$offer, 'VALIDED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-success float-right">
-      <i class="fa fa-download"></i>Valide offer </button>
-   </form>
-   <!--  /Valide  -->
-   @endif
-   <!--  Archive  -->
-
-   @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENDED" )
-   <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right">
-      <i class="fa fa-download"></i>Archive  </button>
-   </form>
-   <!--  /Archive  -->
-   @endif 
-   @if($offer->offer_state == "VALIDED")
-   <!--  Turn into project  -->
-   <form method="post" action="{{route('archive-offer', $offer )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right">
-      <i class="fa fa-download"></i>Turn into Project  </button>
-   </form>
-   <!--  /Turn into projec  -->
-   
-   @endif
-   @endisManager
-   @isClient
-   @if($offer->offer_state == "SENDED")
-   <!--  Accept  -->
-   <form method="post" action="{{route('change-state-offer', [$offer, 'ACCEPTED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-success float-right">
-      <i class="fa fa-download"></i>Accept  </button>
-   </form>
-   <!--  /Accept   -->
-   <!--  Decline  -->
-   <form method="post" action="{{route('change-state-offer', [$offer, 'DECLINED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right">
-      <i class="fa fa-download"></i>Decline  </button>
-   </form>
-   <!--  /Decline   -->
-   <!--  Ask update  -->
-   <form method="post" action="{{route('change-state-offer', [$offer, 'UPDATE ASKED'] )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right">
-      <i class="fa fa-download"></i>Ask update  </button>
-   </form>
-   <!--  /Ask update   -->
-   @endif
-   @endisClient
+   <div class="card-body">
+      <div class="btn-group">
+         @isManager
+         @if($offer->offer_state != "SENDED" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
+         <!--  Update  -->
+         <form method="get" action="{{route('edit-offer', $offer->id )}}">
+            @csrf
+            <button type="submit" class="btn btn-primary float-right">
+            <i class="fa fa-download"></i>Update Offer  </button>
+         </form>
+         <!--  /Update  -->
+         @if ($offer->services()->exists())
+         <!--  SEND  -->
+         <form method="post" action="{{route('change-state-offer', [$offer, 'SENDED'] )}}">
+            @csrf
+            <button type="submit" class="btn btn-success float-right">
+            <i class="fa fa-download"></i>Send offer </button>
+         </form>
+         <!--  /SEND  -->
+         @endif
+         <!--   Add service -->
+         <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
+         <i class="fa fa-download"></i> Add a new service 
+         </button>
+         <!--   /Add service -->
+         @endif
+         @if($offer->offer_state == "ACCEPTED" )
+         <!--  Valide  -->
+         <form method="post" action="{{route('change-state-offer', [$offer, 'VALIDED'] )}}">
+            @csrf
+            <button type="submit" class="btn btn-success float-right">
+            <i class="fa fa-download"></i>Valide offer </button>
+         </form>
+         <!--  /Valide  -->
+         @endif
+         <!--  Archive  -->
+         @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENDED" )
+         <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
+            @csrf
+            <button type="submit" class="btn btn-danger float-right">
+            <i class="fa fa-download"></i>Archive  </button>
+         </form>
+         <!--  /Archive  -->
+         @endif 
+         @if($offer->offer_state == "VALIDED")
+         <!--  Turn into project  -->
+         <form method="post" action="{{route('archive-offer', $offer )}}">
+            @csrf
+            <button type="submit" class="btn btn-success float-right">
+            <i class="fa fa-download"></i>Turn into Project  </button>
+         </form>
+         <!--  /Turn into projec  -->
+         @endif
+         @endisManager
+         @isClient
+         @if($offer->offer_state == "SENDED")
+         <!--  Accept  -->
+         <form method="post" action="{{route('change-state-offer', [$offer, 'ACCEPTED'] )}}">
+            @csrf
+            <button type="submit" class="btn btn-success float-right">
+            <i class="fa fa-download"></i>Accept  </button>
+         </form>
+         <!--  /Accept   -->
+         <!--  Decline  -->
+         <form method="post" action="{{route('change-state-offer', [$offer, 'DECLINED'] )}}">
+            @csrf
+            <button type="submit" class="btn btn-danger float-right">
+            <i class="fa fa-download"></i>Decline  </button>
+         </form>
+         <!--  /Decline   -->
+         <!--  Ask update  -->
+         <button type="submit" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-update-service">
+         <i class="fa fa-download"></i>Ask update
+         </button>
+         <!--   /Add service -->
+         @endif
+         @endisClient
+      </div>
+   </div>
+   <!-- end card body -->
 </div>
-</div> <!-- end card body -->
-</div> <!-- end card -->
+<!-- end card -->
 <div class="modal fade" id="modal-default">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -341,34 +343,67 @@
 <!-- /.modal -->
 <!-- Modal edit Service Modal -->
 <div class="modal fade" id="modal-edit-service" style="display: none;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">Edit services</h4>
+         </div>
+         <!-- formService Modal -->
+         <form method="post" action="{{route('update-service-doc-offer', $offer)}}">
+            @csrf
+            <div class="modal-body">
+               <div class="form-group">
+                  <input type="hidden" id="sl_id" name="sl_id" value="sl_id">
+                  <label for="serviceName">Service </label>
+                  <select class="form-control " id="choose-service" name="service_id">                   
+                  </select>
+               </div>
+               <div class="form-group">
+                  <label for="quantity">Quantity</label>
+                  <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
+               </div>
+               <div class="form-group">
+                  <label for="cost-ht">Cost price ht</label>
+                  <input class="form-control " type="text" id="cost-ht"  name="unit_cost_ht"  placeholder="cost price">
+               </div>
+               <div class="form-group">
+                  <label for="sel-ht">Sell price ht</label>
+                  <input class="form-control " type="text" id="sell-ht"  name="unit_sell_ht"  placeholder="sell price">
+               </div>
+            </div>
+            <!-- end Modal body -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+               <button type="sumbit" class="btn btn-primary">Save changes</button>
+            </div>
+         </form>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- Modal ask update  Modal -->
+<div class="modal fade" id="modal-update-service" style="display: none;">
 <div class="modal-dialog">
    <div class="modal-content">
       <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
          <span aria-hidden="true">×</span></button>
-         <h4 class="modal-title">Edit services</h4>
+         <h4 class="modal-title">Comment Offer</h4>
       </div>
       <!-- formService Modal -->
-      <form method="post" action="{{route('update-service-doc-offer', $offer)}}">
+      <form method="post" action="{{route('ask-update-service-doc-offer', $offer->id)}}">
          @csrf
          <div class="modal-body">
-            <div class="form-group">
-               <input type="hidden" id="sl_id" name="sl_id" value="sl_id">
-               <label for="serviceName">Service </label>
-               <select class="form-control " id="choose-service" name="service_id">                   
-               </select>
-            </div>
-            <div class="form-group">
-               <label for="quantity">Quantity</label>
-               <input class="form-control " type="text" id="quantity"  name="quantity"  placeholder="Quantity">
-            </div>
-            <div class="form-group">
-               <label for="cost-ht">Cost price ht</label>
-               <input class="form-control " type="text" id="cost-ht"  name="unit_cost_ht"  placeholder="cost price">
-            </div>
-            <div class="form-group">
-               <label for="sel-ht">Sell price ht</label>
-               <input class="form-control " type="text" id="sell-ht"  name="unit_sell_ht"  placeholder="sell price">
+            <div class="form-group {{$errors->has('comments') ? 'has-error' : ''}} ">
+               <label for="offerComments">Offer comments</label>
+               <textarea class="form-control form-control-lg" type="text" id="message" name="message"  placeholder="comments">
+               </textarea>
+               @if($errors->has('message'))
+               <strong> {{$errors->first('message')}}</strong>
+               @endif
             </div>
          </div>
          <!-- end Modal body -->
@@ -400,6 +435,7 @@
    
    
              $('#modal-edit-service').modal('show');
+             $('#ask-update-service').modal('show');
          });
           
    

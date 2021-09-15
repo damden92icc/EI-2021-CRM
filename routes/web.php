@@ -169,7 +169,7 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('listing-my-offer-by-state');
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
-
+    Route::post('/ask-update/{offer}/comment', [App\Http\Controllers\OfferController::class, 'commentOffer'])->name('ask-update-service-doc-offer');
 
     // Listing own client offers
     Route::group(['middleware' => ['isClient']], function() {          
@@ -214,6 +214,7 @@ Route::group( ['prefix'=>'projects', 'middleware' => ['auth'] ], function(){
     // Listing own client projects
     Route::group(['middleware' => ['isClient']], function() {          
         Route::get('/my-project', [App\Http\Controllers\ProjectController::class, 'myProject'])->name('my-project');
+        Route::post('/cancel-service-doc/{service}', [App\Http\Controllers\ProjectController::class, 'askCancelServiceDoc'])->name('cancel-service-doc-project');
     });
 
     // Management offers by lanager
@@ -229,7 +230,7 @@ Route::group( ['prefix'=>'projects', 'middleware' => ['auth'] ], function(){
             Route::post('/store-service-doc', [App\Http\Controllers\ProjectController::class, 'storeServiceDoc'])->name('store-service-doc-project');    
             Route::post('/remove-service-doc/{id}}', [App\Http\Controllers\ProjectController::class, 'removeServiceDoc'])->name('remove-service-doc-project');
             Route::post('/update-service-doc/{service}', [App\Http\Controllers\ProjectController::class, 'updateServiceDoc'])->name('update-service-doc-project');
-            Route::post('/cancel-service-doc/{service}', [App\Http\Controllers\ProjectController::class, 'askCancelServiceDoc'])->name('cancel-service-doc-project');
+          
         });
     
     });

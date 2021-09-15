@@ -268,7 +268,7 @@ class ProjectController extends Controller
         $service->service_state = "Cancellation Asked";
         
         $service->save();    
-        return redirect()->intended('/projects/'.$service->project_id);
+        return redirect()->intended('/projects/single/'.$service->project_id);
     }
 
 

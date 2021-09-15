@@ -25,13 +25,10 @@ class CreateServiceProvDetailsTable extends Migration
             $table->boolean('spd_is_pay')->nullable();
             $table->string('spd_service_state');            
             $table->string('spd_payement_state')->nullable();
-       
-          
+                 
            // FK field
            $table->unsignedBigInteger('ps_id');
-           $table->foreign('ps_id')->references('id')->on('project_services'); 
-
-           
+           $table->foreign('ps_id')->references('id')->on('project_services');            
            $table->unsignedBigInteger('provider_id');
            $table->foreign('provider_id')->references('id')->on('companies');      
            
