@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Offer;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\OfferService;
+use App\Models\OfferComment;
 use App\Models\Employe;
+use App\Models\Quote;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -222,4 +225,51 @@ class OfferController extends Controller
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);
     }
+
+
+    public function commentOffer(Request $request, Offer $offer){
+
+        // construct new query 
+        $request->merge( [ 'offer_id' => $offer->id ]);        
+        $request->merge( ['send_date' => Carbon::now()] );
+        
+        // change state
+
+        $offer->offer_state = "UPDATE ASKED";
+        $offer->save();            
+       
+        // create comment
+        $newComment = OfferComment::create($request->all());
+
+        return redirect()->intended('/offers/single/'.$offer->id);
+
+    }
+
+
+    public function turnIntoOffer(Request $request, Quote $quote){
+
+         // Retrive main data
+        $request->merge( ['label' => 'Offer from -  '.  $quote->label ]
+                    +   ['description' => $quote->description] 
+                    +   ['offer_priority_state' =>"LOW"] 
+                    +   ['due_date' => Carbon::now()->addMonths()] 
+                    +   ['concerned_company' => $quote->company->id] 
+                    +   ['concerned_client' => $quote->users->id] 
+                    +   ['reference' =>  Str::random(20)] 
+                    + [ 'owner_id' =>  auth()->user()->id] 
+                );
+
+        // Create new offer
+        $newOffer =Offer::create($request->all());
+
+        // Add service 
+        foreach($quote->services as $data){       
+            $newService =OfferService::create(['offer_id'=> $newOffer->id ,'quantity'=> $data->quantity, 'unit_cost_ht'=> 0, 'unit_sell_ht' => 0, 'service_id' =>$data->service_id ]);
+        }
+
+        return redirect()->intended('/offers/single/'.$newOffer->id);
+
+
+    }
+
 }

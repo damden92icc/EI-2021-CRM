@@ -139,13 +139,21 @@
                      @isManager
                      
                      @if($quote->quote_state != "TRAITED" &&  $quote->quote_state == "SENDED")
-                     <!--  Archive Quote -->
+                     <!--  Mark as traite Quote -->
                      <form method="post" action="{{route('change-state-quote', [$quote, 'TRAITED'] )}}">
                         @csrf
                         <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
                         <i class="fa fa-download"></i>Mark as traited  </button>
                      </form>
-                     <!--  /Archive Quote -->
+                     <!--  /Mark as traite Quote -->
+
+                         <!--  Turn into offer - -->
+                          <form method="post" action="{{route('turn-into-offer', $quote )}}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                        <i class="fa fa-download"></i> Turn into Offer </button>
+                     </form>
+                     <!--  /Turn into Offer  -->
                      @endif
 
                      @endisManager
