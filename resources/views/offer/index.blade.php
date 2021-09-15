@@ -18,10 +18,11 @@
 @isClient
                 <div class="button-group">
                 <form method="get" id="doc-filter" action="{{route('my-offer-by-state')}}">
-                        @csrf
+                  
                         <select class="form-control" id="state" name="state">
+                        <option value="ALL" id="ALL"> ALL</option>
                                  <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                                 <option value="DRAFT" id="DRAFT"> DRAFT</option>         
+                           
                                  <option value="SENDED" id="SENDED"> SENDED</option>                            
                               </select>
                            
@@ -59,6 +60,7 @@
                       <th >ID</th>
                       <th>name</th>
                       <th>Desc</th>
+                      <th>Created date</th>
                       <th>Last update</th>
                       <th>State</th>
                       <th> Due Date </th>
@@ -72,8 +74,9 @@
                       <td> {{$data->id}} </td>
                       <td> {{$data->label}} </td>
                       <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
+                      <td> {{ \Illuminate\Support\Str::limit($data->created_at, 10, $end='') }}</td>
                       <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
-                    
+                 
                       <td> {{$data->offer_state}} </td>
                       <td> {{$data->due_date}} </td>
                       <td> {{$data->company->name}} </td>
