@@ -21,7 +21,7 @@ class OfferSeeder extends Seeder
             [
                 'label' => 'Offer Website Fimz',
                 'reference' => 'EDF695',
-                'offer_state'=>  "SENDED" ,
+                'offer_state'=>  "ARCHIVED" ,
             ],
             [
                 'label' => 'Offer Website XYZ',
@@ -118,13 +118,7 @@ class OfferSeeder extends Seeder
         ];
 
         $arrayFakeCOncernedClient = [ 2, 3];
-
-    
-
-
-
-
-        $arrayFakeCompany = [ 2, 3, 4,5];
+      $arrayFakeCompany = [ 2, 3, 4,5];
         foreach($offers as $data){
             DB::table('offers')->insert([
                 'label' => $data['label'],
@@ -138,6 +132,7 @@ class OfferSeeder extends Seeder
                 'validity_delay'=> 30,
                 'due_date'=>  Carbon::parse('2022-01-01') ,
                 'owner_id'=>1,
+                'created_at'=>  Carbon::now()->subdays(3),
                 'concerned_client' =>  Arr::random( $arrayFakeCOncernedClient),       
                 'concerned_company' =>    Arr::random($arrayFakeCompany),       
             ]);
