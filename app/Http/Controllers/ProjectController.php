@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Project;
+use App\Models\Offer;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\Employe;
@@ -139,8 +140,6 @@ class ProjectController extends Controller
 
     public function storeServiceDoc(Request $request){
 
-   
-   //     dd($request);
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -271,9 +270,6 @@ class ProjectController extends Controller
         return redirect()->intended('/projects/single/'.$service->project_id);
     }
 
-
-
-
     public function calculNextPayDate($startDate, $reccurency){
 
         $nextPayementDate = null ; 
@@ -330,6 +326,40 @@ class ProjectController extends Controller
         if($stateBill = 1){
             return "TO PAY";
         }
+    }
+
+    public function turnIntoProject(Request $request, Offer $offer){
+        
+         // Retrive main data
+         $request->merge( ['label' => 'Project -  '.  $offer->label ]
+         +   ['description' => $offer->description] 
+         +   ['is_active' => true] 
+         +   ['project_state' =>"DRAFT"] 
+         +   ['start_date' => Carbon::now()] 
+         +   ['concerned_company' => $offer->company->id] 
+         +   ['reference' =>  Str::random(20)] 
+         + [ 'owner_id' =>  auth()->user()->id] 
+     );
+
+
+     // create new project 
+     $newProject =Project::create($request->all());
+
+        // Add service 
+        foreach($offer->services as $data){       
+            $newService =ProjectService::create(['project_id'=> $newProject->id ,
+                                        'quantity'=> $data->quantity,
+                                        'is_active' => false,
+                                        'service_state' => 'DRAFT',
+                                        'start_date' =>Carbon::now(),
+                                        'next_payement_date'=> Carbon::now()->addYears(),
+                                        'unit_cost_ht'=> $data->unit_cost_ht,
+                                        'unit_sell_ht' => $data->unit_sell_ht,
+                                        'service_id' =>$data->service_id ]);
+                                    }
+
+
+        return redirect()->intended('/projects/single/'.$newProject->id);
     }
         
 }

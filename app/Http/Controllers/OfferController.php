@@ -248,6 +248,7 @@ class OfferController extends Controller
 
     public function turnIntoOffer(Request $request, Quote $quote){
 
+        $quote->quote_state = "TRAITED";
          // Retrive main data
         $request->merge( ['label' => 'Offer from -  '.  $quote->label ]
                     +   ['description' => $quote->description] 
@@ -268,8 +269,6 @@ class OfferController extends Controller
         }
 
         return redirect()->intended('/offers/single/'.$newOffer->id);
-
-
     }
 
 }
