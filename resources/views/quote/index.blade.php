@@ -90,38 +90,37 @@
 <script> 
 
 
-var e = document.getElementById("state");
+
 
     $(document).ready( function () {
     $('#main-table').DataTable();
-
-if( document.URL == 'http://127.0.0.1:8000/quotes/my-quote'){
-
-}
-else{
-   var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/get?state=', ''));
-   console.log(param);
-   $("#state").val(param);
-}
-
- 
 
 } );
 
 
 
-
-
-
 $(function() {
-   $(e).change(function() {
-     $("#doc-filter").submit();
 
-      e.options[e.selectedIndex].text;
-      e.val($param);
+
+   var e = document.getElementById("state");
    
+   if( document.URL == 'http://127.0.0.1:8000/quotes/my-quote'){
+      var param ="ALL";
+   }
+   else{
+
+      var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/get?state=', ''));
+
+      $("#state").val(param);
+   }
+
+
+   $(e).change(function() {
+   $("#doc-filter").submit();
+
    });
- });
+
+});
 
 
 </script>
