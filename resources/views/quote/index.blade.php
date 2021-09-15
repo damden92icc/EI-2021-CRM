@@ -9,9 +9,29 @@
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
+      @isClient
+      
+   <form method="get" action="{{route('my-quote-by-state')}}">
+                        @csrf
+                        <select class="form-control" id="state" name="state">
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="DRAFT" id="DRAFT"> DRAFT</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>                            
+                              </select>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                     </form>
+                     @endisClient
+
+
+           
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
+      
+
+
+
+
    <table class="table table-striped" id="main-table">
          <thead>
             <tr>
@@ -30,12 +50,10 @@
             <tr>
             <td> {{$data->id}} </td>
                <td> {{$data->label}} </td>
-               <td> {{ \Illuminate\Support\Str::limit($data->description, 20, $end='') }}</td>
-               <td> {{$data->company->name}} </td>
-      
+               <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
+               <td> {{$data->company->name}} </td>      
                <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
-               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
-           
+               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>           
                <td> {{$data->quote_state}} </td>
                <td>
                   <div class="btn-group">

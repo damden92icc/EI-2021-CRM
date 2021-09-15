@@ -11,6 +11,33 @@
     <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{$pageTabTitle}}</h3>
+                @isClient
+                <form method="get" action="{{route('my-offer-by-state')}}">
+                        @csrf
+                        <select class="form-control" id="state" name="state">
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="DRAFT" id="DRAFT"> DRAFT</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>                            
+                              </select>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                     </form>
+                     @endisClient
+
+
+                     @isManager
+                     <form method="get" action="{{route('all-offer-by-state')}}">
+                        @csrf
+                        <select class="form-control" id="state" name="state">
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="ACCEPTED" id="ACCEPTED"> ACCEPTED</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>  
+                                 <option value="VALIDED" id="VALIDED"> VALIDED</option>           
+                                 <option value="UPDATE ASKED" id="UPDATE ASKED"> UPDATE ASKED</option>                           
+                              </select>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                     </form>
+     @endisManager       
+     
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
