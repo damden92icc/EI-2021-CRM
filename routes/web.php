@@ -194,6 +194,7 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
         Route::post('/remove-service-doc-offer/{id}}', [App\Http\Controllers\OfferController::class, 'removeServiceDoc'])->name('remove-service-doc-offer');
         Route::post('/update-service-doc-offer/{offer}', [App\Http\Controllers\OfferController::class, 'updateServiceDoc'])->name('update-service-doc-offer');
 
+        Route::post('/turn-into-offer/{quote}', [App\Http\Controllers\OfferController::class, 'turnIntoOffer'])->name('turn-into-offer');
     });
 
 });
