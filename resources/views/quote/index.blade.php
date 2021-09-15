@@ -7,11 +7,34 @@
 @stop
 @section('content')
 <div class="card">
-   <div class="card-header">
-      <h3 class="card-title">{{$pageTabTitle}}</h3>
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6">
+        <h3 class="card-title">{{$pageTabTitle}}</h3>
+</div>
+<div class="col-6">
+@isClient
+      
+   <form method="GET" id="doc-filter" action="{{route('my-quote-by-state')}}">
+
+                        <select class="form-control" id="state" name="state">
+                        
+                                 <option value="ALL" id="ALL"> ALL</option>
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="DRAFT" id="DRAFT"> DRAFT</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>                            
+                              </select>
+                 
+                     </form>
+                     @endisClient
+</div>
+</div>
+
+           
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
+      
    <table class="table table-striped" id="main-table">
          <thead>
             <tr>
@@ -30,10 +53,10 @@
             <tr>
             <td> {{$data->id}} </td>
                <td> {{$data->label}} </td>
-               <td> {{$data->description}} </td>
-               <td> {{$data->company->name}} </td>
-               <td> {{$data->created_at}} </td>
-               <td> {{$data->updated_at}} </td>
+               <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
+               <td> {{$data->company->name}} </td>      
+               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
+               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>           
                <td> {{$data->quote_state}} </td>
                <td>
                   <div class="btn-group">
@@ -53,6 +76,8 @@
             @endforeach
          </tbody>
       </table>
+      <button type="text" id="btnFiterSubmitSearch" class="btn btn-info">Submit</button>
+    </div>
    </div>
    <!-- /.card-body -->
 </div>
@@ -63,9 +88,38 @@
 @section('js')
 
 <script> 
+
     $(document).ready( function () {
     $('#main-table').DataTable();
+
 } );
+
+
+
+$(function() {
+
+
+   var e = document.getElementById("state");
+   
+   if( document.URL == 'http://127.0.0.1:8000/quotes/my-quote'){
+      var param ="ALL";
+   }
+   else{
+
+      var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/get?state=', ''));
+
+      $("#state").val(param);
+   }
+
+
+   $(e).change(function() {
+   $("#doc-filter").submit();
+
+   });
+
+});
+
+
 </script>
 @stop
 

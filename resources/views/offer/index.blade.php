@@ -9,8 +9,46 @@
     @section('content')
     
     <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{$pageTabTitle}}</h3>
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6">
+        <h3 class="card-title">{{$pageTabTitle}}</h3>
+</div>
+<div class="col-6">
+@isClient
+                <div class="button-group">
+                <form method="get" id="doc-filter" action="{{route('my-offer-by-state')}}">
+                        @csrf
+                        <select class="form-control" id="state" name="state">
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="DRAFT" id="DRAFT"> DRAFT</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>                            
+                              </select>
+                           
+                     </form>
+</div>
+                     @endisClient
+
+
+                     @isManager
+                     <form method="get" action="{{route('all-offer-by-state')}}">
+                        @csrf
+                        <select class="form-control" id="state" name="state">
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                                 <option value="ACCEPTED" id="ACCEPTED"> ACCEPTED</option>         
+                                 <option value="SENDED" id="SENDED"> SENDED</option>  
+                                 <option value="VALIDED" id="VALIDED"> VALIDED</option>           
+                                 <option value="UPDATE ASKED" id="UPDATE ASKED"> UPDATE ASKED</option>                           
+                              </select>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                     </form>
+     @endisManager    
+</div>
+</div>
+             
+             
+                  
+     
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -78,6 +116,15 @@
     $(document).ready( function () {
     $('#main-table').DataTable();
 } );
+
+
+
+$(function() {
+   $("#doc-filter").change(function() {
+     $("#doc-filter").submit();
+   });
+ });
+
 </script>
 
 @stop

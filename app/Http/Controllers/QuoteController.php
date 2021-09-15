@@ -199,6 +199,38 @@ class QuoteController extends Controller
         ]);
     }
    
+    public function getDocumentByState(Request $request){
+
+        $state = $request->state;
+
+
+
+        $user =Auth::user();
+
+        // check if user is client
+        if($user->checkRole(1) ){
+
+            if($state == "ALL" ){
+                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->get();  
+            }
+            else{
+                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
+            }
+                
+                   
+        }
+        else{
+            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
+        }
+
+
+        return view('quote.index', [
+            'pageTitle' => 'Listing Quote ',
+            'pageTabTitle' => 'Listing quotes',
+            'quotes'=>          $listingQuotes  ,      
+        ]);
+
+    }
 
     public function removeServiceDoc($id){
 

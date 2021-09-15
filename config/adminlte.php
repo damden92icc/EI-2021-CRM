@@ -380,16 +380,15 @@ return [
         'can'       => 'manager-only',
         'submenu' => [
             [
-                'text' => 'Listing all offers',
-                'url'  => '/offers',
-                'can'       => 'manager-only',
-            ],
-            [
                 'text' => 'Listing my offers',
                 'url'  => '/offers/manager',
                 'can'       => 'manager-only',
             ],
-            
+            [
+                'text' => 'Offer Waiting ',
+                'route' => ['listing-my-offer-by-state', ['state' => 'SENDED']],
+                'can'       => 'manager-only',
+            ],
             [
                 'text' => 'Add new',
                 'url'  => '/offers/create',
@@ -465,16 +464,6 @@ return [
                 'can'       => 'client-only',
             ],
             [
-                'text' => 'My quotes archived ',
-                'route' => ['listing-my-quote-by-state', ['state' => 'ARCHIVED']],
-                'can'       => 'client-only',
-            ],
-            [
-                'text' => 'My quotes sended ',
-                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
-                'can'       => 'client-only',
-            ],
-            [
                 'text' => 'Sended quotes ',
                 'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
@@ -496,16 +485,12 @@ return [
             ],
 
             [
-                'text' => 'Offer Archived',
-                'route' => ['listing-my-offer-by-state', ['state' => 'archived']],       
+                'text' => 'All Offer ',
+                'route' => 'listing-my-offer',       
                 'can'       => 'client-only',
             ],
 
-            [
-                'text' => 'Offer Accepted',
-                'route' => ['listing-my-offer-by-state', ['state' => 'ACCEPTED']],    
-                'can'       => 'client-only',
-            ],
+          
            
         ],
     ],

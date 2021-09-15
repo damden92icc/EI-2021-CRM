@@ -211,7 +211,16 @@ class OfferController extends Controller
 
 
             $user = Auth::user();
-            $myOffer = Offer::where([['concerned_client', $user->id ],['offer_state', $state]])->get();
+
+            // Check if user is client or maanger to get own offer
+            if($user->role->id == 1){
+                $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $state]])->get();
+            }
+    
+            else{
+                $myOffer = Offer::where([['owner_id', $user->id ], ['offer_state', $state]])->get();
+            }
+         
         
             return view('offer.index', [
                 'pageTitle' => 'Listing Offers',
@@ -269,6 +278,37 @@ class OfferController extends Controller
         }
 
         return redirect()->intended('/offers/single/'.$newOffer->id);
+    }
+
+    public function myOffer(){
+        $user = Auth::user();
+        $myOffer = Offer::where([['concerned_client', $user->id ]])->get();
+
+           return view('offer.index', [
+                'pageTitle' => 'Listing Offers',
+                'pageTabTitle' => 'Listing Offers',
+                'offers'=> $myOffer ,      
+            ]);
+    }
+
+    public function myOfferByState(Request $request){
+        $user = Auth::user();
+
+        // Check if user is client or maanger to get own offer
+        if($user->role->id == 1){
+            $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $request->state]])->get();
+        }
+
+        else{
+            $myOffer = Offer::where([['owner_id', $user->id ], ['offer_state', $request->state]])->get();
+        }
+     
+
+           return view('offer.index', [
+                'pageTitle' => 'Listing Offers',
+                'pageTabTitle' => 'Listing Offers',
+                'offers'=> $myOffer ,      
+            ]);
     }
 
 }

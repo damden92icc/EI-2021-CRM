@@ -125,6 +125,7 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
     Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('listing-quote');
     Route::post('/action/{quote}/{state}', [App\Http\Controllers\QuoteController::class, 'documentChangeState'])->name('change-state-quote');
     Route::get('/states/{state}', [App\Http\Controllers\QuoteController::class, 'documentByState'])->name('listing-my-quote-by-state');
+    Route::get('/get', [App\Http\Controllers\QuoteController::class, 'getDocumentByState'])->name('my-quote-by-state');
     Route::get('/single/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
     
     
@@ -168,20 +169,26 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
     
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('listing-my-offer-by-state');
+
+    
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
     Route::post('/ask-update/{offer}/comment', [App\Http\Controllers\OfferController::class, 'commentOffer'])->name('ask-update-service-doc-offer');
 
     // Listing own client offers
     Route::group(['middleware' => ['isClient']], function() {          
         Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'myOffer'])->name('listing-my-offer');
+        Route::get('/my-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('my-offer-by-state');
+     
     });
+
+
 
     // Management offers by lanager
     Route::group(['middleware' => ['isManager']], function() {     
         // Actions for client + Manager
         Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');            
         Route::get('/manager', [App\Http\Controllers\OfferController::class, 'indexManager'])->name('listing-manager-offer');
-
+        Route::get('/get-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('all-offer-by-state');
         // CRUD Offer
         Route::get('/create', [App\Http\Controllers\OfferController::class, 'create'])->name('create-offer');
         Route::post('/store', [App\Http\Controllers\OfferController::class, 'store'])->name('store-offer');
