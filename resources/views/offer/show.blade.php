@@ -246,7 +246,7 @@
          @endif 
          @if($offer->offer_state == "VALIDED")
          <!--  Turn into project  -->
-         <form method="post" action="{{route('archive-offer', $offer )}}">
+         <form method="post" action="{{route('turn-into-project', $offer )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Turn into Project  </button>

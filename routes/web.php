@@ -233,6 +233,8 @@ Route::group( ['prefix'=>'projects', 'middleware' => ['auth'] ], function(){
             Route::post('/update-service-doc/{service}', [App\Http\Controllers\ProjectController::class, 'updateServiceDoc'])->name('update-service-doc-project');
           
         });
+
+        Route::post('/turn-into-project/{offer}', [App\Http\Controllers\ProjectController::class, 'turnIntoProject'])->name('turn-into-project');
     
     });
 
