@@ -16,8 +16,7 @@
             <div class="col-12">
                <h4>
                   <i class="fas fa-globe"></i> Label : {{$quote->label}}
-                  <small class="float-right">Created Date: {{$quote->created_at}}</small><br>
-                  <small class="float-right">Sended date: {{$quote->sended_date}}</small>
+                  
                </h4>
             </div>
             <!-- /.col -->
@@ -53,9 +52,17 @@
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-               <b>Quote Ref :  {{$quote->reference}}</b><br>
-               <br>
-               <b>Quote State :  {{$quote->quote_state}}</b><br>
+               <b>Quote Referance :</b>  {{$quote->reference}}  <br>
+              
+               <b>Quote State :  </b>{{$quote->quote_state}}</b><br>
+               <b>Created Date: </b> {{ \Illuminate\Support\Str::limit($quote->created_at, 10, $end='') }} <br>
+                  <b>Updated Date:</b> {{ \Illuminate\Support\Str::limit($quote->updated_at, 10, $end='') }}<br>
+                  <b>Sended date: </b>
+                  @if(isset($quote->sended_date))
+                  {{ \Illuminate\Support\Str::limit($quote->sended_date, 10, $end='') }}
+                  @else 
+                     none 
+                  @endif   
             </div>
             <!-- /.col -->
          </div>
@@ -63,6 +70,8 @@
          <!-- Table row -->
          <div class="row">
             <div class="col-12 table-responsive">
+
+       
                <table class="table table-striped">
                   <thead>
                      <tr>                   

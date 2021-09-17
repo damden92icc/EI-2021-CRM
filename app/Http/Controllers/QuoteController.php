@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Service;
 use App\Models\QuoteService;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,7 +76,7 @@ class QuoteController extends Controller
         
         $selectableCompanies = Company::where(['active', true, 'company_type', 'client']);
 
-        
+
         return view('quote.form', [
             'pageTitle' => 'Update quote',
             'user' =>  Auth::user(),
@@ -174,7 +175,14 @@ class QuoteController extends Controller
     public function documentChangeState(Quote $quote , String $state){
 
         $quote->quote_state  = $state;
-        $quote->save();    
+
+
+        if($quote->quote_state == "SENDED"){
+            $quote->sended_date =  Carbon::now();
+        }
+        
+        $quote->save();  
+         
         return redirect()->route('single-quote', $quote);
     }
 
