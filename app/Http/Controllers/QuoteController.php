@@ -75,6 +75,7 @@ class QuoteController extends Controller
         
         $selectableCompanies = Company::where(['active', true, 'company_type', 'client']);
 
+        
         return view('quote.form', [
             'pageTitle' => 'Update quote',
             'user' =>  Auth::user(),
