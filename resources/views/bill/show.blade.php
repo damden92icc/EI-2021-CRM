@@ -11,8 +11,7 @@
 @stop
 @section('content')
 {{$bill}}
-<br>
-<br> <br>
+
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
@@ -163,6 +162,7 @@
    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
 
 @stop
 @section('css')

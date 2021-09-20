@@ -181,7 +181,12 @@
                   <p> Never billed </p>
                   @endif
                </td>
-               <td>{{$data->is_billable}}</td>
+               <td>@if($data->is_billable == 1)
+                  Yes
+                  @else
+                  No
+                  @endif
+               </td>
                @isManager
                <td>
                   @if(isset($data->serviceProv ))

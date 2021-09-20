@@ -48,7 +48,7 @@ class BillController extends Controller
 
     public function create(){
 
-        $selectableCompanies = Company::all();
+        $selectableCompanies = Company::where('company_type', 'client')->where('active', true)->get();
         return view('bill.form', [
             'pageTitle' => 'Create bill',
            'companies' => $selectableCompanies ,
@@ -57,6 +57,9 @@ class BillController extends Controller
 
 
     public function store(Request $request){
+
+
+
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -64,20 +67,19 @@ class BillController extends Controller
         $rules = [
             'label' => 'required',        
             'description'=> 'required',       
-            'validity_delay' => 'required',
-            'due_date' => 'required',
+            'validity_delay' => 'required',         
             'concerned_company' => 'required',
                     
         ];
 
-        $request->merge( ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
+        $request->merge( ['due_date'=>  Carbon::now()->addDays($request->validity_delay) ] + ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
        
        // dd($request);
         $newBill =Bill::create($request->all());
 
-        return redirect()->intended('/bills/'.$newBill->id);
+        return redirect()->intended('/bills/single/'.$newBill->id);
     }
 
 
@@ -146,7 +148,7 @@ class BillController extends Controller
             ]);
         }
 
-        return redirect()->intended('/bills/'.$billID);
+        return redirect()->intended('/bills/single/'.$billID);
 
     }
 

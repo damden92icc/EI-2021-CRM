@@ -7,7 +7,8 @@
     @stop
 
     @section('content')
-    
+
+
     <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{$pageTabTitle}}</h3>
@@ -46,6 +47,9 @@
               
               <!-- /.card-body -->
             </div>
+
+            </div>
+</div>
     @stop
 
 @section('css')

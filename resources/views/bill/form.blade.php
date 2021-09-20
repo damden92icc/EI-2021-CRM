@@ -37,21 +37,16 @@
 
 
         <div class="form-group {{$errors->has('validity_delay') ? 'has-error' : ''}} ">
-            <label for="offerValidity"> validity delay</label>
-                    <input class="form-control form-control-lg" type="text" id="validity_delay" name="validity_delay" value="{{ isset($bill) ? $bill->validity_delay: old('validity_delay') }}" placeholder=" validity delay">
-                        @if($errors->has('validity_delay'))
-                        <strong> {{$errors->first('validity_delay')}}</strong>
-                        @endif
+            <label for="offerValidity"> Validity delay</label>
+
+            <select class="form-control"  id="validity_delay" name="validity_delay">
+          
+            <option value="15" id="15"> 15</option>
+            <option value="30" id="30"> 30</option>
+            <option value="60" id="60"> 60</option>
+            </select>
      </div>
 
-
-     <div class="form-group {{$errors->has('due_date') ? 'has-error' : ''}} ">
-            <label for="billDueDate">Bill due date</label>
-                    <input class="form-control form-control-lg" type="text" id="due_date" name="due_date" value="{{ isset($bill) ? $bill->due_date: old('due_date') }}" placeholder="bill due date">
-                        @if($errors->has('due_date'))
-                        <strong> {{$errors->first('due_date')}}</strong>
-                        @endif
-     </div>
 
      <div class="form-group  {{$errors->has('concerned_company') ? 'has-error' : ''}}">
           <label for="inputCompany">Company</label>
