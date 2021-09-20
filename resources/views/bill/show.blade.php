@@ -121,6 +121,49 @@
                <!-- /.row -->
             </div>
             <!-- /.invoice -->
+            <div class="btn-group">
+               <!--  Update  -->
+               <form method="get" action="{{route('edit-bill', $bill )}}">
+                  @csrf
+                  <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i>Update bill  </button>
+               </form>
+               <!--  /Update  -->
+               <!--  Valide  -->
+               <form method="post" action="{{route('send-bill', $bill )}}">
+                  @csrf
+                  <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i>Send bill </button>
+               </form>
+               <!--  /Valide  -->
+               <!--  Valide  -->
+               <form method="post" action="{{route('valide-bill', $bill )}}">
+                  @csrf
+                  <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i>Valide bill </button>
+               </form>
+               <!--  /Valide  -->
+               <!--  Archive  -->
+               <form method="post" action="{{route('archive-bill', $bill )}}">
+                  @csrf
+                  <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i>Archive  </button>
+               </form>
+               <!--  /Archive  -->
+               <!--   Add service -->
+               <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
+               <i class="fa fa-download"></i> Add billable service 
+               </button>
+               <!--   /Add service -->
+               <!--  Archive  -->
+               <form method="post" action="{{route('archive-bill', $bill )}}">
+                  @csrf
+                  <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i>Pay  </button>
+               </form>
+               <!--  /Archive  -->
+            </div>
+            <!-- end button -->
          </div>
          <!-- /.col -->
       </div>
@@ -128,48 +171,6 @@
    </div>
    <!-- /.container-fluid -->
 </section>
-<div class="btn-group">
-   <!--  Update  -->
-   <form method="get" action="{{route('edit-bill', $bill )}}">
-      @csrf
-      <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-      <i class="fa fa-download"></i>Update bill  </button>
-   </form>
-   <!--  /Update  -->
-   <!--  Valide  -->
-   <form method="post" action="{{route('send-bill', $bill )}}">
-      @csrf
-      <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
-      <i class="fa fa-download"></i>Send bill </button>
-   </form>
-   <!--  /Valide  -->
-   <!--  Valide  -->
-   <form method="post" action="{{route('valide-bill', $bill )}}">
-      @csrf
-      <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
-      <i class="fa fa-download"></i>Valide bill </button>
-   </form>
-   <!--  /Valide  -->
-   <!--  Archive  -->
-   <form method="post" action="{{route('archive-bill', $bill )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-      <i class="fa fa-download"></i>Archive  </button>
-   </form>
-   <!--  /Archive  -->
-   <!--   Add service -->
-   <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
-   <i class="fa fa-download"></i> Add billable service 
-   </button>
-   <!--   /Add service -->
-   <!--  Archive  -->
-   <form method="post" action="{{route('archive-bill', $bill )}}">
-      @csrf
-      <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-      <i class="fa fa-download"></i>Pay  </button>
-   </form>
-   <!--  /Archive  -->
-</div>
 <div class="modal fade" id="modal-default">
    <div class="modal-dialog modal-lg">
       <div class="modal-content">

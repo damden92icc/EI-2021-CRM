@@ -110,6 +110,7 @@
 </div>
 <!-- /.card -->
 <br>
+
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
@@ -173,7 +174,13 @@
                   {{$data->unit_sell_ht * $data->quantity }} €
                </td>
                <td  class="collapse accordion">{{$data->start_date}}</td>
-               <td  class="collapse accordion">{{$data->next_payement_date}}</td>
+               <td  class="collapse accordion">
+                   @if ($data->next_payement_date == null) 
+                   none
+                   @else 
+                   {{$data->next_payement_date}}
+                   @endif
+                   </td>
                <td  class="collapse accordion">
                   @if(isset($data->last_payement_date ))
                   {{$data->last_payement_date}}

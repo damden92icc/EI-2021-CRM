@@ -19,7 +19,7 @@
                 <div class="button-group">
                 <form method="get" id="doc-filter" action="{{route('my-offer-by-state')}}">
                   
-                        <select class="form-control" id="state" name="state">
+                        <select class="form-control state_filter" id="state" name="state">
                         <option value="ALL" id="ALL"> ALL</option>
                                  <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                            
@@ -32,9 +32,9 @@
 
 
                      @isManager
-                     <form method="get" action="{{route('all-offer-by-state')}}">
-                        @csrf
-                        <select class="form-control" id="state" name="state">
+                     <form method="get" id="doc-filter" action="{{route('all-offer-by-state')}}">
+               
+                     <select class="form-control state_filter" id="state" name="state">
                                  <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                                  <option value="ACCEPTED" id="ACCEPTED"> ACCEPTED</option>         
                                  <option value="SENDED" id="SENDED"> SENDED</option>  
@@ -135,6 +135,7 @@ else{
    var param  = (document.URL.replace('http://127.0.0.1:8000/offers/my-offer/state?state=', ''));
 
    $("#state").val(param);
+   
    console.log(param);
 }
 
