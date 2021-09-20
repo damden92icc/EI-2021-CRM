@@ -122,11 +122,29 @@
 
 
 
+// Display current selected state by checking paramter
 $(function() {
-   $("#doc-filter").change(function() {
-     $("#doc-filter").submit();
-   });
- });
+
+var e = document.getElementById("state");
+
+if( document.URL == 'http://127.0.0.1:8000/offers/my-offer'){
+   var param ="ALL";
+}
+else{
+
+   var param  = (document.URL.replace('http://127.0.0.1:8000/offers/my-offer/state?state=', ''));
+
+   $("#state").val(param);
+   console.log(param);
+}
+
+
+$(e).change(function() {
+$("#doc-filter").submit();
+
+});
+
+});
 
 </script>
 

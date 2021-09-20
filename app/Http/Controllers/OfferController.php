@@ -291,12 +291,22 @@ class OfferController extends Controller
             ]);
     }
 
+
     public function myOfferByState(Request $request){
+        $state = $request->state;
         $user = Auth::user();
 
         // Check if user is client or maanger to get own offer
         if($user->role->id == 1){
+
+            if($state == "ALL" ){
+            
+                $myOffer = Offer::where([['concerned_client', $user->id ]])->get();
+            }
+            else{
+               
             $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $request->state]])->get();
+            }
         }
 
         else{

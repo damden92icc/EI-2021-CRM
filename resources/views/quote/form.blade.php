@@ -26,14 +26,11 @@
          </div>
          <div class="form-group {{$errors->has('description') ? 'has-error' : ''}} ">
             <label for="quoteDesc">Quote description</label>
-        
             <textarea class="form-control form-control-lg" rows="3" type="text" id="description" name="description" value="{{ isset($quote) ? $quote->description: old('description') }}" placeholder="quote description">
-            
-            
             @isset($quote)
             {{$quote->description}}
             @endisset
-         </textarea>
+            </textarea>
             @if($errors->has('description'))
             <strong> {{$errors->first('description')}}</strong>
             @endif
@@ -41,9 +38,19 @@
          <div class="form-group  {{$errors->has('concerned_company') ? 'has-error' : ''}}">
             <label for="inputCompany">Company</label>
             <select class="form-control" id="selectCompanyValue" name="concerned_company">
+               @if(isset($quote))
+               @foreach ($user->employes as $data)
+               @if($data->company->name == $quote->company->name )
+               <option value="{{$data->company->id}}" selected="selected" id="{{$data->company->id}}"> {{$data->company->name}}</option>
+               @else
+               <option value="{{$data->company->id}}" id="{{$data->company->id}}"> {{$data->company->name}}</option>
+               @endif
+               @endforeach
+               @else 
                @foreach ($user->employes as $data)
                <option value="{{$data->company->id}}" id="{{$data->company->id}}"> {{$data->company->name}}</option>
                @endforeach
+               @endif
             </select>
          </div>
          <button type="submit" class="btn btn-primary">Submit</button>

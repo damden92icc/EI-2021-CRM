@@ -96,8 +96,9 @@
 
 
 
-$(function() {
 
+// Display current selected state by checking paramter
+$(function() {
 
    var e = document.getElementById("state");
    
