@@ -6,6 +6,10 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
+
+
+
+
 <div class="container">
 <div class="row">
    <div class="col-12">

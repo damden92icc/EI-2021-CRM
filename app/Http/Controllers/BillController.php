@@ -28,6 +28,7 @@ class BillController extends Controller
     public function show($id)
     {      
 
+        $myCompany = Company::where('company_type', 'main_company')->first();
         $bill = Bill::where('id', $id)->first();
 
         $services = BillService::where('bill_id', $bill->id)->get();
@@ -42,6 +43,7 @@ class BillController extends Controller
             'pageTitle' => 'Single bill',
             'pageTabTitle' => 'Listing services ',         
             'bill'=>        $bill ,  
+            'myCompany' => $myCompany,
             'totalSellHT'     => $totalHT
         ]);
     }

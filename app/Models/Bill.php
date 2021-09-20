@@ -33,4 +33,10 @@ class Bill extends  DocumentPriced
     {
         return $this->hasMany(BillService::class, 'bill_id','id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'concerned_company', 'id');
+    }
+
 }
