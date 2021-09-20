@@ -78,7 +78,7 @@
                         <th>name</th>
                         <th>Quantity</th>
                         <th>Description</th>
-                        <th>This service recurrent</th>
+                        <th>This service is recurrent</th>
                         <th></th>
                      </tr>
                   </thead>
