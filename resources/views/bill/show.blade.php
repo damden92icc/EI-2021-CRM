@@ -77,6 +77,7 @@
                         <tbody>
                            @forelse ($bill-> billServices as $data)
                            <tr>
+               
                               <td>  {{$data->service->project->label}} </td>
                               <td> {{$data->service->quantity}} </td>
                               <td>  {{$data->service->service->label}} </td>
@@ -219,7 +220,7 @@
                    return {
                        results: $.map(data, function(item) {
                            return {
-                               text : item.project_name + ' ' + item.service_name  + ' ' + item.unit_sell_ht + ' €' + '(' + item.quantity + ')' ,
+                               text : item.project_name + '('  +  item.ps_id +  ') ' + item.service_name  + ' ' + item.unit_sell_ht + ' €' + '(' + item.quantity + ')' ,
                                id: $.parseJSON(item.id ),
                            }
                        } )

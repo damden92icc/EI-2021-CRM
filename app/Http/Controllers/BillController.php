@@ -174,11 +174,10 @@ class BillController extends Controller
 
         $billID =json_decode( $request->input('search'));
 
-
         $bill = Bill::where('id', $billID)->first();
 
+        $projects = Project::where('concerned_company' , $bill->concerned_company)->get();
 
-        $projects = Project::where('id' , $bill->concerned_company)->get();
 
         $billableServices = [];
 
@@ -188,13 +187,13 @@ class BillController extends Controller
 
             foreach($ps as $service){
 
-                $service['bill_id'] =    $bill->id;
-               $service['project_name'] = $data->label;
-                $service['service_name'] = $service->service->label;
-
-                
+            $service['bill_id'] =    $bill->id;
+            $service['project_name'] = $data->label;
+            $service['ps_id'] = $service->id;
+            $service['service_name'] = $service->service->label;
 
                 array_push($billableServices,$service) ;
+
             }            
         
         }
@@ -209,17 +208,40 @@ class BillController extends Controller
  */
 
     public function sendDocument (Bill $bill){
+
+        // REtrive ps id from project service and edit state
+       foreach ($bill->billServices as $data){
+            $ps = ProjectService::where('id',  $data->ps_id)->first();
+            $ps->payement_state = "PAYEMENT AWAITING" ;
+            $ps->save();
+        }
+
+       // edit bill state 
         $bill->bill_state = "SENDED";
         $bill->sended_date =Carbon::now() ;
         $bill->save();    
-        return redirect()->intended('/bills/'.$bill->id);
+        return redirect()->intended('/bills/single/'.$bill->id);
     }
 
+
+
+
     public function valideDocument (Bill $bill){
-        $bill->bill_state = "Valided";
-    
+
+        // REtrive ps id from project service and edit state
+        foreach ($bill->billServices as $data){
+            $ps = ProjectService::where('id',  $data->ps_id)->first();
+            $ps->last_payement_date =Carbon::now() ;
+            $ps->payement_state = "PAYED" ;
+            $ps->save();
+        }
+
+       // edit bill state 
+        $bill->bill_state = "VALIDED";
+        $bill->sended_date =Carbon::now() ;
         $bill->save();    
-        return redirect()->intended('/bills/'.$bill->id);
+        return redirect()->intended('/bills/single/'.$bill->id);
+
     }
 
     public function archiveDocument (Bill $bill){
