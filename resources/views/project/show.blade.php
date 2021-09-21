@@ -200,7 +200,10 @@
                   {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
                   @endif      
                </td>
-               <td>@if($data->is_billable == 1)
+               <td>
+                  
+               
+               @if($data->is_billable == 1)
                   Yes
                   @else
                   No

@@ -29,7 +29,7 @@ class ProjectController extends Controller
     }
 
     public function show($id){
-        
+
         $currentProject = Project::where('id', $id)->first();  
 
         // Get active service
@@ -41,7 +41,32 @@ class ProjectController extends Controller
         $totalPriceASR=0.0;
 
         foreach($queryARS  as $data){
+
              $totalPriceASR  += $data->unit_sell_ht * $data->quantity;
+
+             // Check and calcul date for recurrent service 
+             // change state if become billable
+             if($data->last_payement_date == null ){
+        
+                $npd =   $this->calculNextPayDate(Carbon::parse($data->start_date),  $data->recurrency_payement );
+
+                $data->next_payement_date = $npd ;
+                $data->save();
+                $data->is_billable = $this->calculServiceIsBillable($npd);
+                $data->save();
+             }
+
+             else{
+
+              //  dd($data->next_payement_date);
+        
+                $data->next_payement_date =    $this->calculNextPayDate(Carbon::parse($data->last_payement_date),  $data->recurrency_payement ) ;
+                $data->save();
+            //    dd($data->next_payement_date);
+
+                $data->is_billable = $this->calculServiceIsBillable(           $data->next_payement_date );
+                $data->save();
+             }
         }     
  
         // Get all service available and providers
@@ -154,6 +179,7 @@ class ProjectController extends Controller
         ];
 
     
+ 
         $startDate = $request->get("start_date"); 
         $reccurency = $request->get("recurrency_payement");
      
@@ -295,7 +321,7 @@ class ProjectController extends Controller
 
     public function calculServiceIsBillable( $date){
              
-        if ( $date->subDays(29)  <= Carbon::now()  ){
+        if ( $date->subDays(30)  <= Carbon::now()  ){
           return 1;
           
         }
