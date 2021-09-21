@@ -110,6 +110,7 @@
 </div>
 <!-- /.card -->
 <br>
+
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
@@ -119,23 +120,25 @@
       <table class="table table-striped" id="main-table">
          <thead>
             <tr>
-               <th> name  </th>
+               <th> Name  </th>
                <th>QT.   </th>
-               <th>Recurrency</th>
+               <th>Recc.</th>
                <th> State </th>
+               <th> Payement State </th>
                @isManager
                <th> Unit Cost HT </th>
                <th> Total cost HT </th>
                @endisManager
-               <th>Unit @isManager sell @endisManager HT</th>
-               <th> Total HT </th>
+               <th>Unit @isManager sell @endisManager </th>
+               <th> Total  @isManager sell @endisManager  </th>
                <th  class="collapse accordion"> Start Date </th>
                <th  class="collapse accordion"> Next pay date </th>
                <th  class="collapse accordion"> Last Payement date </th>
-               <th> Is billable </th>
                @isManager
                <th> Benefits </th>
                @endisManager
+               <th> Is billable </th>
+          
                <th></th>
             </tr>
          </thead>
@@ -152,13 +155,14 @@
                   @endisset
                </td>
                <td>{{$data->service_state}}</td>
+               <td>{{$data->payement_state}}</td>
                @isManager
                @if(isset($data->serviceProv ))
                <td> {{$data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht}} €<br>
-                  <strong>   {{$data->unit_cost_ht}} + {{$data->serviceProv->spd_unit_cost_ht}}€  ({{$data->serviceProv->provided->name}} ) </strong>
+          {{$data->unit_cost_ht}} € +         <strong>    {{$data->serviceProv->spd_unit_cost_ht}}€  ({{$data->serviceProv->provided->name}} ) </strong>
                </td>
                @else
-               <td>{{$data->unit_cost_ht}} €  </td>
+               <td>{{$data->unit_cost_ht }} €  </td>
                @endif
                <td>
                   @if(isset($data->serviceProv ))
@@ -168,12 +172,18 @@
                   @endif      
                </td>
                @endisManager
-               <td>{{$data->unit_sell_ht}} €</td>
+               <td>{{$data->unit_sell_ht }}€</td>
                <td>
                   {{$data->unit_sell_ht * $data->quantity }} €
                </td>
                <td  class="collapse accordion">{{$data->start_date}}</td>
-               <td  class="collapse accordion">{{$data->next_payement_date}}</td>
+               <td  class="collapse accordion">
+                   @if ($data->next_payement_date == null) 
+                   none
+                   @else 
+                   {{$data->next_payement_date}}
+                   @endif
+                   </td>
                <td  class="collapse accordion">
                   @if(isset($data->last_payement_date ))
                   {{$data->last_payement_date}}
@@ -181,7 +191,7 @@
                   <p> Never billed </p>
                   @endif
                </td>
-               <td>{{$data->is_billable}}</td>
+            
                @isManager
                <td>
                   @if(isset($data->serviceProv ))
@@ -189,6 +199,12 @@
                   @else 
                   {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
                   @endif      
+               </td>
+               <td>@if($data->is_billable == 1)
+                  Yes
+                  @else
+                  No
+                  @endif
                </td>
                @endisManager
                <td>
