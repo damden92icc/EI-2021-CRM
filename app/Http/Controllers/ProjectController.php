@@ -33,9 +33,9 @@ class ProjectController extends Controller
         $currentProject = Project::where('id', $id)->first();  
 
         // Get active service
-        $queryAS = ProjectService::where('project_id', $id)->where('is_active', true)->get();
+        $queryAS = ProjectService::where('project_id', $id)->where('service_state', "RUNNING")->get();
         // get active reccurent service
-        $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', null)->where('is_active', true)->get();
+        $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', null)->where('service_state', 'RUNNING')->get();
        
         // somme all price * qt foreach active recc service
         $totalPriceASR=0.0;
@@ -268,7 +268,7 @@ class ProjectController extends Controller
     public function removeServiceDoc($id){
 
         $service = ProjectService::where('id', $id)->first();
-        $service->service_state = "Archived";
+        $service->service_state = "ARCHIVED";
         
         $service->save();    
 
@@ -282,7 +282,7 @@ class ProjectController extends Controller
      */
 
     public function archive (Project $project){
-        $project->project_state = "Archived";
+        $project->project_state = "ARCHIVED";
         
         $project->save();    
         return redirect()->intended('/projects/single/'.$project->id);
@@ -321,7 +321,7 @@ class ProjectController extends Controller
 
     public function calculServiceIsBillable( $date){
              
-        if ( $date->subDays(30)  <= Carbon::now()  ){
+        if ( $date->subDays(29)  <= Carbon::now()  ){
           return 1;
           
         }

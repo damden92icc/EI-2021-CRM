@@ -84,7 +84,8 @@
                               <td> {{$data->service->unit_sell_ht}} </td>
                               <td> {{$data->vat_rate}} % </td>
                               <td>  {{ $data->service->unit_sell_ht * $data->service->quantity }}   </td>
-                              <td>
+                            
+                              @if($bill->bill_state != "SENDED" && $bill->bill_state != "VALIDED")  <td>
                                  <!--  Remove service Quote -->
                                  <form method="post" action="{{route('remove-service-doc-bill', $data->id )}}">
                                     @csrf
@@ -93,6 +94,7 @@
                                  </form>
                                  <!--  /Remove service Quote -->
                               </td>
+                              @endif
                            </tr>
                         </tbody>
                         @empty
@@ -123,20 +125,25 @@
             </div>
             <!-- /.invoice -->
             <div class="btn-group">
-               <!--  Update  -->
-               <form method="get" action="{{route('edit-bill', $bill )}}">
+
+            
+
+
+               @if($bill->bill_state != "SENDED" && $bill->bill_state != "VALIDED")  
+                              <!--  Update  -->
+                              <form method="get" action="{{route('edit-bill', $bill )}}">
                   @csrf
                   <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
                   <i class="fa fa-download"></i>Update bill  </button>
                </form>
                <!--  /Update  -->
-               <!--  Valide  -->
-               <form method="post" action="{{route('send-bill', $bill )}}">
+   <!--  send bill  -->
+   <form method="post" action="{{route('send-bill', $bill )}}">
                   @csrf
                   <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
                   <i class="fa fa-download"></i>Send bill </button>
                </form>
-               <!--  /Valide  -->
+               <!--  /send bill  -->
                <!--  Valide  -->
                <form method="post" action="{{route('valide-bill', $bill )}}">
                   @csrf
@@ -144,6 +151,13 @@
                   <i class="fa fa-download"></i>Valide bill </button>
                </form>
                <!--  /Valide  -->
+                <!--   Add service -->
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
+               <i class="fa fa-download"></i> Add billable service 
+               </button>
+               <!--   /Add service -->
+
+               @endif
                <!--  Archive  -->
                <form method="post" action="{{route('archive-bill', $bill )}}">
                   @csrf
@@ -151,18 +165,18 @@
                   <i class="fa fa-download"></i>Archive  </button>
                </form>
                <!--  /Archive  -->
-               <!--   Add service -->
-               <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
-               <i class="fa fa-download"></i> Add billable service 
-               </button>
-               <!--   /Add service -->
-               <!--  Archive  -->
+              
+
+               @isClient
+               <!--  Pay  -->
                <form method="post" action="{{route('archive-bill', $bill )}}">
                   @csrf
                   <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
                   <i class="fa fa-download"></i>Pay  </button>
                </form>
-               <!--  /Archive  -->
+               <!--  /Pay  -->
+            @endisClient
+
             </div>
             <!-- end button -->
          </div>

@@ -22,6 +22,7 @@
                       <th>ID</th>
                       <th>name</th>
                       <th>Desc</th>
+                      <th> Client </th>
                       <th>State</th>
                       <th></th>
                     </tr>
@@ -32,7 +33,8 @@
                       <td> {{$data->id}} </td>
                       <td> {{$data->label}} </td>
                       <td> {{$data->description}} </td>
-                      <td> {{$data->offer_state}} </td>
+                      <td> {{$data->company->name}} </td>
+                      <td> {{$data->bill_state}} </td>
                       
                      <td>
                          <a class="btn btn-block btn-info" href="{{route('single-bill', $data->id )}}">view</a>
