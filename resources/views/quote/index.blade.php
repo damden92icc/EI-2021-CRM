@@ -76,7 +76,7 @@
             @endforeach
          </tbody>
       </table>
-      <button type="text" id="btnFiterSubmitSearch" class="btn btn-info">Submit</button>
+     
     </div>
    </div>
    <!-- /.card-body -->
