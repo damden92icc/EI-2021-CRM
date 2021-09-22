@@ -111,13 +111,28 @@
 <!-- /.card -->
 <br>
 
-<div class="card">
-   <div class="card-header">
-      <h3 class="card-title">{{$pageTabTitle}}</h3>
-   </div>
-   <!-- /.card-header -->
-   <div class="card-body p-0">
-      <table class="table table-striped" id="main-table">
+
+
+
+
+
+
+<div class="row">
+          <div class="col-12">
+            <!-- Custom Tabs -->
+            <div class="card">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Tabs</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Service Active</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Service Archived</a></li>
+                  
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                  <table class="table table-striped" id="main-table">
          <thead>
             <tr>
                <th> Name  </th>
@@ -143,7 +158,7 @@
             </tr>
          </thead>
          <tbody>
-            @forelse($project->services as $data)       
+            @forelse($project->services->where('service_state', 'RUNNING') as $data)       
             <tr>
                <td>  {{$data->service->label}}  </td>
                <td>{{$data->quantity}} </td>
@@ -279,6 +294,120 @@
             @endforelse
          </tbody>
       </table>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                  <table class="table table-striped" id="second-table">
+         <thead>
+            <tr>
+               <th> Name  </th>
+               <th>QT.   </th>
+               <th>Recc.</th>
+               <th> State </th>
+               <th> Payement State </th>
+               @isManager
+               <th> Unit Cost HT </th>
+               <th> Total cost HT </th>
+               @endisManager
+               <th>Unit @isManager sell @endisManager </th>
+               <th> Total  @isManager sell @endisManager  </th>
+               <th  > Start Date </th>
+             
+               <th  > Last Payement date </th>
+               @isManager
+               <th> Benefits </th>
+               @endisManager
+           
+            </tr>
+         </thead>
+         <tbody>
+   @forelse($project->services->where('service_state', 'ARCHIVED') as $data)        
+            <tr>
+               <td>  {{$data->service->label}}  </td>
+               <td>{{$data->quantity}} </td>
+               <td>
+                  @isset($data->recurrency_payement)
+                  {{$data->recurrency_payement}}
+                  @else
+                  none
+                  @endisset
+               </td>
+               <td>{{$data->service_state}}</td>
+               <td>{{$data->payement_state}}</td>
+               @isManager
+               @if(isset($data->serviceProv ))
+               <td> {{$data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht}} €<br>
+          {{$data->unit_cost_ht}} € +         <strong>    {{$data->serviceProv->spd_unit_cost_ht}}€  ({{$data->serviceProv->provided->name}} ) </strong>
+               </td>
+               @else
+               <td>{{$data->unit_cost_ht }} €  </td>
+               @endif
+               <td>
+                  @if(isset($data->serviceProv ))
+                  {{($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * $data->quantity}}€ <br>
+                  @else 
+                  {{ (  $data->unit_cost_ht ) * ($data->quantity) }} €
+                  @endif      
+               </td>
+               @endisManager
+               <td>{{$data->unit_sell_ht }}€</td>
+               <td>
+                  {{$data->unit_sell_ht * $data->quantity }} €
+               </td>
+               <td  >{{$data->start_date}}</td>
+              
+               <td>
+                  @if(isset($data->last_payement_date ))
+                  {{$data->last_payement_date}}
+                  @else 
+                  <p> Never billed </p>
+                  @endif
+               </td>
+            
+               @isManager
+               <td>
+                  @if(isset($data->serviceProv ))
+                  {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity)) }} € <br/>
+                  @else 
+                  {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
+                  @endif      
+               </td>
+              
+               @endisManager
+           
+            </tr>
+            @empty
+            <td colspan="5"> no service currently </td>
+            @endforelse
+         </tbody>
+      </table>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                    like Aldus PageMaker including versions of Lorem Ipsum.
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- ./card -->
+          </div>
+          <!-- /.col -->
+        </div>
+<div class="card">
+   <div class="card-header">
+      <h3 class="card-title">{{$pageTabTitle}}</h3>
+   </div>
+   <!-- /.card-header -->
+   <div class="card-body p-0">
+    
    </div>
    <!-- /.card-body -->
 </div>
@@ -789,6 +918,7 @@
     $(document).ready( function () {
    
     $('#main-table').DataTable();
+    $('#second-table').DataTable();
    } );
 </script>
 @stop
