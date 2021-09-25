@@ -7,7 +7,7 @@
     @stop
 
     @section('content')
-    
+  
     <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{$pageTabTitle}}</h3>
@@ -16,8 +16,7 @@
               <div class="card-body p-0">
                 <table class="table table-striped" id="main-table">
                   <thead>
-                    <tr>
-                     
+                    <tr>                     
                       <th>ID</th>
                       <th>name</th>
                       <th>Desc</th>
@@ -37,18 +36,13 @@
                       <td> {{$service->active}} </td>
                       <td> {{$service->validity_delay}} </td>
                       <td>
-                        <div class="btn-group">
-                         <a class="btn btn-inline btn-danger" href="">Archive</a>
-
-          
-
-
-                         <a class="btn btn-block btn-info" href="{{route('edit-service', $service->id )}}">edit</a>
-
-                         <a class="btn btn-block btn-info" href="{{route('single-service', $service->id )}}">view</a>
+                        <div class="btn-group">                  
+                            <a class="btn btn-inline btn-success" href="{{route('edit-state-service',  [$service, '1']  )}}">Enable</a>
+                            <a class="btn btn-inline btn-danger" href="{{route('edit-state-service',  [$service, '0']  )}}">Disable</a>
+                            <a class="btn btn-inline btn-warning" href="{{route('edit-service', $service->id )}}">Edit</a>
+                            <a class="btn btn-inline btn-primary" href="{{route('single-service', $service->id )}}">view</a>
                         </div>
                     </td>
-
                     </tr>
                     @endforeach
                    

@@ -90,5 +90,17 @@ class ServiceController extends Controller
         return redirect()->intended('/managements/services/single/'.$service->id);
     }
 
+    public function editState(Service $service,  String $state){
+
+      //  dd($service);
+
+      //  $service = Service::where('id', $service->id)->first();
+
+      
+         $service->active = $state;
+
+        $service->save();
+        return redirect()->intended('/managements/services/single/'.$service->id);
+    }
     
 }

@@ -43,7 +43,8 @@ Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] 
         Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
         Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
         Route::put('/update/{service}', [App\Http\Controllers\ServiceController::class, 'update'])->name('update-service');
-        Route::get('/edit/{service}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('edit-service');      
+        Route::get('/edit/{service}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('edit-service');    
+        Route::get('/edit/{service}/{state}', [App\Http\Controllers\ServiceController::class, 'editState'])->name('edit-state-service');      
         Route::get('/single/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
     });
     
