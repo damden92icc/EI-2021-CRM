@@ -344,7 +344,7 @@ return [
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/company/create',
+                'url'  => '/managements/company/create',
               
             ],
 

@@ -38,6 +38,8 @@ Auth::routes();
  */
 Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] ], function(){     
 
+
+    //Services Management 
     Route::prefix('services')->group(function () {    
         Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');        
         Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
@@ -46,6 +48,23 @@ Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] 
         Route::get('/edit/{service}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('edit-service');    
         Route::get('/edit/{service}/{state}', [App\Http\Controllers\ServiceController::class, 'editState'])->name('edit-state-service');      
         Route::get('/single/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
+    });
+
+
+    // Companies Management
+    Route::prefix('company')->group(function () {          
+        Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
+        Route::post('/store', [App\Http\Controllers\CompanyController::class, 'store'])->name('store-company'); 
+        Route::get('/edit/{id}', [App\Http\Controllers\CompanyController::class, 'edit'])->name('edit-company');
+        Route::put('/update/{company}', [App\Http\Controllers\CompanyController::class, 'update'])->name('update-company');
+        Route::delete('/archive/{company}', [App\Http\Controllers\CompanyController::class, 'archive'])->name('archive-company');
+        Route::post('/enable/{company}', [App\Http\Controllers\CompanyController::class, 'enable'])->name('enable-company');
+        Route::post('/assignEmploye', [App\Http\Controllers\CompanyController::class, 'assignEmploye'])->name('assign-employe');   
+    });
+
+    Route::prefix('select2')->group(function () {
+       
+        Route::get('/s2-user-employemet',  [App\Http\Controllers\UserController::class, 's2_assignementEmployement'])->name('s2-user-employable');
     });
     
 });
@@ -67,29 +86,17 @@ Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){
     Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');
     Route::put('/disable/{user}', [App\Http\Controllers\UserController::class, 'disableAccount'])->name('disable-user');
     Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
+
+
+
+   
 });
 
-/** 
- * ==============================================
- *                   Company Management 
- * ===============================================
- */
 
 Route::prefix('company')->group(function () {    
+    
     Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
-
-
-    Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
-    Route::post('/store', [App\Http\Controllers\CompanyController::class, 'store'])->name('store-company'); 
-    Route::get('/edit/{id}', [App\Http\Controllers\CompanyController::class, 'edit'])->name('edit-company');
-    Route::put('/update/{company}', [App\Http\Controllers\CompanyController::class, 'update'])->name('update-company');
-    Route::delete('/archive/{company}', [App\Http\Controllers\CompanyController::class, 'archive'])->name('archive-company');
-    Route::post('/enable/{company}', [App\Http\Controllers\CompanyController::class, 'enable'])->name('enable-company');
-    Route::get('/assign', [App\Http\Controllers\CompanyController::class, 'assign'])->name('assign-company');
-
-
-
-    Route::get('/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');
+    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');
 
    
 });
@@ -290,6 +297,7 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
      Route::prefix('select2')->group(function () {
         Route::get('/services-billable',  [App\Http\Controllers\BillController::class, 'serviceBillable'])->name('services-billable');
         Route::get('/selectable-client',  [App\Http\Controllers\UserController::class, 'selectableClient'])->name('selectable-client');
+      
     });
 
   
