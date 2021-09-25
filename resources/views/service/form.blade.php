@@ -9,6 +9,8 @@
     @section('content')
 
 
+
+
     <form method="POST" role="form" action="{{ isset($service) ? route('update-service', $service) : route('store-service') }}">
     @isset($service)
                   @method('put')
@@ -17,7 +19,7 @@
 
     <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
             <label for="serviceLabel">Service label</label>
-                    <input class="form-control form-control-lg" type="text" id="label" name="label" value="{{ isset($service) ? $user->label: old('label') }}" placeholder="service name">
+                    <input class="form-control form-control-lg" type="text" id="label" name="label" value="{{ isset($service) ? $service->label: old('label') }}" placeholder="service name">
                         @if($errors->has('label'))
                         <strong> {{$errors->first('label')}}</strong>
                         @endif
@@ -26,7 +28,7 @@
 
      <div class="form-group {{$errors->has('description') ? 'has-error' : ''}} ">
             <label for="servicedescription">Service description</label>
-                    <input class="form-control form-control-lg" type="text" id="description" name="description" value="{{ isset($service) ? $user->description: old('description') }}" placeholder="service description">
+                    <input class="form-control form-control-lg" type="text" id="description" name="description" value="{{ isset($service) ? $service->description: old('description') }}" placeholder="service description">
                         @if($errors->has('description'))
                         <strong> {{$errors->first('description')}}</strong>
                         @endif
@@ -57,7 +59,7 @@
 
      <div class="form-group {{$errors->has('validity_delay') ? 'has-error' : ''}} ">
             <label for="serviceValidity">Service validity_delay</label>
-                    <input class="form-control form-control-lg" type="text" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $user->validity_delay: old('validity_delay') }}" placeholder="service validity">
+                    <input class="form-control form-control-lg" type="text" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="service validity">
                         @if($errors->has('validity_delay'))
                         <strong> {{$errors->first('validity_delay')}}</strong>
                         @endif

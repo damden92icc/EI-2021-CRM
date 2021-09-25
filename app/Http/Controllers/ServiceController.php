@@ -34,6 +34,16 @@ class ServiceController extends Controller
         ]);
     }
 
+
+    public function edit($id){
+
+        return view('service.form', [
+            'pageTitle' => 'Edit service',
+            'service'=>  $service = Service::where('id' , $id )->first(),
+        ]);
+    }
+
+
     public function store(Request $request){
      
         $messages = [
@@ -54,6 +64,9 @@ class ServiceController extends Controller
     
         return redirect()->intended('/managements/services/'.$newService->id);
     }
+
+
+
 
     
 }
