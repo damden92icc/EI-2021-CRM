@@ -272,7 +272,7 @@ return [
     ['header' => 'SERVICES SETTINGS',         'can'       => 'admin-only',],
     [
         'text'    => 'Categories Services',
-        'icon'    => 'fas fa-fw fa-database',
+        'icon'    => 'fas fa-fw fa-globe',
         'can'       => 'admin-only',
         'submenu' => [
             [
@@ -344,7 +344,7 @@ return [
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/company/create',
+                'url'  => '/managements/company/create',
               
             ],
 
@@ -361,7 +361,7 @@ return [
           
     [
         'text'    => 'Quotes',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file',
         'can'       => 'manager-only',
         'submenu' => [
        
@@ -376,7 +376,7 @@ return [
     ],
     [
         'text'    => 'Offers',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file-invoice-dollar',
         'can'       => 'manager-only',
         'submenu' => [
             [
@@ -386,7 +386,7 @@ return [
             ],
             [
                 'text' => 'Offer Waiting ',
-                'route' => ['listing-my-offer-by-state', ['state' => 'SENDED']],
+                'route' => ['all-offer-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
             [
@@ -399,7 +399,7 @@ return [
     ],
     [
         'text'    => 'Project',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-project-diagram',
         'can'       => 'manager-only',
         'submenu' => [
             [
@@ -418,7 +418,7 @@ return [
     ],
     [
         'text'    => 'Bills',
-        'icon'    => 'fas fa-fw fa-user',
+        'icon'    => 'fas fa-fw fa-file-invoice-dollar',
         'can'       => 'manager-only',
         'submenu' => [
             [

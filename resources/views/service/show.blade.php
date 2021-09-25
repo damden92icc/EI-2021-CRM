@@ -32,7 +32,8 @@
                   <tr>
                       <td>   {{$service->id}}    </td>                       
                       <td>   {{$service->label}}    </td>                       
-                      <td>   {{$service->description}}    </td>                       
+                      <td>   {{$service->description}}    </td>          
+                      <td>   {{$service->active}}    </td>                       
                     </tr>
     
                 

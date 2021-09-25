@@ -31,33 +31,44 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
     
-
 /** 
  * ==============================================
- *                   Company Management 
+ *                   Management  - Admin 
  * ===============================================
  */
+Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], function(){     
 
-    Route::prefix('company')->group(function () {    
-        Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
- 
 
+    //Services Management 
+    Route::prefix('services')->group(function () {    
+        Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');        
+        Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
+        Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
+        Route::put('/update/{service}', [App\Http\Controllers\ServiceController::class, 'update'])->name('update-service');
+        Route::get('/edit/{service}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('edit-service');    
+        Route::get('/edit/{service}/{state}', [App\Http\Controllers\ServiceController::class, 'editState'])->name('edit-state-service');      
+        Route::get('/single/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
+    });
+
+
+    // Companies Management
+    Route::prefix('company')->group(function () {          
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
         Route::post('/store', [App\Http\Controllers\CompanyController::class, 'store'])->name('store-company'); 
         Route::get('/edit/{id}', [App\Http\Controllers\CompanyController::class, 'edit'])->name('edit-company');
         Route::put('/update/{company}', [App\Http\Controllers\CompanyController::class, 'update'])->name('update-company');
         Route::delete('/archive/{company}', [App\Http\Controllers\CompanyController::class, 'archive'])->name('archive-company');
         Route::post('/enable/{company}', [App\Http\Controllers\CompanyController::class, 'enable'])->name('enable-company');
-        Route::get('/assign', [App\Http\Controllers\CompanyController::class, 'assign'])->name('assign-company');
-
-
-
-        Route::get('/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');
-
-       
+        Route::post('/assignEmploye', [App\Http\Controllers\CompanyController::class, 'assignEmploye'])->name('assign-employe');   
+        Route::put('/remove-employe/{employe}', [App\Http\Controllers\CompanyController::class, 'removeEmploye'])->name('remove-employe');   
     });
 
-
+    // Retrieve assingable user to company
+    Route::prefix('select2')->group(function () {       
+        Route::get('/s2-user-employemet',  [App\Http\Controllers\UserController::class, 's2_assignementEmployement'])->name('s2-user-employable');
+    });
+    
+});
 
 
 
@@ -67,7 +78,8 @@ Auth::routes();
  * ===============================================
  */
 
-Route::prefix('users')->group(function () {    
+
+Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){      
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('listing-user');
     Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create-user');
     Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store-user');
@@ -75,25 +87,19 @@ Route::prefix('users')->group(function () {
     Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');
     Route::put('/disable/{user}', [App\Http\Controllers\UserController::class, 'disableAccount'])->name('disable-user');
     Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
+
+
+
+   
 });
 
 
-/** 
- * ==============================================
- *                  Services Management  - Admin 
- * ===============================================
- */
-
-Route::prefix('managements')->group(function () {    
-
-    Route::prefix('services')->group(function () {    
-        Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');        
-        Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
-        Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
-        Route::put('/update', [App\Http\Controllers\ServiceController::class, 'create'])->name('update-service');
-        Route::get('/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
-    });
+Route::prefix('company')->group(function () {    
     
+    Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
+    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');
+
+   
 });
 
 /** 
@@ -102,13 +108,15 @@ Route::prefix('managements')->group(function () {
  * ===============================================
  */
 
-Route::prefix('my-profil')->group(function () {    
+
+Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){     
+
     Route::get('/', [App\Http\Controllers\UserController::class, 'myprofil'])->name('my-profil');
     Route::get('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-profil');  
     Route::put('/store', [App\Http\Controllers\UserController::class, 'updateMyProfil'])->name('store-my-profil');  
     Route::put('/ask-remove-account/{user}', [App\Http\Controllers\UserController::class, 'askRemoveAccount'])->name('ask-remove-account');
+    
 });
-
 
 
 /** 
@@ -165,8 +173,6 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
 
 Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){     
 
-
-    
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('listing-my-offer-by-state');
 
@@ -292,6 +298,7 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
      Route::prefix('select2')->group(function () {
         Route::get('/services-billable',  [App\Http\Controllers\BillController::class, 'serviceBillable'])->name('services-billable');
         Route::get('/selectable-client',  [App\Http\Controllers\UserController::class, 'selectableClient'])->name('selectable-client');
+      
     });
 
   

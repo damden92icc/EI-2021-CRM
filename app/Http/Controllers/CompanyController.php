@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\User;
+use App\Models\Employe;
 class CompanyController extends Controller
 {
     //
@@ -64,7 +66,7 @@ class CompanyController extends Controller
              
         $company->update($request->all());
     
-        return redirect()->intended('/company/'.$company->id);
+        return redirect()->intended('/company/single/'.$company->id);
     }
 
     public function store(Request $request){
@@ -90,7 +92,7 @@ class CompanyController extends Controller
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();         
         $newCompany = Company::create($request->all());        
     
-        return redirect()->intended('/company/'.$newCompany->id);
+        return redirect()->intended('/company/single/'.$newCompany->id);
     }
 
     public function archive(Company $company){
@@ -109,6 +111,37 @@ class CompanyController extends Controller
 
 
 
+    public function assignEmploye(Request $request){
 
+
+        $company = Company::where('id', $request->company_id)->first();
+        $newWorker =  Employe::where('user_id', $request->user_id)->where('company_id', $company->id)->first() ;
+        
+
+        // If user already exist will not add it
+        if(!isset($newWorker)){
+
+                $messages = [
+                    'required' => 'Ce champs ne peut etre vide',
+                ];
+
+
+                $rules = [
+                    'company_id'=> 'required',        
+                    'user_id'=> 'required',        
+                ];
+                $validator = \Validator::make($request->all(), $rules, $messages)->validate();        
+                $newEmploye =  Employe::create($request->all());
+        }
+
+         return redirect()->intended('/company/single/'.$request->company_id);
+
+    }
+
+    public function removeEmploye(Employe $employe){
+
+        $employe->delete();
+        return redirect()->intended('/company/single/'.$employe->company_id);
+    }
 
 }

@@ -196,4 +196,24 @@ class UserController extends Controller
         return    $tabWorker ;
     }
 
+
+
+
+    public function s2_assignementEmployement(Request $request){
+
+     
+        $workers = User::where('user_state', "ACTIVE")->get();
+ 
+        $tabWorker = [];
+
+        foreach($workers as $data){
+                  
+            $data['name'] = $data->name; 
+            $data['firstname'] = $data->firstname; 
+            
+            array_push($tabWorker,$data) ;
+        }
+
+        return    $tabWorker ;
+    }
 }
