@@ -62,11 +62,33 @@ class ServiceController extends Controller
        
         $newService = Service::create($request->all());        
     
-        return redirect()->intended('/managements/services/'.$newService->id);
+        return redirect()->intended('/managements/services/single/'.$newService->id);
     }
 
 
+    public function update(Request $request, Service $service){
 
+        $service = Service::where('id', $service->id)->first();
+
+       
+
+        $messages = [
+            'required' => 'Ce champs ne peut etre vide',
+        ];
+
+        $rules = [
+            'label'=> 'required',        
+            'description'=> 'required',
+            'recurrent'=> 'required',
+            'active'=> 'required',
+            'validity_delay'=> 'required',           
+        ];
+
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();         
+  
+        $service->update($request->all());
+        return redirect()->intended('/managements/services/single/'.$service->id);
+    }
 
     
 }

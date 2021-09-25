@@ -42,7 +42,7 @@ Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] 
         Route::get('/', [App\Http\Controllers\ServiceController::class, 'index'])->name('listing-service');        
         Route::get('/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('create-service');
         Route::post('/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('store-service');
-        Route::put('/update', [App\Http\Controllers\ServiceController::class, 'create'])->name('update-service');
+        Route::put('/update/{service}', [App\Http\Controllers\ServiceController::class, 'update'])->name('update-service');
         Route::get('/edit/{service}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('edit-service');      
         Route::get('/single/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
     });

@@ -72,12 +72,12 @@
     
    </div>
    <div class="form-group {{$errors->has('validity_delay') ? 'has-error' : ''}} ">
-      <label for="serviceValidity">Service validity_delay</label>
+      <label for="serviceValidity">Default validity delay</label>
 
       @if(isset($service))
-      <input class="form-control form-control-lg" type="text" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="{{$service->validity_delay}}">
+      <input class="form-control form-control-lg" type="number" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="{{$service->validity_delay}}">
       @else
-      <input class="form-control form-control-lg" type="text" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="service validity">
+      <input class="form-control form-control-lg" type="number" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="service validity">
       @endif
 
 
