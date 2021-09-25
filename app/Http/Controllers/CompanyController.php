@@ -66,7 +66,7 @@ class CompanyController extends Controller
              
         $company->update($request->all());
     
-        return redirect()->intended('/company/'.$company->id);
+        return redirect()->intended('/company/single/'.$company->id);
     }
 
     public function store(Request $request){
@@ -92,7 +92,7 @@ class CompanyController extends Controller
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();         
         $newCompany = Company::create($request->all());        
     
-        return redirect()->intended('/company/'.$newCompany->id);
+        return redirect()->intended('/company/single/'.$newCompany->id);
     }
 
     public function archive(Company $company){
@@ -138,6 +138,10 @@ class CompanyController extends Controller
 
     }
 
-    
+    public function removeEmploye(Employe $employe){
+
+        $employe->delete();
+        return redirect()->intended('/company/single/'.$employe->company_id);
+    }
 
 }

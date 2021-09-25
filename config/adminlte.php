@@ -272,7 +272,7 @@ return [
     ['header' => 'SERVICES SETTINGS',         'can'       => 'admin-only',],
     [
         'text'    => 'Categories Services',
-        'icon'    => 'fas fa-fw fa-database',
+        'icon'    => 'fas fa-fw fa-globe',
         'can'       => 'admin-only',
         'submenu' => [
             [

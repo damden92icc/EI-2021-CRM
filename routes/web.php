@@ -36,7 +36,7 @@ Auth::routes();
  *                   Management  - Admin 
  * ===============================================
  */
-Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] ], function(){     
+Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], function(){     
 
 
     //Services Management 
@@ -60,10 +60,11 @@ Route::group( ['prefix'=>'managements', 'middleware' => ['auth'], ['isManager'] 
         Route::delete('/archive/{company}', [App\Http\Controllers\CompanyController::class, 'archive'])->name('archive-company');
         Route::post('/enable/{company}', [App\Http\Controllers\CompanyController::class, 'enable'])->name('enable-company');
         Route::post('/assignEmploye', [App\Http\Controllers\CompanyController::class, 'assignEmploye'])->name('assign-employe');   
+        Route::put('/remove-employe/{employe}', [App\Http\Controllers\CompanyController::class, 'removeEmploye'])->name('remove-employe');   
     });
 
-    Route::prefix('select2')->group(function () {
-       
+    // Retrieve assingable user to company
+    Route::prefix('select2')->group(function () {       
         Route::get('/s2-user-employemet',  [App\Http\Controllers\UserController::class, 's2_assignementEmployement'])->name('s2-user-employable');
     });
     
