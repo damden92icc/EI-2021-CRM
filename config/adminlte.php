@@ -277,12 +277,12 @@ return [
         'submenu' => [
             [
                 'text' => 'Listing',
-                'url'  => '/managements/services',
+                'url'  => '/managements/services-categories',
                 
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/users/create',
+                'url'  => '/managements/services-categories/create',
             ],
            
         ],

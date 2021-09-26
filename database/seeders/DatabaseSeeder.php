@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,      
             UsersSeeder::class,        
             EmployesSeeder::class,
+            ServiceCategorySeeder::class,
             ServiceSeeder::class,
             QuoteSeeder::class,
             QuoteServiceSeeder::class,

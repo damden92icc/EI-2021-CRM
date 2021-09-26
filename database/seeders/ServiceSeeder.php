@@ -126,6 +126,7 @@ class ServiceSeeder extends Seeder
             'description'=> $data['description'],   
             'recurrent'=> $data['recurrent'],   
             'active'=> $data['active'],   
+            'category_id' => 1 ,
             'validity_delay'=> $data['validity_delay'],               
         ]);
     }

@@ -15,7 +15,6 @@ class UserController extends Controller
     {      
 
         $users = User::all();
-  
         return view('users.index', [
             'pageTitle' => 'Listing users',
             'pageTabTitle' => 'Listing users',
@@ -84,7 +83,6 @@ class UserController extends Controller
             'password' =>   Hash::make($request->get('password')),
         ]);
        
-
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
 
         $newUser = User::create($request->all());  
@@ -133,9 +131,6 @@ class UserController extends Controller
                 'user'=> $user,
                 'companies'=>    $companies = Company::all(),     
         ]);
-        
-
-
     }
 
     public function update(Request $request, User $user){
