@@ -50,7 +50,11 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
 
     Route::prefix('services-categories')->group(function () {    
         Route::get('/', [App\Http\Controllers\ServiceCategoryController::class, 'index'])->name('listing-service-cat');        
-     
+        Route::get('/create', [App\Http\Controllers\ServiceCategoryController::class, 'create'])->name('create-service-cat');
+        Route::post('/store', [App\Http\Controllers\ServiceCategoryController::class, 'store'])->name('store-service-cat');
+        Route::get('/edit/{service}', [App\Http\Controllers\ServiceCategoryController::class, 'edit'])->name('edit-service-cat');    
+        Route::put('/update/{serviceCat}', [App\Http\Controllers\ServiceCategoryController::class, 'update'])->name('update-service-cat');
+        Route::get('/single/{service}', [App\Http\Controllers\ServiceCategoryController::class, 'show'])->name('single-service-cat');
     });
 
 

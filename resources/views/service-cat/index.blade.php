@@ -32,7 +32,8 @@
                     
                       <td>
                         <div class="btn-group">                  
-                    
+                        <a class="btn btn-inline btn-primary" href="{{route('single-service-cat', $service->id )}}">view</a>
+                        <a class="btn btn-inline btn-warning" href="{{route('edit-service-cat', $service->id )}}">Edit</a>
                         </div>
                     </td>
                     </tr>

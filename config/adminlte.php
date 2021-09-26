@@ -282,7 +282,7 @@ return [
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/users/create',
+                'url'  => '/managements/services-categories/create',
             ],
            
         ],
