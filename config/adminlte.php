@@ -319,11 +319,11 @@ return [
         'submenu' => [
             [
                 'text' => 'Listing',
-                'url'  => '/users',
+                'url'  => '/managements/users',
             ],
             [
                 'text' => 'Add new',
-                'url'  => '/users/create',
+                'url'  => '/managements/users/create',
             ],
            
         ],

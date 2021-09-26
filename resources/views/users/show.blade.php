@@ -33,7 +33,18 @@
                         <p>{{$user->user_state}}</p>
                      </li>
                   </ul>
-                  <a  href="{{route('update-user', $user->id )}}" class="btn btn-primary btn-block"><b>Update user</b></a>
+
+
+                  @isAdmin
+               
+                  <a class="btn btn-block btn-info" href="{{route('edit-user', $user )}}">Edit user</a> 
+                  
+                  @endisAdmin
+
+                  @isClient
+                  @endisClient
+
+               
                   <form method="POST" role="form" action="{{route('disable-user', $user )}}">
                      @method('put')
                      {{csrf_field()}}
