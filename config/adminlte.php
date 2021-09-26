@@ -277,7 +277,7 @@ return [
         'submenu' => [
             [
                 'text' => 'Listing',
-                'url'  => '/managements/services',
+                'url'  => '/managements/services-categories',
                 
             ],
             [

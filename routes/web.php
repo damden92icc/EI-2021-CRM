@@ -48,6 +48,14 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
     });
 
 
+    Route::prefix('services-categories')->group(function () {    
+        Route::get('/', [App\Http\Controllers\ServiceCategoryController::class, 'index'])->name('listing-service-cat');        
+     
+    });
+
+
+
+
     // Companies Management
     Route::prefix('company')->group(function () {          
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
