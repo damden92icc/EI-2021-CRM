@@ -63,6 +63,19 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::put('/remove-employe/{employe}', [App\Http\Controllers\CompanyController::class, 'removeEmploye'])->name('remove-employe');   
     });
 
+    // Users managements
+
+    Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){      
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('listing-user');
+        Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create-user');
+        Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store-user');       
+        Route::put('/disable/{user}', [App\Http\Controllers\UserController::class, 'disableAccount'])->name('disable-user');
+        Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
+        Route::put('/update/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');  
+
+       
+    });
+
     // Retrieve assingable user to company
     Route::prefix('select2')->group(function () {       
         Route::get('/s2-user-employemet',  [App\Http\Controllers\UserController::class, 's2_assignementEmployement'])->name('s2-user-employable');
@@ -74,32 +87,23 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
 
 /** 
  * ==============================================
- *                  User  Management  - Admin 
+ *                  User  - All 
  * ===============================================
  */
 
 
 Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){      
-    Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('listing-user');
-    Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create-user');
-    Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store-user');
+  
     Route::get('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit-user');
-    Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');
-    Route::put('/disable/{user}', [App\Http\Controllers\UserController::class, 'disableAccount'])->name('disable-user');
-    Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
-
-
+    Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
 
    
 });
 
 
-Route::prefix('company')->group(function () {    
-    
+Route::prefix('company')->group(function () {        
     Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
-    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');
-
-   
+    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');   
 });
 
 /** 
@@ -107,7 +111,6 @@ Route::prefix('company')->group(function () {
  *                  Profil Management  for all users
  * ===============================================
  */
-
 
 Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){     
 
@@ -126,7 +129,6 @@ Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){
  */
 
     
-
 Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){     
 
 

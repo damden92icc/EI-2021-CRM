@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $newEmploye =  Employe::create($request->all());
 
-        return redirect()->intended('/users/'.$newUser->id);
+        return redirect()->intended('/users/single/'.$newUser->id);
     }
 
 
@@ -124,12 +124,29 @@ class UserController extends Controller
     }
 
 
-    public function update($id){
-        $user = User::where('id' ,     $id  )->first();
-        return view('profil.update', [
-            'pageTitle' => 'Update Profil',
-            'user'=> $user ,           
+    public function update(User $user){
+
+     
+        if($user->id == Auth::user()->id){
+     
+        // return view('profil.update', [
+        //     'pageTitle' => 'Update Profil',
+        //     'user'=> $user ,           
+        // ]);
+        }
+
+        else {
+       
+            $roles = Role::all();
+            return view('users.form', [
+                'pageTitle' => 'Create users',
+                'roles' => $roles,    
+                'user'=> $user,
+                'companies'=>    $companies = Company::all(),     
         ]);
+        }
+
+
     }
 
 
@@ -164,13 +181,9 @@ class UserController extends Controller
     public function disableAccount(User $user){
         $user->user_state ="Disable";
         $user->save();
-        return redirect()->intended('/users/'.$user->id);
+        return redirect()->intended('/users/single/'.$user->id);
 
     }
-
-
-
-
 
 
 
@@ -181,18 +194,15 @@ class UserController extends Controller
  
         $workers = Employe::where('company_id', $company->id)->get();
 
-
         $tabWorker = [];
 
         foreach($workers as $data){
-            
-      
+
             $data['name'] = $data->users->name; 
             $data['firstname'] = $data->users->firstname; 
             
             array_push($tabWorker,$data) ;
         }
-
         return    $tabWorker ;
     }
 
@@ -200,10 +210,8 @@ class UserController extends Controller
 
 
     public function s2_assignementEmployement(Request $request){
-
      
         $workers = User::where('user_state', "ACTIVE")->get();
- 
         $tabWorker = [];
 
         foreach($workers as $data){
