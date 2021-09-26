@@ -37,11 +37,8 @@
 
                   @isAdmin
                
-                  <form method="POST" role="form" action="{{route('update-user', $user )}}">
-                     @method('put')
-                     {{csrf_field()}}
-                     <button class="btn btn-block btn-warning" > Update  account </a> 
-                  </form>
+                  <a class="btn btn-block btn-info" href="{{route('edit-user', $user )}}">Edit user</a> 
+                  
                   @endisAdmin
 
                   @isClient

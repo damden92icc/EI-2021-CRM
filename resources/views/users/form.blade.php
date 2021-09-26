@@ -12,7 +12,7 @@
    </div>
    <div class="card-body">
       <form method="POST" role="form" action="{{ isset($user) ? route('update-user', $user) : route('store-user') }}">
-         @isset($$user)
+         @isset($user)
          @method('put')
          @endisset
          {{csrf_field()}}

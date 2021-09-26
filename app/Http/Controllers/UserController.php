@@ -124,30 +124,42 @@ class UserController extends Controller
     }
 
 
-    public function update(User $user){
+    public function edit(User $user){
 
-     
-        if($user->id == Auth::user()->id){
-     
-        // return view('profil.update', [
-        //     'pageTitle' => 'Update Profil',
-        //     'user'=> $user ,           
-        // ]);
-        }
-
-        else {
-       
-            $roles = Role::all();
+     $roles = Role::all();
             return view('users.form', [
-                'pageTitle' => 'Create users',
+                'pageTitle' => 'Update users',
                 'roles' => $roles,    
                 'user'=> $user,
                 'companies'=>    $companies = Company::all(),     
         ]);
-        }
+        
 
 
     }
+
+    public function update(Request $request, User $user){
+
+       // $user = Auth::user();
+        $messages = [
+            'required' => 'Ce champs ne peut etre vide',
+        ];
+
+        $rules = [
+            'name'=> 'required',        
+            'firstname'=> 'required',       
+            'phone'=> 'required',
+            'mobile'=> 'required',     
+            'password'=> 'required',          
+        ];
+               
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
+
+        $user->update($request->all());
+        return redirect()->intended('/users/single/'.$user->id);
+    }
+
+
 
 
     public function updateMyProfil(Request $request){
