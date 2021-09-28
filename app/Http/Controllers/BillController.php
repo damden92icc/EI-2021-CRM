@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Bill;
+use App\Models\Employe;
+use App\Models\User;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\ProjectService;
@@ -9,6 +11,12 @@ use App\Models\BillService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+
+use App\Notifications\SendBill;
+
+use App\Notifications\changeStateBill;
+use Illuminate\Support\Facades\Notification;
+
 
 class BillController extends Controller
 {
@@ -88,7 +96,7 @@ class BillController extends Controller
     public function edit(Bill $bill){
 
         $currentCompany= Company::where('id', $bill->concerned_company)->first();
-        $selectableCompanies = Company::all();
+        $selectableCompanies =Company::where('company_type', 'client')->where('active', true)->get();
 
         return view('bill.form', [
             'pageTitle' => 'Update bill',
@@ -213,8 +221,20 @@ class BillController extends Controller
        foreach ($bill->billServices as $data){
             $ps = ProjectService::where('id',  $data->ps_id)->first();
             $ps->payement_state = "PAYEMENT AWAITING" ;
+            $ps->is_billable = 0 ;
             $ps->save();
         }
+
+        // Send notification to all employ 
+
+        $employes = Employe::where('company_id', $bill->concerned_company)->get();
+
+        foreach($employes as $data){
+
+            $notifTarget = User::where('id', $data->user_id)->first();
+            Notification::send($notifTarget, new SendBill($bill));
+        }
+   
 
        // edit bill state 
         $bill->bill_state = "SENDED";
@@ -247,8 +267,28 @@ class BillController extends Controller
     public function archiveDocument (Bill $bill){
         $bill->bill_state = "ARCHIVED";     
         $bill->save();    
-        return redirect()->intended('/bills/'.$bill->id);
+        return redirect()->intended('/bills/single/'.$bill->id);
     }
 
+
+    public function payBill (Bill $bill){
+        
+        // REtrive ps id from project service and edit state
+        
+        foreach ($bill->billServices as $data){
+            $ps = ProjectService::where('id',  $data->ps_id)->first();
+            $ps->last_payement_date =Carbon::now() ;
+            $ps->payement_state = "PAYED" ;
+            $ps->save();
+        }
+        
+
+        $notifTarget = User::where('role_id', 2)->get();
+        Notification::send($notifTarget, new changeStateBill($bill, "PAYED"));
+
+        $bill->bill_state = "PAYED";         
+        $bill->save();    
+        return redirect()->intended('/bills/single/'.$bill->id);
+    }
     
 }
