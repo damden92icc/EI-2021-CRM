@@ -11,7 +11,7 @@ use App\Models\BillService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendBill;
 
 use App\Notifications\changeStateBill;
@@ -22,8 +22,41 @@ class BillController extends Controller
 {
     public function index()
     {      
+        // Return Offer based on the role (Client or Manager)
+        $user= Auth::user();
 
-        $bills = Bill::all();  
+        if($user->role->id == 1){
+
+
+            // Tab to store all id from company where user work
+          $tabCompanyID = [];
+
+            foreach($user->employes as $job){
+            
+                // get all bills assigned with teh company
+                $bills = Bill::select('id')->where('concerned_company',  $job->company_id )->where('bill_state', '!=', 'DRAFT')->get();                
+                
+                foreach($bills as $data){
+                    array_push($tabCompanyID,  $data->id );
+                }
+            }
+
+            // get all bills by passing matched bill id array
+            $bills= Bill::whereIn('id', $tabCompanyID)->get();
+
+       
+        }
+
+        elseif($user->role->id == 2){
+            $bills = Bill::where('owner_id', $user->id)->get(); 
+        }
+        else{
+            $bills = Bill::where('bill_state', 'PAYED')->get(); 
+        }
+
+
+
+ 
         return view('bill.index', [
             'pageTitle' => 'Listing bills',
             'pageTabTitle' => 'Listing bills',
@@ -31,6 +64,10 @@ class BillController extends Controller
       
         ]);
     }
+
+
+
+
 
 
     public function show($id)

@@ -7,7 +7,6 @@ use App\Models\Company;
 use App\Models\Service;
 use App\Models\OfferService;
 use App\Models\OfferComment;
-use App\Models\Employe;
 use App\Models\Quote;
 use App\Models\User;
 use App\Notifications\SendOffer;
