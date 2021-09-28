@@ -249,7 +249,7 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
 
     // Listing own client projects
     Route::group(['middleware' => ['isClient']], function() {          
-     
+        Route::post('/pay/{bill}', [App\Http\Controllers\BillController::class, 'payBill'])->name('pay-bill');
     });
 
     // Management offers by lanager
