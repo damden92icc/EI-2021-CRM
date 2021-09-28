@@ -6,11 +6,13 @@ use App\Models\Offer;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\Employe;
+use App\Models\User;
 use App\Models\ProjectService;
 use App\Models\ServiceProvDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RequestRemovePS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -290,8 +292,12 @@ class ProjectController extends Controller
 
     public function askCancelServiceDoc ($id){
         $service = ProjectService::where('id', $id)->first();
-        $service->service_state = "Cancellation Asked";
-        
+        $service->service_state = "CANCELLATION ASKED";
+
+        $notifTarget =  User::where('role_id', 2)->get(); 
+        $project = Project::where('id', $service->project_id)->first();
+        Notification::send($notifTarget, new RequestRemovePS($project));
+
         $service->save();    
         return redirect()->intended('/projects/single/'.$service->project_id);
     }

@@ -57,7 +57,7 @@ class RequestRemovePS extends Notification
         $url = url('/');
         return [
             'label' => 'Removing Service Asked for  project '. $this->project->label  ,            
-            'url' =>  $url .'/project/single/'. $this->project->id,
+            'url' =>  $url .'/projects/single/'. $this->project->id,
        
         ];
     }
