@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 
 class NotificationsController extends Controller
@@ -27,6 +28,17 @@ public function index(){
         'notifications'=>        $notifications ,
   
     ]);
+}
+
+
+
+public function markAsView(Request $request, String $id){
+
+
+    $user = Auth::user();
+
+    $user->unreadNotifications->where('id', $id)->markAsRead();
+    return redirect()->route('all-notifications');
 }
 
 

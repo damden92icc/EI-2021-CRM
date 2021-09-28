@@ -314,10 +314,13 @@ Route::prefix('company')->group(function () {
 
 
 
-Route::prefix('notifications')->group(function () {        
+Route::prefix('notifications')->group(function () {     
+    // display top nav   
     Route::get('/get', [App\Http\Controllers\NotificationsController::class, 'getNotificationsData'])->name('notifications-get');
+
+    // show all notif
     Route::get('/show', [App\Http\Controllers\NotificationsController::class, 'index'])->name('all-notifications');
-  
+    Route::get('/mark-as-view/{id}', [App\Http\Controllers\NotificationsController::class, 'markAsView'])->name('mark-notif-as-view');
 });
 
 
