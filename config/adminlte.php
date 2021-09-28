@@ -398,7 +398,7 @@ return [
         'submenu' => [
             [
                 'text' => 'Listing my offers',
-                'url'  => '/offers/manager',
+                'url'  => '/offers',
                 'can'       => 'manager-only',
             ],
             [
