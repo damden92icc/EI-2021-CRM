@@ -3,15 +3,19 @@ Epreuve intégrée - Damien DENIS - Année 2020-21
 Pré-requis: 
 - Un serveur base de données de type SQL
 - Un serveur web possédant apache Version >= 7.2.0,
+- Gestionnaire de dépendance PHP : hhttps://getcomposer.org/download/
+- Gestionnaire de dépendance NPM : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
 Installation : 
 
-Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
+-Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
 
-composer install
-npm install
-cp .env.example .env (copie le fichier d'exemple pour la configuration )
-php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
+- composer install
+- npm install
+-cp .env.example .env (copie le fichier d'exemple pour la configuration )
+- php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
+- Editer le fichier .env 
+
 
 php artisan migrate lancer les migrations
 php artisan db:seed Remplissez-la base de données
