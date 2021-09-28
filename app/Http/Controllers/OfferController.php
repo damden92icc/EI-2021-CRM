@@ -9,6 +9,10 @@ use App\Models\OfferService;
 use App\Models\OfferComment;
 use App\Models\Employe;
 use App\Models\Quote;
+use App\Models\User;
+use App\Notifications\SendOffer;
+use App\Notifications\AcceptanceOffer;
+use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -207,8 +211,9 @@ class OfferController extends Controller
         }
 
 
-        public function documentByState(String $state){
 
+
+        public function documentByState(String $state){
 
             $user = Auth::user();
 
@@ -228,12 +233,35 @@ class OfferController extends Controller
                 'offers'=> $myOffer ,      
             ]);
         }
+        
+        public function documentChangeState(Offer $offer , String $state){
+            $offer->offer_state = $state    ;
+
+            if(  $offer->offer_state== "SENDED"){
+
+                $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
+                Notification::send($notifTarget, new SendOffer($offer));
+            }
+
+        
+
+            if($offer->offer_state == "ACCEPTED" ||   $offer->offer_state=="DECLINED" ){
     
-    public function documentChangeState(Offer $offer , String $state){
-        $offer->offer_state = $state;
-        $offer->save();    
-        return redirect()->intended('/offers/single/'.$offer->id);
-    }
+                $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+                Notification::send($notifTarget, new AcceptanceOffer($offer));
+            }
+
+            if($offer->offer_state == "VALIDED"  ){
+                // notif Client + Offer owner
+                $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
+                Notification::send($notifTarget, new SendOffer($offer));
+                $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+                Notification::send($notifTarget, new AcceptanceOffer($offer));
+            }
+
+            $offer->save();    
+            return redirect()->intended('/offers/single/'.$offer->id);
+        }
 
 
     public function commentOffer(Request $request, Offer $offer){
@@ -241,10 +269,14 @@ class OfferController extends Controller
         // construct new query 
         $request->merge( [ 'offer_id' => $offer->id ]);        
         $request->merge( ['send_date' => Carbon::now()] );
-        
-        // change state
-
+       
         $offer->offer_state = "UPDATE ASKED";
+        // notif +  change state
+
+        $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+        Notification::send($notifTarget, new AcceptanceOffer($offer));
+
+        
         $offer->save();            
        
         // create comment

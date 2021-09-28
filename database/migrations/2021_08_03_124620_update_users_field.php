@@ -37,11 +37,6 @@ class UpdateUsersField extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::table('users', function (Blueprint $table) {
-
-            $table->dropForeign(['category_id']);
-            $table->dropColumn('category_id');
-   });
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); 
     }
 }

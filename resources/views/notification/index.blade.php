@@ -9,17 +9,25 @@
 @section('content')
 <div class="card">
   
+<table>
 
-
-
+<thead>
+    <tr>
+    <th> Name </th>
+    <th> URL </th>
+    <tr>
+</thead>
 @forelse($notifications as $data)
+<tr>
 
-{{$data->data['label']}}
-
+    <td>{{$data->data['label']}}</td>
+<td> <a href="{{$data->data['url']}}"> Link </a> </td>
 
 @empty
 no notifications
 @endforelse
+</tr>
+</table>
 </div>
 @stop
 @section('css')

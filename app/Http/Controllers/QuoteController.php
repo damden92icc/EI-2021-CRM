@@ -6,11 +6,13 @@ use App\Models\Documents;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\QuoteService;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendQuote;
+use Illuminate\Support\Facades\Notification;
 
 class QuoteController extends Controller
 {
@@ -175,14 +177,16 @@ class QuoteController extends Controller
 
     public function documentChangeState(Quote $quote , String $state){
 
-        $notifTarget =  Auth::user();
+        $notifTarget =  User::where('role_id', 2)->get(); 
 
+       // dd($notifTarget);
         $quote->quote_state  = $state;
 
 
         if($quote->quote_state == "SENDED"){
             $quote->sended_date =  Carbon::now();
-            $notifTarget->notify(new SendQuote($quote));
+           // $->notify();
+            Notification::send($notifTarget, new SendQuote($quote));
         }
         
         $quote->save();  
