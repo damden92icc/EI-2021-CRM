@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Notifications;
-use App\Models\Project;
+
 use Illuminate\Bus\Queueable;
+use App\Models\Project;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RequestRemovePS extends Notification
+class AnswerRemovePS extends Notification
 {
     use Queueable;
 
@@ -16,10 +17,10 @@ class RequestRemovePS extends Notification
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct(Project $project,  String $state)
     {
         $this->project = $project;
-
+        $this->state = $state;
     }
 
     /**
@@ -56,10 +57,20 @@ class RequestRemovePS extends Notification
     public function toArray($notifiable)
     {
         $url = url('/');
+
+        if($this->state == 'Running' )  {
+                $answer= "Will not be removed";
+            }
+
+        else{
+            $answer= "Will be removed";
+        }
+
         return [
-            'label' => 'Removing Service Asked for  project '. $this->project->label  ,            
+            'label' => 'The service on the project '. $this->project->label . ' '. $answer ,            
             'url' =>  $url .'/projects/single/'. $this->project->id,
        
         ];
     }
+    
 }
