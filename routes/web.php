@@ -47,7 +47,6 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::get('/single/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('single-service');
     });
 
-
     Route::prefix('services-categories')->group(function () {    
         Route::get('/', [App\Http\Controllers\ServiceCategoryController::class, 'index'])->name('listing-service-cat');        
         Route::get('/create', [App\Http\Controllers\ServiceCategoryController::class, 'create'])->name('create-service-cat');
@@ -56,9 +55,6 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::put('/update/{serviceCat}', [App\Http\Controllers\ServiceCategoryController::class, 'update'])->name('update-service-cat');
         Route::get('/single/{service}', [App\Http\Controllers\ServiceCategoryController::class, 'show'])->name('single-service-cat');
     });
-
-
-
 
     // Companies Management
     Route::prefix('company')->group(function () {          
@@ -82,9 +78,7 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');
       
         Route::get('/edit/{user}', [App\Http\Controllers\UserController::class, 'edit'])->name('edit-user');  
-        Route::put('/update/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');  
-
-       
+        Route::put('/update/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update-user');         
     });
 
     // Retrieve assingable user to company
@@ -317,4 +311,13 @@ Route::prefix('company')->group(function () {
     Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
     Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');   
 });
+
+
+
+Route::prefix('notifications')->group(function () {        
+    Route::get('/get', [App\Http\Controllers\NotificationsController::class, 'getNotificationsData'])->name('notifications-get');
+    Route::get('/show', [App\Http\Controllers\NotificationsController::class, 'index'])->name('all-notifications');
+  
+});
+
 
