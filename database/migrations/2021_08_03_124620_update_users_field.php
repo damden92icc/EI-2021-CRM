@@ -13,6 +13,8 @@ class UpdateUsersField extends Migration
      */
     public function up()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); 
+
         Schema::table('users', function (Blueprint $table) {    
             $table->string('name', 100)->change();
             $table->string('firstname', 100); 
@@ -35,6 +37,11 @@ class UpdateUsersField extends Migration
      */
     public function down()
     {
-        //
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('category_id');
+   });
     }
 }
