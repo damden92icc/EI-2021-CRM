@@ -1,26 +1,24 @@
 <?php
 
 namespace App\Notifications;
-use App\Models\Quote;
+use App\Models\Offer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Routing\UrlGenerator;
 
-class SendQuote extends Notification
+class SendOffer extends Notification
 {
     use Queueable;
 
-    public $quote;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Quote $quote)
+    public function __construct(Offer $offer)
     {
-        $this->quote = $quote;
+        $this->offer = $offer;
     }
 
     /**
@@ -56,11 +54,12 @@ class SendQuote extends Notification
      */
     public function toArray($notifiable)
     {
+      
         $url = url('/');
         return [
-            'label' => 'new quote '. $this->quote->label . ' by ' . $this->quote->users->name ,
-            
-            'url' =>  $url .'/quotes/single/'. $this->quote->id,
-        ];
+            'label' => 'new offer '. $this->offer->label  ,            
+            'url' =>  $url .'/offers/single/'. $this->offer->id,
+       
+            ];
     }
 }

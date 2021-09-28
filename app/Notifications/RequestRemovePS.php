@@ -1,26 +1,25 @@
 <?php
 
 namespace App\Notifications;
-use App\Models\Quote;
+use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Routing\UrlGenerator;
 
-class SendQuote extends Notification
+class RequestRemovePS extends Notification
 {
     use Queueable;
 
-    public $quote;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Quote $quote)
+    public function __construct(Project $project)
     {
-        $this->quote = $quote;
+        $this->project = $project;
+
     }
 
     /**
@@ -58,9 +57,9 @@ class SendQuote extends Notification
     {
         $url = url('/');
         return [
-            'label' => 'new quote '. $this->quote->label . ' by ' . $this->quote->users->name ,
-            
-            'url' =>  $url .'/quotes/single/'. $this->quote->id,
+            'label' => 'Removing Service Asked for  project '. $this->project->label  ,            
+            'url' =>  $url .'/projects/single/'. $this->project->id,
+       
         ];
     }
 }

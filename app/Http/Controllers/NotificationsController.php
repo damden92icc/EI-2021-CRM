@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 class NotificationsController extends Controller
 {
@@ -40,16 +41,24 @@ public function getNotificationsData(Request $request)
     // At next, we define a hardcoded variable with the explained format,
     // but you can assume this data comes from a database query.
 
-   
+
+   $user = Auth::user();
+
+   $rowUnreadNotifTxt = $user->unreadNotifications->count() . ' Unread Notification';
+
+   $currentTime = Carbon::now();
+   $lastNotifTime = $currentTime->diffInMinutes( Carbon::parse( $user->notifications->last()->created_at)); 
+ 
+
 
     $notifications = [
         
         
         [
             'icon' => 'fas fa-fw fa-envelope',
-            'text' => auth()->user()->unreadNotifications->count() . ' Unread Notification',
-            'time' => rand(0, 10) . ' minutes',
-            'url' => '/'
+            'text' =>  $rowUnreadNotifTxt ,
+            'time' => $lastNotifTime. ' minutes',
+            'url' => '/notifications/show'
         ],
     ];
 

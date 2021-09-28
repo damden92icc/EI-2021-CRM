@@ -167,7 +167,7 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
 
     // Listing own client offers
     Route::group(['middleware' => ['isClient']], function() {          
-        Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'myOffer'])->name('listing-my-offer');
+        Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-my-offer');
         Route::get('/my-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('my-offer-by-state');
      
     });
@@ -178,7 +178,7 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
     Route::group(['middleware' => ['isManager']], function() {     
         // Actions for client + Manager
         Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');            
-        Route::get('/manager', [App\Http\Controllers\OfferController::class, 'indexManager'])->name('listing-manager-offer');
+    
         Route::get('/get-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('all-offer-by-state');
         // CRUD Offer
         Route::get('/create', [App\Http\Controllers\OfferController::class, 'create'])->name('create-offer');

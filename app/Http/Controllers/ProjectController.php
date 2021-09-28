@@ -6,11 +6,14 @@ use App\Models\Offer;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\Employe;
+use App\Models\User;
 use App\Models\ProjectService;
 use App\Models\ServiceProvDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RequestRemovePS;
+use App\Notifications\AnswerRemovePS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -264,13 +267,36 @@ class ProjectController extends Controller
     }
     
 
+    public function archive (Project $project){
+        $project->project_state = "ARCHIVED";
+        
+        $project->save();    
+        return redirect()->intended('/projects/single/'.$project->id);
+    }
+
+
+
 
     public function removeServiceDoc($id){
 
-        $service = ProjectService::where('id', $id)->first();
+        $service = ProjectService::where('id', $id)->first();           
+        $project = Project::where('id', $service->project_id)->first();
+        $employes = Employe::where('company_id', $project->concerned_company)->get();
+
+
         $service->service_state = "ARCHIVED";
-        
         $service->save();    
+
+        foreach($employes as $data){
+
+            $notifTarget = User::where('id', $data->user_id)->first();
+            Notification::send($notifTarget, new AnswerRemovePS($project,   $service->service_state));
+        }
+
+       
+       
+
+      
 
         return redirect()->route('single-project', $service->project_id);
        
@@ -281,17 +307,15 @@ class ProjectController extends Controller
      * Additionnal function 
      */
 
-    public function archive (Project $project){
-        $project->project_state = "ARCHIVED";
-        
-        $project->save();    
-        return redirect()->intended('/projects/single/'.$project->id);
-    }
 
     public function askCancelServiceDoc ($id){
         $service = ProjectService::where('id', $id)->first();
-        $service->service_state = "Cancellation Asked";
-        
+        $service->service_state = "CANCELLATION ASKED";
+
+        $notifTarget =  User::where('role_id', 2)->get(); 
+        $project = Project::where('id', $service->project_id)->first();
+        Notification::send($notifTarget, new RequestRemovePS($project));
+
         $service->save();    
         return redirect()->intended('/projects/single/'.$service->project_id);
     }

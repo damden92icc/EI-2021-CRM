@@ -9,6 +9,10 @@ use App\Models\OfferService;
 use App\Models\OfferComment;
 use App\Models\Employe;
 use App\Models\Quote;
+use App\Models\User;
+use App\Notifications\SendOffer;
+use App\Notifications\AcceptanceOffer;
+use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -20,7 +24,21 @@ class OfferController extends Controller
     public function index()
     {      
 
-        $offers = Offer::all();  
+        // Return Offer based on the role (Client or Manager)
+        $user= Auth::user();
+
+        if($user->role->id == 2){
+
+            $offers = Offer::where('owner_id',$user->id)->get();  
+        }
+
+        elseif($user->role->id == 1){
+            $offers = Offer::where([['concerned_client', $user->id ]])->get();
+        }
+        else{
+            $offers = Offer::all(); 
+        }
+      
         return view('offer.index', [
             'pageTitle' => 'Listing Offers',
             'pageTabTitle' => 'Listing Offers',
@@ -29,18 +47,7 @@ class OfferController extends Controller
         ]);
     }
 
-    public function indexManager()
-    {      
 
-        $offers = Offer::where('owner_id', auth()->user()->id)->get();  
-
-        return view('offer.index', [
-            'pageTitle' => 'Listing Offers',
-            'pageTabTitle' => 'Listing Offers',
-            'offers'=>        $offers ,
-      
-        ]);
-    }
 
 
     public function show($id)
@@ -207,30 +214,53 @@ class OfferController extends Controller
         }
 
 
-        public function documentByState(String $state){
 
 
-            $user = Auth::user();
+    public function documentByState(String $state){
 
-            // Check if user is client or maanger to get own offer
-            if($user->role->id == 1){
-                $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $state]])->get();
-            }
-    
-            else{
-                $myOffer = Offer::where([['owner_id', $user->id ], ['offer_state', $state]])->get();
-            }
-         
-        
-            return view('offer.index', [
-                'pageTitle' => 'Listing Offers',
-                'pageTabTitle' => 'Listing Offers',
-                'offers'=> $myOffer ,      
-            ]);
+        $user = Auth::user();
+
+        // Check if user is client or maanger to get own offer
+        if($user->role->id == 1){
+            $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $state]])->get();
         }
+
+        else{
+            $myOffer = Offer::where([['owner_id', $user->id ], ['offer_state', $state]])->get();
+        }
+        
+    
+        return view('offer.index', [
+            'pageTitle' => 'Listing Offers',
+            'pageTabTitle' => 'Listing Offers',
+            'offers'=> $myOffer ,      
+        ]);
+    }
+
     
     public function documentChangeState(Offer $offer , String $state){
-        $offer->offer_state = $state;
+        $offer->offer_state = $state    ;
+
+        if(  $offer->offer_state== "SENDED"){
+
+            $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
+            Notification::send($notifTarget, new SendOffer($offer));
+        }
+
+        if($offer->offer_state == "ACCEPTED" ||   $offer->offer_state=="DECLINED" ){
+
+            $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+            Notification::send($notifTarget, new AcceptanceOffer($offer));
+        }
+
+        if($offer->offer_state == "VALIDED"  ){
+            // notif Client + Offer owner
+            $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
+            Notification::send($notifTarget, new AcceptanceOffer($offer));
+            $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+            Notification::send($notifTarget, new AcceptanceOffer($offer));
+        }
+
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);
     }
@@ -241,10 +271,14 @@ class OfferController extends Controller
         // construct new query 
         $request->merge( [ 'offer_id' => $offer->id ]);        
         $request->merge( ['send_date' => Carbon::now()] );
-        
-        // change state
-
+       
         $offer->offer_state = "UPDATE ASKED";
+        // notif +  change state
+
+        $notifTarget =  User::where('id', $offer->owner_id)->first(); 
+        Notification::send($notifTarget, new AcceptanceOffer($offer));
+
+        
         $offer->save();            
        
         // create comment
@@ -280,16 +314,6 @@ class OfferController extends Controller
         return redirect()->intended('/offers/single/'.$newOffer->id);
     }
 
-    public function myOffer(){
-        $user = Auth::user();
-        $myOffer = Offer::where([['concerned_client', $user->id ]])->get();
-
-           return view('offer.index', [
-                'pageTitle' => 'Listing Offers',
-                'pageTabTitle' => 'Listing Offers',
-                'offers'=> $myOffer ,      
-            ]);
-    }
 
 
     public function myOfferByState(Request $request){
