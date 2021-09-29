@@ -264,7 +264,6 @@ class BillController extends Controller
         }
 
         // Send notification to all employ 
-
         $employes = Employe::where('company_id', $bill->concerned_company)->get();
 
         foreach($employes as $data){
@@ -334,9 +333,16 @@ class BillController extends Controller
         // construct new query 
         $request->merge( [ 'bill_id' => $bill->id ]);        
         $request->merge( ['send_date' => Carbon::now()] );
+
+        // Edit vill state
         $bill->bill_state = "ISSUED";
         $bill->save();
 
+
+        // Create notif
+        $notifTarget = User::where('role_id', 2)->get();
+        Notification::send($notifTarget, new changeStateBill($bill, $bill->bill_state));
+        // create comment
         $newIssue = IssueBill::create($request->all());
 
         return redirect()->intended('/bills/single/'.$bill->id);

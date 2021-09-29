@@ -123,6 +123,22 @@
                   <!-- /.col -->
                </div>
                <!-- /.row -->
+
+               
+               <div class="row">
+                  <div class="col-12">
+
+                  @if(isset($bill->billIssues))
+                     Issues for this bill : 
+                     <ol>
+                           @foreach($bill->billIssues as $data)
+                        <li> {{$data->message}} </li>
+                        @endforeach 
+                     </ol>
+                  @endif
+              
+                  </div>
+               </div>
             </div>
             <!-- /.invoice -->
             <div class="btn-group">
@@ -150,7 +166,7 @@
                <!--   /Add service -->
               
                @endif
-               @if($bill->bill_state =="PAYED")  
+               @if($bill->bill_state =="PAYED" || $bill->bill_state =="ISSUED")  
                 <!--  Valide  -->
                 <form method="post" action="{{route('valide-bill', $bill )}}">
                   @csrf
@@ -181,7 +197,7 @@
                @endisClient
 
                @isAccount
-               @if($bill->bill_state == "VALIDED")  
+               @if($bill->bill_state == "VALIDED" ||$bill->bill_state == "PAYED"  )  
             
                <!--  Report issues  -->
         
