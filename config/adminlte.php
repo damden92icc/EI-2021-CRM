@@ -542,6 +542,20 @@ return [
         ],
     ],
 
+    [
+        'text'    => 'Bills',
+        'icon'    => 'fas fa-fw fa-file-invoice-dollar',
+        'can'       => 'accountant-only',
+        'submenu' => [
+          
+            [
+                'text' => 'Listing Bills',
+                'url'  => '/bills',
+                'can'       => 'accountant-only',
+            ],
+           
+        ],
+    ],
 
     ],
 

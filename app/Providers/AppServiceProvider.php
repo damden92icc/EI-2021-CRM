@@ -33,15 +33,20 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && auth()->user()->checkRole(1);
          });
 
-        // register middleware @isClient to display on blade
-            Blade::if('isManager', function(){
-                return auth()->check() && auth()->user()->checkRole(2);
-             });
+        // register middleware @isManager to display on blade
+        Blade::if('isManager', function(){
+            return auth()->check() && auth()->user()->checkRole(2);
+            });
 
-                     // register middleware @isClient to display on blade
-            Blade::if('isAdmin', function(){
-                return auth()->check() && auth()->user()->checkRole(3);
-             });
+        // register middleware @isAdmin to display on blade
+        Blade::if('isAdmin', function(){
+            return auth()->check() && auth()->user()->checkRole(3);
+            });
+
+        // register middleware @isAccount to display on blade
+        Blade::if('isAccount', function(){
+            return auth()->check() && auth()->user()->checkRole(4);
+            });
 
         }
 }
