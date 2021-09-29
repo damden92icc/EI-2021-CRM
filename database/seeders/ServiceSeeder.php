@@ -20,6 +20,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Hosting for Wordpress, Joomla, ... and other cms without e-commerce',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 1 ,
             'validity_delay' => 365
         ],
         [
@@ -27,6 +28,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Hosting for e-commerce plateform like Wocoomerce , Prestashop , .... ',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 1 ,
             'validity_delay' => 365
         ],
 
@@ -34,6 +36,7 @@ class ServiceSeeder extends Seeder
             'label' => 'Hosting Odoo Plateform',
             'description' => 'Hosting Odoo Community plateforme',          
             'recurrent' => 1,
+            'category_id' => 1 ,
             'active' => 1,
             'validity_delay' => 365
         ],
@@ -43,6 +46,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Domaine name serveur ',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 5 ,
             'validity_delay' => 365
         ],
        
@@ -51,6 +55,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Adresse email linked with the DNS ',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 6,
             'validity_delay' => 365
         ],
         [
@@ -58,6 +63,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Adresse email linked with the DNS ',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 6,
             'validity_delay' => 365
         ],
 
@@ -66,6 +72,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Adresse email linked with the DNS ',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 6,
             'validity_delay' => 365
         ],
 
@@ -74,6 +81,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Handle website issues on a plateforme   ',          
             'recurrent' => 0,
             'active' => 1,
+            'category_id' => 3,
             'validity_delay' => 0
         ],
 
@@ -82,6 +90,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Update website  on a plateforme   ',          
             'recurrent' => 0,
             'active' => 1,
+            'category_id' => 3,
             'validity_delay' =>0
         ],
 
@@ -89,6 +98,7 @@ class ServiceSeeder extends Seeder
             'label' => ' Transfert Website to this company  ',
             'description' => 'Transfert your website on DamDen CRM  ',          
             'recurrent' => 0,
+            'category_id' => 3,
             'active' => 1,
             'validity_delay' => 0
         ],
@@ -98,6 +108,7 @@ class ServiceSeeder extends Seeder
             'description' => 'Adresse email linked with the DNS ',          
             'recurrent' => 0,
             'active' => 1,
+            'category_id' => 3,
             'validity_delay' =>0
         ],
 
@@ -106,6 +117,7 @@ class ServiceSeeder extends Seeder
             'description' => 'SLL certificate for all webplateforme except e-commerce',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 2,
             'validity_delay' =>0
         ],
 
@@ -114,6 +126,7 @@ class ServiceSeeder extends Seeder
             'description' => 'SLL certificate for e-commerce',          
             'recurrent' => 1,
             'active' => 1,
+            'category_id' => 2,
             'validity_delay' => 365
         ],
       
@@ -126,7 +139,7 @@ class ServiceSeeder extends Seeder
             'description'=> $data['description'],   
             'recurrent'=> $data['recurrent'],   
             'active'=> $data['active'],   
-            'category_id' => 1 ,
+            'category_id' =>  $data['category_id'],   
             'validity_delay'=> $data['validity_delay'],               
         ]);
     }

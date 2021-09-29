@@ -66,7 +66,7 @@ class UsersSeeder extends Seeder
             ],
 
             [
-                'name' => "Accountant Test",
+                'name' => "Accountant Michel",
                 'firstname' => "Julien",
                 'email' => 'accountant1@demo.com',
                 'phone' => '0032-489373721',

@@ -17,6 +17,7 @@ class Company extends Model
         'street_number',
         'zip_code',
         'locality',
+        'phone',
         'email',
         'company_type',
         'active'

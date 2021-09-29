@@ -31,6 +31,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@damien.com',
                 'company_type' => 'main_company',
                 'active' => 1, 
+                'phone'=> '+32-02-105456-00' 
             ],
              
 
@@ -47,6 +48,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@hmcoiff.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-12-105696-00' 
             ],
 
             [
@@ -59,6 +61,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@kingdog.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-02-105696-09' 
             ],
 
             [
@@ -71,6 +74,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@pizzafolia.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-02-106996-00' 
             ],
 
             [
@@ -83,6 +87,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@caneva.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-02-101196-00' 
             ],
       
             [
@@ -95,6 +100,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@villathaile.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-02-105698-00' 
             ],
 
             [
@@ -107,6 +113,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@pkprphone.com',
                 'company_type' => 'client',
                 'active' => 1, 
+                'phone'=> '+32-03-105696-00' 
             ],
 
 
@@ -124,6 +131,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@ovh.com',
                 'company_type' => 'provider',
                 'active' => 1, 
+                'phone'=> '+32-02-106696-00' 
             ],
 
             [
@@ -136,6 +144,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@namecheap.com',
                 'company_type' => 'provider',
                 'active' => 1, 
+                'phone'=> '+32-02-105696-10' 
             ],
 
             [
@@ -148,6 +157,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@googla.com',
                 'company_type' => 'provider',
                 'active' => 1, 
+                'phone'=> '+32-02-107696-00' 
             ],
 
             [
@@ -160,6 +170,7 @@ class CompanySeeder extends Seeder
                 'email' => 'company@starttreck.com',
                 'company_type' => 'provider',
                 'active' => 1, 
+                'phone'=> '+32-02-105696-00' 
             ],
           
         ];
@@ -174,6 +185,7 @@ class CompanySeeder extends Seeder
                 'zip_code' => $data['zip_code'],
                 'locality' => $data['locality'],
                 'email' => $data['email'],
+                'phone' => $data['phone'],
                 'company_type' => $data['company_type'],
                 'active' => $data['active'],  
             ]);
