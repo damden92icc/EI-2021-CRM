@@ -7,25 +7,28 @@
 - Gestionnaire de dépendance NPM : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 - Télécharger le projet présent ci-dessus
 
-## Installation : 
+## Installation du projet : 
 
-1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
+### Initialisation
+
+1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet
+2. Lancer les lignes de commandes suivantes:
 - composer install
 - npm install
 
--cp .env.example .env (copie le fichier d'exemple pour la configuration )
+### Configuration de l'environnement
+Toujours via un terminal à la racine du projet lancez les commandes suivantes afin de copier le fichier d'exemple du fichier de configuration:
+-cp .env.example .env 
 - Editer le fichier .env 
-    -APP_NAME = "CRM-APP" 
-    -DB_HOST = l'adresse de votre serveur
-    -DB_PORT = le port utilisé par MySQL
-    -DB_DATABASE = le nom de votre BD
-    -DB_USERNAME = le nom d'utilisateur de votre BD
-    -DB_PASSWORD = le pass lié à l'utilisateurs SQL
+    - APP_NAME = "CRM-APP" 
+    - DB_HOST = l'adresse de votre serveur
+    - DB_PORT = le port utilisé par MySQL
+    - DB_DATABASE = le nom de votre BD
+    - DB_USERNAME = le nom d'utilisateur de votre BD
+    - DB_PASSWORD = le pass lié à l'utilisateurs SQL
 
-- php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
-    
 2. Initialisation du projet :Toujours a la racine du projet lancer les commandes suivantes:
-
+    - php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
     - php artisan migrate 
     - php artisan db:seed
     - php artisan serve  (pour lancer l'application)
