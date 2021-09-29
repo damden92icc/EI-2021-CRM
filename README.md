@@ -14,13 +14,14 @@
 
 1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet
 2. Lancer les lignes de commandes suivantes:
-- composer install
-- npm install
+ > composer install
+ > npm install
 
 ### Configuration de l'environnement
 Toujours via un terminal à la racine du projet lancez les commandes suivantes afin de copier le fichier d'exemple du fichier de configuration:
--cp .env.example .env 
-- Editer le fichier .env 
+> cp .env.example .env 
+
+ Editer ensuiite les élements présent dans dans le tableau suivant dans le fichier .env 
 
 
 Field | Value
