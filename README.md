@@ -36,12 +36,17 @@ DB_PASSWORD | le pass lié à l'utilisateurs SQL
 
 
 ### Initialisation du projet 
-3oujours a la racine du projet lancer les commandes suivantes:
-    - php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
-    - php artisan migrate 
-    - php artisan db:seed
-    - php artisan serve  (pour lancer l'application)
-    - Rendez-vous ensuite via un navigateur à l'adresse: http://127.0.0.1:8000 
+Toujours a la racine du projet lancer les commandes suivantes:
+
+> php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
+
+> php artisan migrate 
+
+> php artisan db:seed
+
+> php artisan serve  (pour lancer l'application)
+
+Rendez-vous ensuite via un navigateur à l'adresse: http://127.0.0.1:8000 
     
     
 
