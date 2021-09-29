@@ -22,7 +22,7 @@ class BillController extends Controller
 {
     public function index()
     {      
-        // Return Offer based on the role (Client or Manager)
+        // Return bill based on the role (Client or Manager)
         $user= Auth::user();
 
         if($user->role->id == 1){
