@@ -14,7 +14,8 @@
 
 1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet
 2. Lancer les lignes de commandes suivantes:
- > composer install
+ > composer install 
+ 
  > npm install
 
 ### Configuration de l'environnement
