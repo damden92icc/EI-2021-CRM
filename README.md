@@ -7,7 +7,7 @@
 - Gestionnaire de dépendance NPM : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 - Télécharger le projet présent ci-dessus
 
-## Installation : 
+##Installation : 
 
 1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
 
@@ -25,3 +25,4 @@
     - php artisan migrate 
     - php artisan db:seed
     - php artisan serve  (pour lancer l'application)
+    - Rendez-vous ensuite via un navigateur à l'adresse: http://127.0.0.1:8000 
