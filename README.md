@@ -47,6 +47,7 @@ Toujours a la racine du projet lancer les commandes suivantes:
 > php artisan serve  (pour lancer l'application)
 
 Rendez-vous ensuite via un navigateur à l'adresse: http://127.0.0.1:8000 
+
 Les identifiants de connexion se trouve à la page 95 du document PDF reçus lors de la remise de l'écrit.
     
 
