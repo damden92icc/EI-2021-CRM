@@ -27,7 +27,8 @@ Toujours via un terminal à la racine du projet lancez les commandes suivantes a
     - DB_USERNAME = le nom d'utilisateur de votre BD
     - DB_PASSWORD = le pass lié à l'utilisateurs SQL
 
-2. Initialisation du projet :Toujours a la racine du projet lancer les commandes suivantes:
+### Initialisation du projet 
+3oujours a la racine du projet lancer les commandes suivantes:
     - php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
     - php artisan migrate 
     - php artisan db:seed
