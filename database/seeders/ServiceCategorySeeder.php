@@ -32,6 +32,14 @@ class ServiceCategorySeeder extends Seeder
                 'label' => 'Design Solution',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
             ],
+            [
+                'label' => 'Digital label Solution',
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+            ],
+            [
+                'label' => 'Digital communication Solution',
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+            ],
         ];
 
 
