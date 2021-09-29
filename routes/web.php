@@ -247,12 +247,12 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
     Route::get('/', [App\Http\Controllers\BillController::class, 'index'])->name('listing-bills');
     Route::get('/single/{bill}', [App\Http\Controllers\BillController::class, 'show'])->name('single-bill');
 
-    // Listing own client projects
+    // Action pay bill for client
     Route::group(['middleware' => ['isClient']], function() {          
         Route::post('/pay/{bill}', [App\Http\Controllers\BillController::class, 'payBill'])->name('pay-bill');
     });
 
-    // Management offers by lanager
+    // Management bill by Manager
     Route::group(['middleware' => ['isManager']], function() {              
    
     
@@ -279,6 +279,10 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
      });
     });
 
+
+    Route::group(['middleware' => ['isAccount']], function() { 
+        Route::post('/report-issue/{bill}', [App\Http\Controllers\BillController::class, 'reportIssue'])->name('report-bill-issue');
+          });
   
      Route::prefix('select2')->group(function () {
         Route::get('/services-billable',  [App\Http\Controllers\BillController::class, 'serviceBillable'])->name('services-billable');

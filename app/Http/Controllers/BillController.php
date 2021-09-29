@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Bill;
+use App\Models\IssueBill;
 use App\Models\Employe;
 use App\Models\User;
 use App\Models\Company;
@@ -51,7 +52,7 @@ class BillController extends Controller
             $bills = Bill::where('owner_id', $user->id)->get(); 
         }
         else{
-            $bills = Bill::where('bill_state', 'PAYED')->get(); 
+            $bills = Bill::whereIn('bill_state', ['PAYED', 'VALIDED'])->get(); 
         }
 
 
@@ -263,7 +264,6 @@ class BillController extends Controller
         }
 
         // Send notification to all employ 
-
         $employes = Employe::where('company_id', $bill->concerned_company)->get();
 
         foreach($employes as $data){
@@ -326,6 +326,27 @@ class BillController extends Controller
         $bill->bill_state = "PAYED";         
         $bill->save();    
         return redirect()->intended('/bills/single/'.$bill->id);
+    }
+
+
+    public function reportIssue(Request $request, Bill $bill){
+        // construct new query 
+        $request->merge( [ 'bill_id' => $bill->id ]);        
+        $request->merge( ['send_date' => Carbon::now()] );
+
+        // Edit vill state
+        $bill->bill_state = "ISSUED";
+        $bill->save();
+
+
+        // Create notif
+        $notifTarget = User::where('role_id', 2)->get();
+        Notification::send($notifTarget, new changeStateBill($bill, $bill->bill_state));
+        // create comment
+        $newIssue = IssueBill::create($request->all());
+
+        return redirect()->intended('/bills/single/'.$bill->id);
+
     }
     
 }

@@ -123,6 +123,22 @@
                   <!-- /.col -->
                </div>
                <!-- /.row -->
+
+               
+               <div class="row">
+                  <div class="col-12">
+
+                  @if(isset($bill->billIssues))
+                     Issues for this bill : 
+                     <ol>
+                           @foreach($bill->billIssues as $data)
+                        <li> {{$data->message}} </li>
+                        @endforeach 
+                     </ol>
+                  @endif
+              
+                  </div>
+               </div>
             </div>
             <!-- /.invoice -->
             <div class="btn-group">
@@ -150,7 +166,7 @@
                <!--   /Add service -->
               
                @endif
-               @if($bill->bill_state =="PAYED")  
+               @if($bill->bill_state =="PAYED" || $bill->bill_state =="ISSUED")  
                 <!--  Valide  -->
                 <form method="post" action="{{route('valide-bill', $bill )}}">
                   @csrf
@@ -179,6 +195,22 @@
                <!--  /Pay  -->
                @endif
                @endisClient
+
+               @isAccount
+               @if($bill->bill_state == "VALIDED" ||$bill->bill_state == "PAYED"  )  
+            
+               <!--  Report issues  -->
+        
+             
+                  <button type="submit" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal-report-issue">
+                  <i class="fa fa-download"></i> Report issues  </button>
+  
+               <!--  /Report issues  -->
+               @endif
+               @endisAccount
+
+
+
             </div>
             <!-- end button -->
          </div>
@@ -212,6 +244,39 @@
    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- Modal ask update  Modal -->
+<div class="modal fade" id="modal-report-issue" style="display: none;">
+<div class="modal-dialog">
+   <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">×</span></button>
+         <h4 class="modal-title">Report Issue</h4>
+      </div>
+      <!-- formService Modal -->
+      <form method="post" action="{{route('report-bill-issue', $bill->id)}}">
+         @csrf
+         <div class="modal-body">
+            <div class="form-group {{$errors->has('comments') ? 'has-error' : ''}} ">
+               <label for="offerComments">Issue </label>
+               <textarea class="form-control form-control-lg" type="text" id="message" name="message"  placeholder="comments">
+               </textarea>
+               @if($errors->has('message'))
+               <strong> {{$errors->first('message')}}</strong>
+               @endif
+            </div>
+         </div>
+         <!-- end Modal body -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="sumbit" class="btn btn-primary">Save changes</button>
+         </div>
+      </form>
+   </div>
+   <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 @stop
 @section('css')
 <link rel="stylesheet" href="../css/admin_custom.css">
