@@ -20,12 +20,17 @@
 Toujours via un terminal à la racine du projet lancez les commandes suivantes afin de copier le fichier d'exemple du fichier de configuration:
 -cp .env.example .env 
 - Editer le fichier .env 
-    - APP_NAME = "CRM-APP" 
-    - DB_HOST = l'adresse de votre serveur
-    - DB_PORT = le port utilisé par MySQL
-    - DB_DATABASE = le nom de votre BD
-    - DB_USERNAME = le nom d'utilisateur de votre BD
-    - DB_PASSWORD = le pass lié à l'utilisateurs SQL
+
+
+Field | Value
+------------ | -------------
+APP_NAME| CRM-APP
+DB_HOST | l'adresse de votre serveur
+DB_PORT | le port utilisé par MySQL
+DB_DATABASE | le nom de votre BD
+DB_USERNAME | le nom d'utilisateur de votre BD
+DB_PASSWORD | le pass lié à l'utilisateurs SQL
+
 
 ### Initialisation du projet 
 3oujours a la racine du projet lancer les commandes suivantes:
@@ -34,3 +39,7 @@ Toujours via un terminal à la racine du projet lancez les commandes suivantes a
     - php artisan db:seed
     - php artisan serve  (pour lancer l'application)
     - Rendez-vous ensuite via un navigateur à l'adresse: http://127.0.0.1:8000 
+    
+    
+
+
