@@ -2,7 +2,8 @@
 
 ## Pré-requis: 
 - Un serveur base de données de type SQL
-- Un serveur web possédant apache Version >= 7.2.0,
+- Un serveur web possédant apache
+- PHP Version >= 7.2.0,
 - Gestionnaire de dépendance PHP : hhttps://getcomposer.org/download/
 - Gestionnaire de dépendance NPM : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 - Télécharger le projet présent ci-dessus
