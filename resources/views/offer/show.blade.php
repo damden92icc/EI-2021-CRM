@@ -31,7 +31,7 @@
                   <strong> {{$myCompany->name}} </strong><br>
                   {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
                   {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>            
-                  Phone :  <br>
+                  Phone : {{$myCompany->phone}} <br>
                   Email:    {{$myCompany->email}}<br>
                   VAT :  {{$myCompany->vat}}<br>
                   <strong> Representant : </strong><br>
@@ -46,7 +46,7 @@
                   {{$offer->company->street_name}} , {{$offer->company->street_number}} <br>
                   {{$offer->company->locality}} ,    {{$offer->company->zip_code}} <br>
                   Email:   {{$offer->company->email}} <br>
-                  Phone :    {{$offer->company->mail}} <br>
+                  Phone :    {{$offer->company->phone}} <br>
                   VAT :    {{$offer->company->vat}} <br>
                   <strong> Representant : </strong><br>
                   {{$offer->client->name}}  {{$offer->client->firstname}}

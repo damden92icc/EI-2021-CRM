@@ -33,7 +33,7 @@
                         <strong> {{$myCompany->name}} </strong><br>
                         {{$myCompany->street_name}} ,   {{$myCompany->street_number}} <br>
                         {{$myCompany->zip_code}} -  {{$myCompany->locality}}  <br>
-                        Phone :  <br>
+                        Phone :  {{$myCompany->phone}}  <br>
                         Email:    {{$myCompany->email}}<br>
                         VAT :  {{$myCompany->vat}}<br>
                      </address>
@@ -45,7 +45,7 @@
                         <strong>{{$bill->company->name}}</strong><br>
                         {{$bill->company->street_name}} , {{$bill->company->street_number}} <br>
                         {{$bill->company->locality}} ,    {{$bill->company->zip_code}} <br>
-                        Phone :    {{$bill->company->mail}} <br>
+                        Phone :    {{$bill->company->phone}} <br>
                         Email:   {{$bill->company->email}} <br>
                         VAT:   {{$bill->company->vat}} <br>
                      </address>
