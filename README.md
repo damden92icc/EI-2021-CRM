@@ -1,28 +1,28 @@
-#Epreuve intégrée - Damien DENIS - Année 2020-21
+# Epreuve intégrée - Damien DENIS - Année 2020-21
 
-##Pré-requis: 
+## Pré-requis: 
 - Un serveur base de données de type SQL
 - Un serveur web possédant apache Version >= 7.2.0,
 - Gestionnaire de dépendance PHP : hhttps://getcomposer.org/download/
 - Gestionnaire de dépendance NPM : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 - Télécharger le projet présent ci-dessus
 
-##Installation : 
+## Installation : 
 
 1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
-    - composer install
-    - npm install
-    
-    -cp .env.example .env (copie le fichier d'exemple pour la configuration )
-    - Editer le fichier .env 
-        -APP_NAME = "CRM-APP" 
-        -DB_HOST = l'adresse de votre serveur
-        -DB_PORT = le port utilisé par MySQL
-        -DB_DATABASE = le nom de votre BD
-        -DB_USERNAME = le nom d'utilisateur de votre BD
-        -DB_PASSWORD = le pass lié à l'utilisateurs SQL
+- composer install
+- npm install
 
-    - php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
+-cp .env.example .env (copie le fichier d'exemple pour la configuration )
+- Editer le fichier .env 
+    -APP_NAME = "CRM-APP" 
+    -DB_HOST = l'adresse de votre serveur
+    -DB_PORT = le port utilisé par MySQL
+    -DB_DATABASE = le nom de votre BD
+    -DB_USERNAME = le nom d'utilisateur de votre BD
+    -DB_PASSWORD = le pass lié à l'utilisateurs SQL
+
+- php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
     
 2. Initialisation du projet :Toujours a la racine du projet lancer les commandes suivantes:
 
