@@ -10,13 +10,17 @@
 ##Installation : 
 
 1.Télécharger le projet, rendez-vous via un terminal de commande a la racine de projet et tapez les commandes suivantes:
-
     - composer install
     - npm install
     
     -cp .env.example .env (copie le fichier d'exemple pour la configuration )
     - Editer le fichier .env 
-    ( DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME,  DB_PASSWORD)
+        -APP_NAME = "CRM-APP" 
+        -DB_HOST = l'adresse de votre serveur
+        -DB_PORT = le port utilisé par MySQL
+        -DB_DATABASE = le nom de votre BD
+        -DB_USERNAME = le nom d'utilisateur de votre BD
+        -DB_PASSWORD = le pass lié à l'utilisateurs SQL
 
     - php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
     
