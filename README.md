@@ -13,8 +13,10 @@ Installation :
 - composer install
 - npm install
 -cp .env.example .env (copie le fichier d'exemple pour la configuration )
-- php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
 - Editer le fichier .env 
+( DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME,  DB_PASSWORD)
+- php artisan key:generate ( Génère une nouvelle clé de sécurité qui sera placer dans ce nouveau fichier .env )
+
 
 
 php artisan migrate lancer les migrations
