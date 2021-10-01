@@ -118,7 +118,6 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
     Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('listing-quote');
     Route::post('/action/{quote}/{state}', [App\Http\Controllers\QuoteController::class, 'documentChangeState'])->name('change-state-quote');
     Route::get('/states/{state}', [App\Http\Controllers\QuoteController::class, 'documentByState'])->name('listing-my-quote-by-state');
-    Route::get('/get', [App\Http\Controllers\QuoteController::class, 'getDocumentByState'])->name('my-quote-by-state');
     Route::get('/single/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
     
     

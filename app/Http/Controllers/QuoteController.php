@@ -18,11 +18,23 @@ class QuoteController extends Controller
 {
     public function index()
     {      
-        $quotes = Quote::where('quote_state', 'SENDED')->orWhere('quote_state', 'TRAITED')->get();  
+        
+        $user =Auth::user();
+
+        // check if user is client
+        if($user->checkRole(1) ){
+
+            $listingQuotes  = Quote::where('owner_id', $user->id)->get();  
+        }
+        else{
+            $listingQuotes = Quote::where( 'quote_state',   "SENDED")->get();  
+        }
+
+   
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',
             'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $quotes ,      
+            'quotes'=>          $listingQuotes   ,      
         ]);
     }
 
@@ -107,73 +119,7 @@ class QuoteController extends Controller
         $quote->update($request->all());
         return redirect()->route('single-quote', $quote);
     }
-
     
-
-
-    public function storeServiceDoc (Request $request){
-
-     
-        $messages = [
-            'required' => 'Ce champs ne peut etre vide',
-        ];
-
-        $rules = [
-            'quantity' => 'required|int',        
-            'service_id'=> 'required|int',
-            'quote_id' => 'required|int',                    
-        ];
-
-
-        $quote = $request['quote_id'];
-
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-   
-        $newService = QuoteService::create($request->all());
-     
-        return redirect()->route('single-quote', $quote);
-    }
-
-
-
-    public function updateServiceDoc(Request $request){
-
-        // Get current Service listing + quote
-        $sl = QuoteService::where('id', $request['sl_id'])->first();
-        $quote = Quote::where('id', $sl->quote_id )->first();
-
-        $messages = [
-            'required' => 'Ce champs ne peut etre vide',
-        ];
-
-        $rules = [
-            'quantity' => 'required|int',        
-            'service_id'=> 'required|int',
-                    
-        ];
-
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-   
-        $sl->update($request->all());
-
-        return redirect()->route('single-quote', $quote);
-    }
-
-
-
-
-    public function myQuote(){     
-     
-        $myQuotes = Quote::where('owner_id', Auth::user()->id)->get();  
-
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $myQuotes ,      
-        ]);
-    }
-
-
 
     public function documentChangeState(Quote $quote , String $state){
 
@@ -216,37 +162,52 @@ class QuoteController extends Controller
         ]);
     }
    
-    public function getDocumentByState(Request $request){
-
-        $state = $request->state;
 
 
+    public function storeServiceDoc (Request $request){
 
-        $user =Auth::user();
+     
+        $messages = [
+            'required' => 'Ce champs ne peut etre vide',
+        ];
 
-        // check if user is client
-        if($user->checkRole(1) ){
-
-            if($state == "ALL" ){
-                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->get();  
-            }
-            else{
-                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
-            }
-                
-                   
-        }
-        else{
-            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
-        }
+        $rules = [
+            'quantity' => 'required|int',        
+            'service_id'=> 'required|int',
+            'quote_id' => 'required|int',                    
+        ];
 
 
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote ',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>          $listingQuotes  ,      
-        ]);
+        $quote = $request['quote_id'];
 
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
+   
+        $newService = QuoteService::create($request->all());
+     
+        return redirect()->route('single-quote', $quote);
+    }
+
+    public function updateServiceDoc(Request $request){
+
+        // Get current Service listing + quote
+        $sl = QuoteService::where('id', $request['sl_id'])->first();
+        $quote = Quote::where('id', $sl->quote_id )->first();
+
+        $messages = [
+            'required' => 'Ce champs ne peut etre vide',
+        ];
+
+        $rules = [
+            'quantity' => 'required|int',        
+            'service_id'=> 'required|int',
+                    
+        ];
+
+        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
+   
+        $sl->update($request->all());
+
+        return redirect()->route('single-quote', $quote);
     }
 
     public function removeServiceDoc($id){

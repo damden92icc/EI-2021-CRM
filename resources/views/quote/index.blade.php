@@ -17,7 +17,7 @@
 </div>
 <div class="col-6">
 @isClient
-   <form method="GET" id="doc-filter" action="{{route('my-quote-by-state')}}">
+   <form method="GET" id="doc-filter" action="{{route('listing-my-quote-by-state', 'ALL')}}">
 
                         <select class="form-control" id="state" name="state">
                         
@@ -98,18 +98,17 @@
 
 
 
-
 // Display current selected state by checking paramter
 $(function() {
 
    var e = document.getElementById("state");
    
-   if( document.URL == 'http://127.0.0.1:8000/quotes/my-quote'){
-      var param ="ALL";
+   if( document.URL == 'http://127.0.0.1:8000/quotes/'){
+      var param ="";
    }
    else{
 
-      var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/get?state=', ''));
+      var param  = (document.URL.replace('http://127.0.0.1:8000/quotes/states=', ''));
 
       $("#state").val(param);
    }
