@@ -103,4 +103,28 @@ class ServiceController extends Controller
         return redirect()->intended('/managements/services/single/'.$service->id);
     }
     
+
+
+
+
+
+    public function selectableService(Request $request){
+
+        $services = Service::where('active', true)->get();
+
+        $selectableService = [];
+
+        foreach($services as $data){
+
+            $service['id'] = $data->id;
+            $service['service_name'] = $data->label;
+            $service['service_desc'] =  $data->description;
+
+                array_push($selectableService,$service) ;
+
+            }       
+     
+
+        return      $selectableService ;
+    }
 }

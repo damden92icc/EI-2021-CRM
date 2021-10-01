@@ -73,9 +73,7 @@
          <!-- /.row -->
          <!-- Table row -->
          <div class="row">
-            <div class="col-12 table-responsive">
-
-       
+            <div class="col-12 table-responsive">       
                <table class="table table-striped">
                   <thead>
                      <tr>                   
@@ -214,7 +212,7 @@
    </div>
    <!-- /.row -->
 </div>
-<div class="modal fade" id="modal-default">
+<div class="modal fade " id="modal-default">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -232,13 +230,11 @@
                <input type="hidden" id="quote_id" name="quote_id" value="{{$quote->id}}">
                <div class="form-group  {{$errors->has('service_id') ? 'has-error' : ''}}">
                   <label for="inputService">Service</label>
-                  <select class="form-control" id="selectCompanyValue" name="service_id">
-                     @forelse($servicesSelectable as $data)
-                     <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}}</option>
-                     @empty 
-                     <p> No service selectable </p>
-                     @endforelse
-                  </select>
+
+
+                  <select id="selectorServices" class="js-example-basic form-select form-select-lg mb-3" name="service_id"  style="width:100%">>               
+               </select>
+
                </div>
                <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
@@ -306,12 +302,33 @@
            $('#service_name').val($(this).data('name'));
            $('#quantity').val($(this).data('quantity'));
    
-           $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));
-   
-   
-             $('#modal-edit-service').modal('show');
+           $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));   
+            $('#modal-edit-service').modal('show');
          });
-              
+
+
+         $('#selectorServices').select2({
+            placeholder: 'Select a service',
+            ajax: {
+               url:"{{route('services-selectable' )}}",
+               processResults: function (data) {
+               // Transforms the top-level key of the response object from 'items' to 'results'
+                  return {
+                     results: $.map(data, function(item) {
+                              return {
+                                 text :  item.service_name + ' ( ' + item.service_desc + ' )' ,
+                                 id: $.parseJSON(item.id ),
+                                 
+                              }
+                           })
+                        };
+                     }
+               }
+            });
+
+
+
+
 </script>
 @stop
 

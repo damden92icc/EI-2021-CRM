@@ -18,22 +18,21 @@ class QuoteSeeder extends Seeder
     {
         $quotes = [
             [
-                'label' => 'Devis 1',
-      
+                'label' => 'Devis 1 - Updating website',      
                 'reference' => 'A0010',
                 'sended_date' =>null ,             
                 'quote_state' => 'Draft'
             ],
 
             [
-                'label' => 'Devis 2',
+                'label' => 'Devis 2 - Online coffee shop',
                 'reference' => 'A0015',
                 'sended_date' =>null ,            
                 'quote_state' => 'Draft'
             ],
 
             [
-                'label' => 'Devis 3',
+                'label' => 'Devis 3 - Pizza Delivery ',
                 'reference' => 'A00410',
                 'sended_date' =>null ,          
                 'quote_state' => 'Draft'

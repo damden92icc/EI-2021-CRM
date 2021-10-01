@@ -297,7 +297,12 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
  * ===============================================
  */
 
-
+Route::prefix('select2')->group(function () {
+    
+    Route::get('/selectableService',  [App\Http\Controllers\ServiceController::class, 'selectableService'])->name('services-selectable');
+   
+  
+});
 Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){         
     Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');   
 });
