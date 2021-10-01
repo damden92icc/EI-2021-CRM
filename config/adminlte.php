@@ -403,7 +403,7 @@ return [
             ],
             [
                 'text' => 'Offer Waiting ',
-                'route' => ['all-offer-by-state', ['state' => 'SENDED']],
+                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
             [
@@ -477,7 +477,7 @@ return [
             ],
             [
                 'text' => 'My quotes ',
-                'url'  => '/quotes/my-quote',
+                'url'  => '/quotes',
                 'can'       => 'client-only',
             ],
             [
@@ -497,13 +497,13 @@ return [
           
             [
                 'text' => ' Offer Waiting',
-                'route' => ['listing-my-offer-by-state', ['state' => 'SENDED']],
+                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
                 'can'       => 'client-only',
             ],
 
             [
-                'text' => 'All Offer ',
-                'route' => 'listing-my-offer',       
+                'text' => 'My Offer ',
+                'url' => '/offers',       
                 'can'       => 'client-only',
             ],
 

@@ -77,48 +77,22 @@ class OfferSeeder extends Seeder
                 'offer_state'=>  "SENDED" ,
             ],
 
-            [
-                'label' => 'Offer Pack Hosting',
-                'reference' => 'GF2AED01545',
-                'offer_state'=>  "DRAFT" ,
-            ],
-
-            [
-                'label' => 'Offer Hosting Wordpress',
-                'reference' => 'FAZ2EGNK01545',
-                'offer_state'=>  "DRAFT" ,
-            ],
-
-            
-
-            [
-                'label' => 'Offer website Queeny',
-                'reference' => 'FA208ZA51545',
-                'offer_state'=>  "SENDED" ,
-            ],
+     
 
 
-            [
-                'label' => 'Offer  Singer Website',
-                'reference' => 'RE2960AVSX1545',
-                'offer_state'=>  "SENDED" ,
-            ],
-
-            [
-                'label' => 'Offer Blog Influanca',
-                'reference' => 'GF23ER01545',
-                'offer_state'=>  "SENDED" ,
-            ],
-
-            [
-                'label' => 'Offer Paradize Holliday ',
-                'reference' => 'FAZ2019K6545',
-                'offer_state'=>  "SENDED" ,
-            ],
+  
         ];
 
-        $arrayFakeCOncernedClient = [ 2, 3];
-      $arrayFakeCompany = [ 2, 3, 4,5];
+   
+
+        /**
+         * Seeder offer for Client Julie 1 
+         */
+
+         $clienID = 2;
+         $workingFor = [2,3] ; 
+
+
         foreach($offers as $data){
             DB::table('offers')->insert([
                 'label' => $data['label'],
@@ -133,10 +107,81 @@ class OfferSeeder extends Seeder
                 'due_date'=>  Carbon::parse('2022-01-01') ,
                 'owner_id'=>1,
                 'created_at'=>  Carbon::now()->subdays(3),
-                'concerned_client' =>  Arr::random( $arrayFakeCOncernedClient),       
-                'concerned_company' =>    Arr::random($arrayFakeCompany),       
+                'concerned_client' =>   $clienID ,       
+                'concerned_company' =>    Arr::random($workingFor),       
             ]);
         }
+
+
+
+
+
+        /**
+         * Seeder offer for client  Pierre
+         */
+
+        $offers = [
+                [
+                    'label' => 'Offer Pack Hosting',
+                    'reference' => 'GF2AED01545',
+                    'offer_state'=>  "DRAFT" ,
+                ],
+
+                [
+                    'label' => 'Offer Hosting Wordpress',
+                    'reference' => 'FAZ2EGNK01545',
+                    'offer_state'=>  "DRAFT" ,
+                ],
+
+                
+
+                [
+                    'label' => 'Offer website Queeny',
+                    'reference' => 'FA208ZA51545',
+                    'offer_state'=>  "SENDED" ,
+                ],
+                [
+                    'label' => 'Offer  Singer Website',
+                    'reference' => 'RE2960AVSX1545',
+                    'offer_state'=>  "SENDED" ,
+                ],
+
+                [
+                    'label' => 'Offer Blog Influanca',
+                    'reference' => 'GF23ER01545',
+                    'offer_state'=>  "SENDED" ,
+                ],
+
+                [
+                    'label' => 'Offer Paradize Holliday ',
+                    'reference' => 'FAZ2019K6545',
+                    'offer_state'=>  "SENDED" ,
+                ],
+            ];
+
+
+        $clienID = 3;
+        $workingFor = [4,5] ; 
+
+        foreach($offers as $data){
+            DB::table('offers')->insert([
+                'label' => $data['label'],
+                'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",   
+                'reference'=> $data['reference'],
+                'sended_date'=>  Carbon::parse('2021-08-01') ,
+                'offer_state'=>  $data['offer_state'],
+                'offer_priority_state'=> "Low",
+                'total_cost_ht'=> 200,
+                'total_sell_ht'=> 1000,
+                'validity_delay'=> 30,
+                'due_date'=>  Carbon::parse('2022-01-01') ,
+                'owner_id'=>1,
+                'created_at'=>  Carbon::now()->subdays(3),
+                'concerned_client' =>   $clienID ,       
+                'concerned_company' =>    Arr::random($workingFor),       
+            ]);
+        }
+
     }
 }
 

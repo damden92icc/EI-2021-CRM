@@ -20,26 +20,37 @@ class EmployesSeeder extends Seeder
      
             // admin 
             [
-                'user_id' => 1 ,// Damien super Admin
+                'user_id' => 1 ,// Damien  - Manager
                 'company_id' => 1, // main company
             ],
 
             // Client 1 - company 2 
             [
-                'user_id' => 2 ,// Client 1
+                'user_id' => 2 ,// Client 1 - Julie
                 'company_id' => 2, // x company
             ],
 
               // Client 1 - company 3
             [
-                'user_id' =>  2,// Client 1
+                'user_id' =>  2,// Client 1 Julie
                 'company_id' => 3, // x company
             ],
    
+            // Client 2 - company 4 
+            [
+                'user_id' => 3 ,// Client 2- Pierre
+                'company_id' => 2, // x company
+            ],
+
+            // Client 2 - company 5
+            [
+                'user_id' =>  3,// Client 2 Pierre
+                'company_id' => 3, // x company
+            ],
 
             // Manager  
             [
-                'user_id' =>  4,// Damien super Admin
+                'user_id' =>  4,// Damien Manager
                 'company_id' => 1, // x company
             ],
             

@@ -32,7 +32,9 @@ class OfferController extends Controller
         }
 
         elseif($user->role->id == 1){
-            $offers = Offer::where([['concerned_client', $user->id ]])->get();
+
+            $offerState = ['ARCHIVED', 'SENDED', 'ACCEPTED'];
+            $offers = Offer::where([['concerned_client', $user->id ]])->whereIn('offer_state', $offerState)->get();
         }
         else{
             $offers = Offer::all(); 
@@ -319,6 +321,8 @@ class OfferController extends Controller
         $state = $request->state;
         $user = Auth::user();
 
+
+        dd("test");
         // Check if user is client or maanger to get own offer
         if($user->role->id == 1){
 
@@ -338,8 +342,8 @@ class OfferController extends Controller
      
 
            return view('offer.index', [
-                'pageTitle' => 'Listing Offers',
-                'pageTabTitle' => 'Listing Offers',
+                'pageTitle' => 'Listing my  Offers',
+                'pageTabTitle' => 'Listing my Offers',
                 'offers'=> $myOffer ,      
             ]);
     }
