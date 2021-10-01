@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Notification;
 
 class QuoteController extends Controller
 {
-    public function index()
-    {      
+    public function index() {      
         
         $user =Auth::user();
-
         // check if user is client
         if($user->checkRole(1) ){
 
@@ -51,7 +49,7 @@ class QuoteController extends Controller
             'pageTabTitle' => 'Listing service',
             'quote'=>  $quote,   
             'myCompany' =>   $myCompany,         
-            'servicesSelectable' =>  $selectableServices,
+     
         ]);
     }
 
@@ -161,8 +159,6 @@ class QuoteController extends Controller
             'quotes'=>          $listingQuotes  ,      
         ]);
     }
-   
-
 
     public function storeServiceDoc (Request $request){
 
@@ -221,7 +217,6 @@ class QuoteController extends Controller
         return redirect()->route('single-quote', $quote);
        
     }
-
 
 }
 

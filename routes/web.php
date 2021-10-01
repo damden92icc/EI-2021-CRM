@@ -57,7 +57,9 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
     });
 
     // Companies Management
-    Route::prefix('company')->group(function () {          
+    Route::prefix('company')->group(function () {       
+        Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
+        Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');      
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
         Route::post('/store', [App\Http\Controllers\CompanyController::class, 'store'])->name('store-company'); 
         Route::get('/edit/{id}', [App\Http\Controllers\CompanyController::class, 'edit'])->name('edit-company');
@@ -68,6 +70,7 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::put('/remove-employe/{employe}', [App\Http\Controllers\CompanyController::class, 'removeEmploye'])->name('remove-employe');   
     });
 
+    
     // Users managements
 
     Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){      
@@ -287,32 +290,27 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
 
 
 
-
-
-
-
 /** 
  * ==============================================
  *                  Available for all register user
  * ===============================================
  */
 
-Route::prefix('select2')->group(function () {
+Route::group( ['prefix'=>'select2', 'middleware' => ['auth'] ], function() {
     
-    Route::get('/selectableService',  [App\Http\Controllers\ServiceController::class, 'selectableService'])->name('services-selectable');
-   
+    Route::get('/selectableService',  [App\Http\Controllers\ServiceController::class, 'selectableService'])->name('services-selectable');      
   
 });
 Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){         
     Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');   
 });
 
-Route::prefix('company')->group(function () {        
-    Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
-    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');   
-});
 
-
+/** 
+ * ==============================================
+ *                Notification manangement
+ * ===============================================
+ */
 
 Route::prefix('notifications')->group(function () {     
     // display top nav   
