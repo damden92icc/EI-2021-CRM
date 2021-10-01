@@ -60,6 +60,29 @@ class QuoteSeeder extends Seeder
                 'quote_state' => 'SENDED'
             ],
 
+        ];
+
+        // Seeding quote for client 1 working for 2-3 
+        $clienID = 2;
+        $workingFor = [2,3] ; 
+
+
+        foreach($quotes as $data){
+            DB::table('quotes')->insert([
+                'label' => $data['label'],
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+                'reference' => $data['reference'],
+                'created_at' => Carbon::now()->subdays(15), 
+                'updated_at' => Carbon::now()->subdays(1), 
+                'sended_date' => $data['sended_date'],
+                'quote_state' => $data['quote_state'],
+                'owner_id' =>        $clienID ,    
+                'concerned_company' =>    Arr::random($workingFor),                   
+            ]);
+        }
+
+
+        $quotes=[
             [
                 'label' => 'Devis 7',
                 'reference' => 'A00aDS41fg0',
@@ -104,7 +127,12 @@ class QuoteSeeder extends Seeder
         ];
 
 
-        $arrayFakeCompany = [ 2, 3, 4];
+    
+
+    // Seeding quote for client 2 working for 4-5
+        $clienID = 3;
+        $workingFor = [4,5] ; 
+
         foreach($quotes as $data){
             DB::table('quotes')->insert([
                 'label' => $data['label'],
@@ -114,8 +142,8 @@ class QuoteSeeder extends Seeder
                 'updated_at' => Carbon::now()->subdays(1), 
                 'sended_date' => $data['sended_date'],
                 'quote_state' => $data['quote_state'],
-                'owner_id' => 2,    
-                'concerned_company' =>    Arr::random($arrayFakeCompany),                   
+                'owner_id' => $clienID,    
+                'concerned_company' =>    Arr::random($workingFor),                   
             ]);
         }
     }
