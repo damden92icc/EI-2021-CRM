@@ -194,7 +194,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'my-profil',
 
     /*
     |--------------------------------------------------------------------------
@@ -263,7 +263,7 @@ return [
         ],
         */
        
-        ['header' => 'PROFIL ', ],
+    
                
     /**
     * Company Nav
@@ -273,12 +273,7 @@ return [
         'icon'    => 'fas fa-fw fa-tachometer-alt',
         'url'  => '/',
     ],
-        [
-        'text' => 'My Profil',
-        'url'  => 'my-profil/',
-        'icon'    => 'fas fa-fw fa-user',
-    ],    
-  
+       
 
 
 

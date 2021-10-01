@@ -160,20 +160,16 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
     Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('my-offer-by-state');
-
-    
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
 
 
-    // Listing own client offers
+    // Action for client ask update
     Route::group(['middleware' => ['isClient']], function() {          
         Route::post('/ask-update/{offer}/comment', [App\Http\Controllers\OfferController::class, 'commentOffer'])->name('ask-update-service-doc-offer');
            
     });
 
-
-
-    // Management offers by lanager
+    // Management offers by Manager
     Route::group(['middleware' => ['isManager']], function() {     
        
         // CRUD Offer
