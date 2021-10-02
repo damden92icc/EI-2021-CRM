@@ -7,87 +7,119 @@
 @stop
 @section('content')
 <div class="card">
-    <div class="card-header">
+   <div class="card-header">
       <div class="row">
-        <div class="col-6">
-        <h3 class="card-title">{{$pageTabTitle}}</h3>
-
-
-
-</div>
-<div class="col-6">
-
-</div>
-</div>
-
-           
+         <div class="col-6">
+            <h3 class="card-title">{{$pageTabTitle}}</h3>
+         </div>
+         <div class="col-6">
+            <select class="form-control " id="documentState"  onchange="reloadTabData()">
+               @isClient
+               <option value="DRAFT" > DRAFT</option>
+               <option value="TRAITED" > TRAITED</option>
+               <option value="SENDED" > SENDED</option>
+               <option value="VALIDED" > VALIDED</option>
+               @endisClient
+               @isManager
+               <option value="SENDED" > SENDED</option>
+               <option value="TRAITED" > TRAITED</option>
+               @endisManager
+            </select>
+         </div>
+      </div>
    </div>
    <!-- /.card-header -->
    <div class="card-body p-0">
-      
-   <table class="table table-striped" id="main-table">
+      <table class="table table-striped" id="main-table">
          <thead>
             <tr>
-               <th>num</th>
-               <th>name</th>
+               <th>#</th>
+               <th>label</th>
                <th>Desc</th>
-               <th>Company</th>
-               <th> Created Date </th>
-               <th>Last update</th>
-               <th>State</th>
-               <th></th>
+               <th>reference</th>
+               <th>state</th>
+               <th>company</th>
+               <th>Action</th>
             </tr>
          </thead>
-         <tbody>
-            @foreach($quotes as $data)
-            <tr>
-            <td> {{$data->id}} </td>
-               <td> {{$data->label}} </td>
-               <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
-               <td> {{$data->company->name}} </td>      
-               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
-               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>           
-               <td> {{$data->quote_state}} </td>
-               <td>
-                  <div class="btn-group">
-                     <a class="btn btn-block btn-info" href="{{route('single-quote', $data->id )}}">view</a>
-                     @isClient
-                     <!--  Update Quote -->
-                     <form method="get" action="{{route('edit-quote', $data )}}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                        Update  </button>
-                     </form>
-                     <!--  Update Quote -->
-                     @endisClient
-                  </div>
-               </td>
-            </tr>
-            @endforeach
-         </tbody>
       </table>
-     
-    </div>
    </div>
-   <!-- /.card-body -->
+</div>
+<!-- /.card-body -->
 </div>
 @stop
 @section('css')
-<link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
-
 <script> 
-
-    $(document).ready( function () {
-    $('#main-table').DataTable();
-
-} );
-
-
-
-
-
+   $(document).ready(function () {
+   
+       $('#main-table').DataTable( {
+          
+           "ajax": "{{route('listing-json-quote' )}}",
+         
+           "processing": true,
+           retrieve: true,
+       paging: false,
+           "serverSide": true,
+           select: true,
+           "columns": [
+            { "data": "DT_RowId" },
+            
+               { "data": "label" },
+               { "data": "description" },
+               { "data": "reference" },
+               { "data": "state" },
+               { "data": "company" },
+   
+               {"render":function(data, type, row, meta){
+                 var link =  window.location + '/single/'+ row.quote_id ;
+                 return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
+               }},
+           ],
+   
+   
+       } );
+   
+   
+      });
+   
+   function reloadTabData(){
+   
+      $('#main-table').dataTable().fnDestroy();
+     
+     var  choiceState = document.getElementById('documentState');
+   
+      console.log(choiceState.value);
+   
+      $('#main-table').DataTable( {
+         retrieve: true,
+       paging: false,
+          "ajax": '/quotes/json/index-quote-state/'+choiceState.value,
+        
+          "processing": true,
+          "serverSide": true,
+          select: true,
+          "columns": [
+           { "data": "DT_RowId" },
+           
+              { "data": "label" },
+              { "data": "description" },
+              { "data": "reference" },
+              { "data": "state" },
+              { "data": "company" },
+   
+              {"render":function(data, type, row, meta){
+                var link =  window.location + '/single/'+ row.quote_id ;
+                return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
+              }},
+          ],
+   
+   
+      } );
+   
+   }
+   
 </script>
 @stop
 

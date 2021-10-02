@@ -118,12 +118,20 @@ Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){
 Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){     
 
 
-    Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('listing-quote');
+    Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('index-quote');
     Route::post('/action/{quote}/{state}', [App\Http\Controllers\QuoteController::class, 'documentChangeState'])->name('change-state-quote');
-    Route::get('/states/{state}', [App\Http\Controllers\QuoteController::class, 'documentByState'])->name('listing-my-quote-by-state');
+
     Route::get('/single/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
     
+
+    Route::group( ['prefix'=>'json' ], function() {
     
+        Route::get('/index-quote',  [App\Http\Controllers\QuoteController::class, 'indexJson'])->name('listing-json-quote');      
+        Route::get('/index-quote-state/{state}',  [App\Http\Controllers\QuoteController::class, 'indexJsonByState'])->name('listing-json-quote-state');   
+      
+    });
+
+
 
     Route::group(['middleware' => ['isClient']], function() {      
         // CRUD Quote
@@ -295,6 +303,9 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
  *                  Available for all register user
  * ===============================================
  */
+
+
+
 
 Route::group( ['prefix'=>'select2', 'middleware' => ['auth'] ], function() {
     

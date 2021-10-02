@@ -379,7 +379,7 @@ return [
        
             [
                 'text' => 'Clients quotes ',
-                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
+                'route' => 'index-quote',
                 'can'       => 'manager-only',
             ],
            
@@ -462,7 +462,7 @@ return [
             [
                 'text' => 'Listing all quote',
                 'can'       => 'manager-only',
-                'url'  => '/quotes',
+                'route'  => 'index-quote',
              
             ],
             [
@@ -472,7 +472,7 @@ return [
             ],
             [
                 'text' => 'My quotes ',
-                'url'  => '/quotes',
+                'route'  => 'index-quote',
                 'can'       => 'client-only',
             ],
             [
@@ -595,17 +595,17 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
