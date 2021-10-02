@@ -15,6 +15,7 @@
          <div class="col-6">
             <select class="form-control " id="documentState"  onchange="reloadTabData()">
                @isClient
+               <option value="ALL" > ALL</option>
                <option value="DRAFT" > DRAFT</option>
                <option value="TRAITED" > TRAITED</option>
                <option value="SENDED" > SENDED</option>
@@ -52,46 +53,56 @@
 @stop
 @section('js')
 <script> 
-   $(document).ready(function () {
-   
-       $('#main-table').DataTable( {
-          
-           "ajax": "{{route('listing-json-quote' )}}",
-         
-           "processing": true,
-           retrieve: true,
-       paging: false,
-           "serverSide": true,
-           select: true,
-           "columns": [
-            { "data": "DT_RowId" },
-            
-               { "data": "label" },
-               { "data": "description" },
-               { "data": "reference" },
-               { "data": "state" },
-               { "data": "company" },
-   
-               {"render":function(data, type, row, meta){
-                 var link =  window.location + '/single/'+ row.quote_id ;
-                 return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
-               }},
-           ],
-   
-   
-       } );
-   
-   
+   $(document).ready(function () {   
+         seedTabData();   
       });
    
+
+
+   function seedTabData(){
+         $('#main-table').DataTable( {
+          
+          "ajax": "{{route('listing-json-quote' )}}",
+        
+          "processing": true,
+          retrieve: true,
+         paging: false,
+          "serverSide": true,
+          select: true,
+          "columns": [
+           { "data": "DT_RowId" },
+           
+              { "data": "label" },
+              { "data": "description" },
+              { "data": "reference" },
+              { "data": "state" },
+              { "data": "company" },
+  
+              {"render":function(data, type, row, meta){
+                var link =  window.location + '/single/'+ row.quote_id ;
+                return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
+              }},
+          ],
+  
+  
+      } );
+  
+      }
+     
+
+
+
    function reloadTabData(){
    
+      var  choiceState = document.getElementById('documentState');
+
+      if(choiceState.value == "ALL"){
+         $('#main-table').dataTable().fnDestroy();
+         seedTabData();
+      }
+
+    else{
       $('#main-table').dataTable().fnDestroy();
-     
-     var  choiceState = document.getElementById('documentState');
-   
-      console.log(choiceState.value);
-   
       $('#main-table').DataTable( {
          retrieve: true,
        paging: false,
@@ -117,6 +128,8 @@
    
    
       } );
+    }
+      
    
    }
    

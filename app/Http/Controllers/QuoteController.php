@@ -20,8 +20,8 @@ class QuoteController extends Controller
         
    
         return view('quote.index', [
-            'pageTitle' => 'Listing Quote',
-            'pageTabTitle' => 'Listing quotes',
+            'pageTitle' => 'Listing Quotes',
+            'pageTabTitle' => 'Listing of quotes',
     
         ]);
     }
