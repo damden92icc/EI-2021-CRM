@@ -15,7 +15,7 @@
          <div class="col-6">
             @isClient
             <div class="button-group">
-               <form method="get" id="doc-filter" action="{{route('my-offer-by-state')}}">
+               <form method="get" id="doc-filter" action="{{route('my-offer-by-state', "ALL" )}}">
                   <select class="form-control state_filter" id="state" name="state">
                      <option value="ALL" id="ALL"> ALL</option>
                      <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
@@ -25,7 +25,7 @@
             </div>
             @endisClient
             @isManager
-            <form method="get" id="doc-filter" action="{{route('all-offer-by-state')}}">
+            <form method="get" id="doc-filter" action="{{route('my-offer-by-state', "ALL" )}}">
                <select class="form-control state_filter" id="stateManager" name="state">
                   <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                   <option value="ACCEPTED" id="ACCEPTED"> ACCEPTED</option>

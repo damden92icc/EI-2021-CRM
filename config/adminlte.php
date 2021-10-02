@@ -194,7 +194,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'my-profil',
 
     /*
     |--------------------------------------------------------------------------
@@ -263,7 +263,7 @@ return [
         ],
         */
        
-        ['header' => 'PROFIL ', ],
+    
                
     /**
     * Company Nav
@@ -273,12 +273,7 @@ return [
         'icon'    => 'fas fa-fw fa-tachometer-alt',
         'url'  => '/',
     ],
-        [
-        'text' => 'My Profil',
-        'url'  => 'my-profil/',
-        'icon'    => 'fas fa-fw fa-user',
-    ],    
-  
+       
 
 
 
@@ -384,7 +379,7 @@ return [
        
             [
                 'text' => 'Clients quotes ',
-                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
+                'route' => 'index-quote',
                 'can'       => 'manager-only',
             ],
            
@@ -403,7 +398,7 @@ return [
             ],
             [
                 'text' => 'Offer Waiting ',
-                'route' => ['all-offer-by-state', ['state' => 'SENDED']],
+                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
             [
@@ -467,7 +462,7 @@ return [
             [
                 'text' => 'Listing all quote',
                 'can'       => 'manager-only',
-                'url'  => '/quotes',
+                'route'  => 'index-quote',
              
             ],
             [
@@ -477,7 +472,7 @@ return [
             ],
             [
                 'text' => 'My quotes ',
-                'url'  => '/quotes/my-quote',
+                'route'  => 'index-quote',
                 'can'       => 'client-only',
             ],
             [
@@ -497,13 +492,13 @@ return [
           
             [
                 'text' => ' Offer Waiting',
-                'route' => ['listing-my-offer-by-state', ['state' => 'SENDED']],
+                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
                 'can'       => 'client-only',
             ],
 
             [
-                'text' => 'All Offer ',
-                'route' => 'listing-my-offer',       
+                'text' => 'My Offer ',
+                'url' => '/offers',       
                 'can'       => 'client-only',
             ],
 
@@ -600,17 +595,17 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],

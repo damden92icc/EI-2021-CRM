@@ -300,13 +300,9 @@
                <input type="hidden" id="offer_id" name="offer_id" value="{{$offer->id}}">
                <div class="form-group  {{$errors->has('service_id') ? 'has-error' : ''}}">
                   <label for="inputService">Service</label>
-                  <select class="form-control" id="selectCompanyValue" name="service_id">
-                     @forelse($servicesSelectable as $data)
-                     <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}}</option>
-                     @empty 
-                     <p> No service </p>
-                     @endforelse
-                  </select>
+                  <select id="selectorServices" class="js-example-basic form-select form-select-lg mb-3" name="service_id"  style="width:100%">>               
+               </select>
+
                </div>
                <div class="form-group {{$errors->has('quantity') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
@@ -439,7 +435,27 @@
          });
           
    
-    
+         $('#selectorServices').select2({
+            placeholder: 'Select a service',
+            ajax: {
+               url:"{{route('services-selectable' )}}",
+               processResults: function (data) {
+               // Transforms the top-level key of the response object from 'items' to 'results'
+                  return {
+                     results: $.map(data, function(item) {
+                              return {
+                                 text :  item.service_name + ' ( ' + item.service_desc + ' )' ,
+                                 id: $.parseJSON(item.id ),
+                                 
+                              }
+                           })
+                        };
+                     }
+               }
+            });
+
+
+
 </script>
 @stop
 

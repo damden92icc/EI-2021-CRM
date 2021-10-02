@@ -412,4 +412,42 @@ class ProjectController extends Controller
         return redirect()->intended('/projects/single/'.$newProject->id);
     }
         
+
+
+    public function updateServiceState(){
+
+        $updatableProject = Project::where('project_state', 'in progress')->get();
+
+        foreach($updatableProject as $project){
+            foreach($project->services as $service){
+
+ 
+                if($service->service->recurrent == 1){
+
+    
+                    if($service->last_payement_date == null){
+                        $serviceLastDate = $service->start_date;
+                        $service->next_payement_date =  $this->calculNextPayDate(Carbon::parse(   $serviceLastDate ),  $service->recurrency_payement ) ;
+                    }
+                    else{
+                        $serviceLastDate = $service->last_payement_date;
+                        $service->next_payement_date =  $this->calculNextPayDate(Carbon::parse(   $serviceLastDate ),  $service->recurrency_payement ) ;
+                    }
+                                       
+                    $service->save();
+                 
+                    // update status of billable
+                    if (   $service->next_payement_date->subDays(29)  <= Carbon::now()  ){
+                        $service->is_billable = 1;
+                        $service->is_pay = 0;
+                        $service->payement_state = "Billable";
+                        $service->save();
+                        return "hellow my dear lord";
+                    }
+                }
+                }
+               
+        }
+      
+    }
 }

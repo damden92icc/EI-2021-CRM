@@ -57,7 +57,9 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
     });
 
     // Companies Management
-    Route::prefix('company')->group(function () {          
+    Route::prefix('company')->group(function () {       
+        Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
+        Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');      
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('create-company');    
         Route::post('/store', [App\Http\Controllers\CompanyController::class, 'store'])->name('store-company'); 
         Route::get('/edit/{id}', [App\Http\Controllers\CompanyController::class, 'edit'])->name('edit-company');
@@ -68,6 +70,7 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
         Route::put('/remove-employe/{employe}', [App\Http\Controllers\CompanyController::class, 'removeEmploye'])->name('remove-employe');   
     });
 
+    
     // Users managements
 
     Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){      
@@ -115,16 +118,22 @@ Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){
 Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){     
 
 
-    Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('listing-quote');
+    Route::get('/', [App\Http\Controllers\QuoteController::class, 'index'])->name('index-quote');
     Route::post('/action/{quote}/{state}', [App\Http\Controllers\QuoteController::class, 'documentChangeState'])->name('change-state-quote');
-    Route::get('/states/{state}', [App\Http\Controllers\QuoteController::class, 'documentByState'])->name('listing-my-quote-by-state');
-    Route::get('/get', [App\Http\Controllers\QuoteController::class, 'getDocumentByState'])->name('my-quote-by-state');
+
     Route::get('/single/{quote}', [App\Http\Controllers\QuoteController::class, 'show'])->name('single-quote');
     
+
+    Route::group( ['prefix'=>'json' ], function() {
     
+        Route::get('/index-quote',  [App\Http\Controllers\QuoteController::class, 'indexJson'])->name('listing-json-quote');      
+        Route::get('/index-quote-state/{state}',  [App\Http\Controllers\QuoteController::class, 'indexJsonByState'])->name('listing-json-quote-state');   
+      
+    });
+
+
 
     Route::group(['middleware' => ['isClient']], function() {      
-        Route::get('/my-quote', [App\Http\Controllers\QuoteController::class, 'myQuote'])->name('listing-my-quote');
         // CRUD Quote
         Route::get('/create', [App\Http\Controllers\QuoteController::class, 'create'])->name('create-quote')->middleware('isClient');
         Route::get('/sended-quotes', [App\Http\Controllers\QuoteController::class, 'sendedQuotes'])->name('sended-quotes');
@@ -158,28 +167,21 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
 
 Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){     
 
+    Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
-    Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('listing-my-offer-by-state');
-
-    
+    Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('my-offer-by-state');
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
-    Route::post('/ask-update/{offer}/comment', [App\Http\Controllers\OfferController::class, 'commentOffer'])->name('ask-update-service-doc-offer');
 
-    // Listing own client offers
+
+    // Action for client ask update
     Route::group(['middleware' => ['isClient']], function() {          
-        Route::get('/my-offer', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-my-offer');
-        Route::get('/my-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('my-offer-by-state');
-     
+        Route::post('/ask-update/{offer}/comment', [App\Http\Controllers\OfferController::class, 'commentOffer'])->name('ask-update-service-doc-offer');
+           
     });
 
-
-
-    // Management offers by lanager
+    // Management offers by Manager
     Route::group(['middleware' => ['isManager']], function() {     
-        // Actions for client + Manager
-        Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');            
-    
-        Route::get('/get-offer/state', [App\Http\Controllers\OfferController::class, 'myOfferByState'])->name('all-offer-by-state');
+       
         // CRUD Offer
         Route::get('/create', [App\Http\Controllers\OfferController::class, 'create'])->name('create-offer');
         Route::post('/store', [App\Http\Controllers\OfferController::class, 'store'])->name('store-offer');
@@ -296,10 +298,6 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
 
 
 
-
-
-
-
 /** 
  * ==============================================
  *                  Available for all register user
@@ -307,16 +305,23 @@ Route::group( ['prefix'=>'bills', 'middleware' => ['auth'] ], function(){
  */
 
 
+
+
+Route::group( ['prefix'=>'select2', 'middleware' => ['auth'] ], function() {
+    
+    Route::get('/selectableService',  [App\Http\Controllers\ServiceController::class, 'selectableService'])->name('services-selectable');      
+  
+});
 Route::group( ['prefix'=>'users', 'middleware' => ['auth'] ], function(){         
     Route::get('/single/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('single-user');   
 });
 
-Route::prefix('company')->group(function () {        
-    Route::get('/', [App\Http\Controllers\CompanyController::class, 'index'])->name('listing-company');
-    Route::get('/single/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('single-company');   
-});
 
-
+/** 
+ * ==============================================
+ *                Notification manangement
+ * ===============================================
+ */
 
 Route::prefix('notifications')->group(function () {     
     // display top nav   

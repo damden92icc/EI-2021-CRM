@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\Quote;
-use App\Models\Documents;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\QuoteService;
@@ -13,16 +12,17 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendQuote;
 use Illuminate\Support\Facades\Notification;
+use Yajra\DataTables\DataTables;
 
 class QuoteController extends Controller
 {
-    public function index()
-    {      
-        $quotes = Quote::where('quote_state', 'SENDED')->orWhere('quote_state', 'TRAITED')->get();  
+    public function index() {      
+        
+   
         return view('quote.index', [
             'pageTitle' => 'Listing Quote',
             'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $quotes ,      
+    
         ]);
     }
 
@@ -32,14 +32,12 @@ class QuoteController extends Controller
         $myCompany = Company::where('company_type', 'main_company')->first();
         $quote = Quote::where('id' , $id )->first();
 
-        $selectableServices = Service::all();
-
         return view('quote.show', [
             'pageTitle' => 'Single quote',
             'pageTabTitle' => 'Listing service',
             'quote'=>  $quote,   
             'myCompany' =>   $myCompany,         
-            'servicesSelectable' =>  $selectableServices,
+     
         ]);
     }
 
@@ -107,8 +105,27 @@ class QuoteController extends Controller
         $quote->update($request->all());
         return redirect()->route('single-quote', $quote);
     }
-
     
+
+    public function documentChangeState(Quote $quote , String $state){
+
+        $notifTarget =  User::where('role_id', 2)->get(); 
+
+       // dd($notifTarget);
+        $quote->quote_state  = $state;
+
+
+        if($quote->quote_state == "SENDED"){
+            $quote->sended_date =  Carbon::now();
+           // $->notify();
+            Notification::send($notifTarget, new SendQuote($quote));
+        }
+        
+        $quote->save();  
+         
+        return redirect()->route('single-quote', $quote);
+    }
+
 
 
     public function storeServiceDoc (Request $request){
@@ -134,8 +151,6 @@ class QuoteController extends Controller
         return redirect()->route('single-quote', $quote);
     }
 
-
-
     public function updateServiceDoc(Request $request){
 
         // Get current Service listing + quote
@@ -159,96 +174,6 @@ class QuoteController extends Controller
         return redirect()->route('single-quote', $quote);
     }
 
-
-
-
-    public function myQuote(){     
-     
-        $myQuotes = Quote::where('owner_id', Auth::user()->id)->get();  
-
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>        $myQuotes ,      
-        ]);
-    }
-
-
-
-    public function documentChangeState(Quote $quote , String $state){
-
-        $notifTarget =  User::where('role_id', 2)->get(); 
-
-       // dd($notifTarget);
-        $quote->quote_state  = $state;
-
-
-        if($quote->quote_state == "SENDED"){
-            $quote->sended_date =  Carbon::now();
-           // $->notify();
-            Notification::send($notifTarget, new SendQuote($quote));
-        }
-        
-        $quote->save();  
-         
-        return redirect()->route('single-quote', $quote);
-    }
-
-    public function documentByState(String $state){
-
-
-        $user =Auth::user();
-
-        // check if user is client
-        if($user->checkRole(1) ){
-
-            $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
-        }
-        else{
-            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
-        }
-
-
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote ',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>          $listingQuotes  ,      
-        ]);
-    }
-   
-    public function getDocumentByState(Request $request){
-
-        $state = $request->state;
-
-
-
-        $user =Auth::user();
-
-        // check if user is client
-        if($user->checkRole(1) ){
-
-            if($state == "ALL" ){
-                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->get();  
-            }
-            else{
-                $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where( 'quote_state',   $state)->get();  
-            }
-                
-                   
-        }
-        else{
-            $listingQuotes = Quote::where( 'quote_state',   $state)->get();  
-        }
-
-
-        return view('quote.index', [
-            'pageTitle' => 'Listing Quote ',
-            'pageTabTitle' => 'Listing quotes',
-            'quotes'=>          $listingQuotes  ,      
-        ]);
-
-    }
-
     public function removeServiceDoc($id){
 
         $service = QuoteService::where('id', $id)->first();
@@ -259,6 +184,118 @@ class QuoteController extends Controller
 
         return redirect()->route('single-quote', $quote);
        
+    }
+
+
+    public function indexJson(){
+
+        $result = [];
+
+        // Check role client to get listing of all quote
+        if(Auth::user()->checkRole(1) ){
+
+         $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->get();  
+            
+         $cpt = 1;  
+          foreach($listingQuotes as $data){
+            
+            // Adding needed value to tab
+              array_push($result,
+                [ 
+                    'row_id' => $cpt,
+                    'quote_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' =>  $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->quote_state ,
+                    'company' => $data->company->name 
+                ]) ;
+                $cpt= $cpt+1;
+          }
+            
+          
+        }
+
+        // User is manager
+        else {
+
+            $listingQuotes = Quote::whereIn( 'quote_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();
+            $cpt = 1;    
+
+            foreach($listingQuotes as $data){
+            
+                array_push($result,
+                [
+                    'row_id' => $cpt,
+                    'quote_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' => $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->quote_state ,
+                    'company' => $data->company->name 
+                  ]) ;
+                  $cpt= $cpt+1;
+            }
+        }
+                
+        // return json tab with datatable method
+        return datatables($result)->setRowId('row_id')->toJson();
+    }
+
+
+    public function indexJsonByState(String $state){
+
+        $result = [];
+
+        // Check role client to get listing of all quote
+        if(Auth::user()->checkRole(1) ){
+
+         $listingQuotes  = Quote::where('owner_id', Auth::user()->id)->where('quote_state', $state)->get();  
+            
+         $cpt = 1;  
+          foreach($listingQuotes as $data){
+            
+            // Adding needed value to tab
+              array_push($result,
+                [ 
+                    'row_id' => $cpt,
+                    'quote_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' =>  $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->quote_state ,
+                    'company' => $data->company->name 
+                ]) ;
+                $cpt= $cpt+1;
+          }
+            
+          
+        }
+
+        // User is manager
+        else {
+
+            $listingQuotes = Quote::where('quote_state', $state)->get();
+            $cpt = 1;    
+
+            foreach($listingQuotes as $data){
+            
+                array_push($result,
+                [
+                    'row_id' => $cpt,
+                    'quote_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' => $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->quote_state ,
+                    'company' => $data->company->name 
+                  ]) ;
+                  $cpt= $cpt+1;
+            }
+        }
+                
+        // return json tab with datatable method
+        return datatables($result)->setRowId('row_id')->toJson();
     }
 
 
