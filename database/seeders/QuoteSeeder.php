@@ -21,35 +21,35 @@ class QuoteSeeder extends Seeder
                 'label' => 'Devis 1 - Updating website',      
                 'reference' => 'A0010',
                 'sended_date' =>null ,             
-                'quote_state' => 'Draft'
+                'quote_state' => 'DRAFT'
             ],
 
             [
                 'label' => 'Devis 2 - Online coffee shop',
                 'reference' => 'A0015',
                 'sended_date' =>null ,            
-                'quote_state' => 'Draft'
+                'quote_state' => 'DRAFT'
             ],
 
             [
                 'label' => 'Devis 3 - Pizza Delivery ',
                 'reference' => 'A00410',
                 'sended_date' =>null ,          
-                'quote_state' => 'Draft'
+                'quote_state' => 'DRAFT'
             ],
           
             [
                 'label' => 'Devis 5',
                 'reference' => 'A0890Z10',
                 'sended_date' =>null ,          
-                'quote_state' => 'Draft'
+                'quote_state' => 'DRAFT'
             ],
 
             [
                 'label' => 'Devis 6',
                 'reference' => 'A00z10',
                 'sended_date' =>null ,             
-                'quote_state' => 'Draft'
+                'quote_state' => 'DRAFT'
             ],
 
             [

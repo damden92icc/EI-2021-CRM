@@ -55,18 +55,8 @@ class OfferController extends Controller
     {      
         $offer = Offer::where('id', $id)->first();  
 
-        $cptCost = count( OfferService::where('offer_id', $id)->get());
+        $total = count( OfferService::where('offer_id', $id)->get());
 
-        $totalCP = 0;
-        $totalSP = 0;
-        if($cptCost > 0){
-            $services = OfferService::where('offer_id', $id)->get();
-            
-                foreach($services as $service){
-                    $totalCP += ( $service->unit_cost_ht * $service->quantity);
-                    $totalSP +=( $service->unit_sell_ht * $service->quantity);
-                }
-        }
 
 
         $selectableServices = Service::all();
@@ -75,8 +65,6 @@ class OfferController extends Controller
             'pageTitle' => 'Single Offers',
             'pageTabTitle' => 'Listing services ',
             'servicesSelectable' =>  $selectableServices,
-            'totalCost' =>$totalCP ,
-            'totalSell' => $totalSP,
             'myCompany' => $myCompany ,
             'offer'=>        $offer ,
       
@@ -172,12 +160,23 @@ class OfferController extends Controller
             'quantity' => 'required|int',        
             'service_id'=> 'required|int',
             'offer_id' => 'required|int',
+            'unit_sell_ht' => 'required|int',
+            'unit_cost_ht' => 'required|int',
                     
         ];
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
 
         $newService =OfferService::create($request->all());
+
+        $offer = Offer::where('id', $request['offer_id'])->first();
+        $offer->total_sell_ht = $offer->total_sell_ht + ($request->quantity * $request->unit_sell_ht);
+        $offer->total_cost_ht = $offer->total_cost_ht + ($request->quantity * $request->unit_cost_ht);
+        $offer->save();
+
+
+    
+     
 
         return redirect()->intended('/offers/single/'.$request->offer_id);
     }
@@ -211,6 +210,12 @@ class OfferController extends Controller
            
             $sl->update($request->all());
     
+            $offer = Offer::where('id', $request['offer_id'])->first();
+            $offer->total_sell_ht = $offer->total_sell_ht + ($request->quantity * $request->unit_sell_ht);
+            $offer->total_cost_ht = $offer->total_cost_ht + ($request->quantity * $request->unit_cost_ht);
+            $offer->save();
+
+
             return redirect()->intended('/offers/single/'.$sl->offer_id);
         }
 
@@ -316,8 +321,6 @@ class OfferController extends Controller
     }
 
 
-
-
     public function indexJson(){
 
         $result = [];
@@ -411,5 +414,18 @@ class OfferController extends Controller
         return datatables($result)->setRowId('row_id')->toJson();
     }
 
+
+    public function downloadPDF(Offer $offer){
+
+        $pdf = \App::make('dompdf.wrapper');
+
+  
+
+        $myCompany = Company::where('company_type', 'main_company')->first();
+
+        $pdf = \PDF::loadView('pdf.documentOffer', ['offer'=> $offer, 'myCompany'=> $myCompany ,   'totalCost' =>$totalCP ,
+        'totalSell' => $totalSP] ); 
+        return $pdf->stream();
+    }
 
 }
