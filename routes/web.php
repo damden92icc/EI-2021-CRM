@@ -143,8 +143,8 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
 
         // CRUD services 
         Route::get('/create-service-doc', [App\Http\Controllers\QuoteController::class, 'create-service-doc'])->name('create-service-doc');
-        Route::post('/update-service-doc/{quote}', [App\Http\Controllers\QuoteController::class, 'updateServiceDoc'])->name('update-service-doc');
-        Route::post('/store-service-doc', [App\Http\Controllers\QuoteController::class, 'storeServiceDoc'])->name('store-service-doc');    
+        Route::post('/update-service-doc-quote', [App\Http\Controllers\QuoteController::class, 'updateServiceDoc'])->name('update-service-doc-quote');
+        Route::post('/store-service-doc', [App\Http\Controllers\QuoteController::class, 'storeServiceDoc'])->name('store-service-doc-quote');    
         Route::post('/remove-service-doc/{id}}', [App\Http\Controllers\QuoteController::class, 'removeServiceDoc'])->name('remove-service-doc');
     
      
