@@ -13,28 +13,23 @@
             <h3 class="card-title">{{$pageTabTitle}}</h3>
          </div>
          <div class="col-6">
-            @isClient
-            <div class="button-group">
-               <form method="get" id="doc-filter" action="{{route('my-offer-by-state', "ALL" )}}">
-                  <select class="form-control state_filter" id="state" name="state">
-                     <option value="ALL" id="ALL"> ALL</option>
-                     <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                     <option value="SENDED" id="SENDED"> SENDED</option>
-                  </select>
-               </form>
-            </div>
-            @endisClient
-            @isManager
-            <form method="get" id="doc-filter" action="{{route('my-offer-by-state', "ALL" )}}">
-               <select class="form-control state_filter" id="stateManager" name="state">
-                  <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                  <option value="ACCEPTED" id="ACCEPTED"> ACCEPTED</option>
-                  <option value="SENDED" id="SENDED"> SENDED</option>
-                  <option value="VALIDED" id="VALIDED"> VALIDED</option>
-                  <option value="UPDATE ASKED" id="UPDATE ASKED"> UPDATE ASKED</option>
-               </select>
-            </form>
-            @endisManager    
+         <select class="form-control " id="documentState"  onchange="reloadTabData()">
+               @isClient
+               <option value="ALL" > ALL</option>      
+               <option value="TRAITED" > TRAITED</option>
+               <option value="SENDED" > SENDED</option>
+               <option value="ACCEPTED" > ACCEPTED</option>
+               <option value="VALIDED" > VALIDED</option>
+               @endisClient
+               @isManager
+               <option value="ALL" > ALL</option>
+               <option value="DRAFT" > DRAFT</option>
+               <option value="SENDED" > SENDED</option>
+               <option value="ACCEPTED" > ACCEPTED</option>
+               <option value="TRAITED" > TRAITED</option>
+               <option value="VALIDED" > VALIDED</option>
+               @endisManager
+            </select>   
          </div>
       </div>
    </div>
@@ -42,46 +37,19 @@
    <div class="card-body p-0">
       <table class="table table-bordered table-striped dataTable dtr-inline" id="main-table">
          <thead>
+           
             <tr>
-               <th >ID</th>
+               <th ></th>
                <th>name</th>
-               <th>Desc</th>
-               <th>Created date</th>
-               <th>Last update</th>
+               <th>Desc</th>             
                <th>State</th>
-               <th> Due Date </th>
+               <th> Reference</th>
                <th> Company </th>
+               <th> Due Date </th>
                <th></th>
             </tr>
          </thead>
-         <tbody>
-            @foreach($offers as $data)
-            <tr>
-               <td> {{$data->id}} </td>
-               <td> {{$data->label}} </td>
-               <td> {{ \Illuminate\Support\Str::limit($data->description, 30, $end='...') }}</td>
-               <td> {{ \Illuminate\Support\Str::limit($data->created_at, 10, $end='') }}</td>
-               <td> {{ \Illuminate\Support\Str::limit($data->updated_at, 10, $end='') }}</td>
-               <td> {{$data->offer_state}} </td>
-               <td> {{$data->due_date}} </td>
-               <td> {{$data->company->name}} </td>
-               <td>
-                  <div class="btn-group">
-                     <a class="btn btn-block btn-info" href="{{route('single-offer', $data->id )}}">view</a>
-                     @isManager
-                     <!--  Update offer -->
-                     <form method="get" action="{{route('edit-offer', $data )}}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                        Update  </button>
-                     </form>
-                     <!--  Update offer -->
-                     @endisManager
-                  </div>
-               </td>
-            </tr>
-            @endforeach
-         </tbody>
+      
       </table>
    </div>
    <!-- /.card-body -->
@@ -92,66 +60,88 @@
 @stop
 @section('js')
 <script> 
-   $(document).ready( function () {
-   $('#main-table').DataTable();
-   } );
+     $(document).ready(function () {   
+         seedTabData();   
+      });
    
+
+   function seedTabData(){
+         $('#main-table').DataTable( {
+          
+          "ajax": "{{route('listing-json-offer' )}}",
+        
+          "processing": true,
+          retrieve: true,
+         paging: false,
+          "serverSide": true,
+          select: true,
+          "columns": [
+           { "data": "DT_RowId" },
+           
+              { "data": "label" },
+              { "data": "description" },
+              { "data": "reference" },
+              { "data": "state" },
+              { "data": "company" },
+              { "data": "due_date" },
+  
+              {"render":function(data, type, row, meta){
+                var link =  window.location + '/single/'+ row.offer_id ;
+                return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
+              }},
+          ],
+  
+  
+      } );
+  
+      }
+
+
+
+   function reloadTabData(){
    
-   
-   // Display current selected state by checking paramter
-   $(function() {
-   
-   var e = document.getElementById("state");
-   
-   if( document.URL == 'http://127.0.0.1:8000/offers/my-offer'){
-   var param ="ALL";
+   var  choiceState = document.getElementById('documentState');
+
+
+
+   if(choiceState.value == "ALL"){
+      $('#main-table').dataTable().fnDestroy();
+      seedTabData();
    }
+
    else{
-   
-   var param  = (document.URL.replace('http://127.0.0.1:8000/offers/my-offer/state?state=', ''));
-   
-   $("#state").val(param);
-   
-   
-   console.log(param);
-   }
-   
-   
-   $(e).change(function() {
-   $("#doc-filter").submit();
-   
-   });
-   
-   });
+      $('#main-table').dataTable().fnDestroy();
 
+      $('#main-table').DataTable( {
+         retrieve: true,
+      paging: false,
+         "ajax": '/offers/json/index-by-state/'+choiceState.value,
+      
+         "processing": true,
+         "serverSide": true,
+         select: true,
+         "columns": [
+         { "data": "DT_RowId" },
+         
+            { "data": "label" },
+            { "data": "description" },
+            { "data": "reference" },
+            { "data": "state" },
+            { "data": "due_date" },
+            { "data": "company" },
 
-
-   // Display current selected state by checking paramter
-   $(function() {
+            {"render":function(data, type, row, meta){
+               var link =  window.location + '/single/'+ row.offer_id ;
+               return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
+            }},
+          ],
    
-   var e = document.getElementById("stateManager");
    
-   if( document.URL == 'http://127.0.0.1:8000/offers/manager'){
-   var param ="ALL";
+      } );
+    }
+      
+   
    }
-   else{
-   
-   var param  = (document.URL.replace('http://127.0.0.1:8000/offers/get-offer/state?state=', ''));
-   
-   $("#stateManager").val(param);
-   
-   
-   console.log(param);
-   }
-   
-   
-   $(e).change(function() {
-   $("#doc-filter").submit();
-   
-   });
-   
-   });
-   
 </script>
 @stop
 

@@ -397,11 +397,6 @@ return [
                 'can'       => 'manager-only',
             ],
             [
-                'text' => 'Offer Waiting ',
-                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
-                'can'       => 'manager-only',
-            ],
-            [
                 'text' => 'Add new',
                 'url'  => '/offers/create',
                 'can'       => 'manager-only',
@@ -477,7 +472,7 @@ return [
             ],
             [
                 'text' => 'Sended quotes ',
-                'route' => ['listing-my-quote-by-state', ['state' => 'SENDED']],
+                'route' => ['listing-json-quote-state', ['state' => 'SENDED']],
                 'can'       => 'manager-only',
             ],
            
@@ -489,13 +484,7 @@ return [
         'icon'    => 'fas fa-fw fa-file-alt',
         'can'       => 'client-only',
         'submenu' => [
-          
-            [
-                'text' => ' Offer Waiting',
-                'route' => ['my-offer-by-state', ['state' => 'SENDED']],
-                'can'       => 'client-only',
-            ],
-
+    
             [
                 'text' => 'My Offer ',
                 'url' => '/offers',       

@@ -100,7 +100,7 @@
                         </td>
                         <td>
                            @isClient
-                           @if($quote->quote_state != "SENDED"  &&  $quote->quote_state != "ARCHIVED" )
+                           @if($quote->quote_state == 'DRAFT')
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal"  class="btn btn-primary  btn-edit-service"  
