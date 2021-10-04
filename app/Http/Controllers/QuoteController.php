@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendQuote;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
+use Validator;
+
 class QuoteController extends Controller
 {
     public function index() {      
@@ -154,33 +156,30 @@ class QuoteController extends Controller
             $newService = QuoteService::create($request->all());
         }
        
-     
 
-      //  return response()->json(['success'=>'Ajax request submitted successfully']);
 
     }
 
     public function updateServiceDoc(Request $request){
 
         // Get current Service listing + quote
-        $sl = QuoteService::where('id', $request['sl_id'])->first();
-        $quote = Quote::where('id', $sl->quote_id )->first();
+        $sl = QuoteService::where('id', $request->get('sl_id'))->first();
 
-        $messages = [
-            'required' => 'Ce champs ne peut etre vide',
-        ];
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required',        
+            'service_id'=> 'required',      
+        ]);
+  
+       
+        if($validator->fails() ){
+            return response()->json($validator->errors(), 422);
+        }
 
-        $rules = [
-            'quantity' => 'required|int',        
-            'service_id'=> 'required|int',
-                    
-        ];
+        else{
+            $sl->update($request->all());
+        }
+       
 
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-   
-        $sl->update($request->all());
-
-        return redirect()->route('single-quote', $quote);
     }
 
     public function removeServiceDoc($id){

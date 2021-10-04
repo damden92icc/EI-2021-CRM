@@ -266,24 +266,24 @@
          <h4 class="modal-title">Edit services</h4>
       </div>
       <!-- formService Modal -->
-      <form method="post" action="{{route('update-service-doc', $quote)}}">
-         @csrf
+      <form  >
+ 
          <div class="modal-body">
             <div class="form-group">
                <input type="hidden" id="sl_id" name="sl_id" value="sl_id">
                <label for="serviceName">Service </label>
-               <select class="form-control " id="choose-service" name="service_id">                   
+               <select class="form-control " id="choose-service" name="edit_service_id">                   
                </select>
             </div>
             <div class="form-group">
                <label for="quantity">Quantity</label>
-               <input class="form-control " type="number" min="1" id="quantity"  name="quantity"  placeholder="Quantity">
+               <input class="form-control " type="number" min="1" id="edit-quantity"  name="edit-quantity"  placeholder="Quantity">
             </div>
          </div>
          <!-- end Modal body -->
          <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="sumbit" class="btn btn-primary">Save changes</button>
+            <button type="sumbit" id="btn-edit-service" class="btn btn-primary btn-edit-service">Save changes</button>
          </div>
       </form>
    </div>
@@ -298,16 +298,15 @@
 <script> 
 
 
-
 $("#btn-submit-new-service").click(function(event){
       event.preventDefault();
 
-      var serviceID = $('#service_id').val()
-   
-      var serviceQT = $("input[name=quantity]").val();
+      
 
+      var serviceID = $('#service_id').val()   
+      var serviceQT = $("input[name=quantity]").val();
       var serviceQuoteID =  $("input[name=quote_id]").val();
-      let _token   = $('meta[name="csrf-token"]').attr('content');
+  
 
       $.ajax({
          url:"{{ route('store-service-doc-quote') }}",
@@ -338,17 +337,56 @@ $("#btn-submit-new-service").click(function(event){
   
 
 
+$("#btn-edit-service").click(function(event){
+      event.preventDefault();
+
+      var serviceID = $('#choose-service').val()   
+
+      var slID = $('#sl_id').val()   
+      var serviceQT = $("input[name=edit-quantity]").val();
+
+  
+
+      $.ajax({
+         url:"{{ route('update-service-doc-quote') }}",
+         headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            },
+        type:"POST",
+        data:{
+                sl_id:slID ,
+               quantity:serviceQT,
+               service_id:serviceID,
+      
+        },
+        success:
+         function(response){
+            console.log(response);
+            location.reload(); 
+          
+        }, 
+        error: function(e){
+               console.error(e);
+               console.log(e.status);
+               alert(e.responseText);      
+         },
+
+       });
+  });
+
+
+
 
    $('.btn-edit-service').click(function() {
    
      $('#sl_id').val($(this).data('servicelist'));
            $('#service_id').val($(this).data('id'));
            $('#service_name').val($(this).data('name'));
-           $('#quantity').val($(this).data('quantity'));
+           $('#edit-quantity').val($(this).data('quantity'));
    
            $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));   
-            $('#modal-edit-service').modal('show');
-         });
+           $('#modal-edit-service').modal('show');
+  });
 
       
       
