@@ -145,10 +145,10 @@
                      <tr>
                         <th colspan="2"> </th>
                         <th colspan=""> Total cost HT</th>
-                        <td> {{$totalCost}} €</td>
+                        <td> {{$offer->total_cost_ht	}} €</td>
                         <th colspan=""> Total sell HT</th>
-                        <td> {{$totalSell}} € </td>
-                        <td> <strong>  Balance : </strong>  {{$totalSell - $totalCost }} €</td>
+                        <td> {{$offer->total_sell_ht	}} €</td>
+                        <td> <strong>  Balance : </strong>  {{$offer->total_sell_ht - $offer->total_cost_ht	 }} €</td>
                      </tr>
                      @endisManager
                      </th>      
@@ -275,6 +275,13 @@
          <i class="fa fa-download"></i>Ask update
          </button>
          <!--   /Add service -->
+                  <!--  Download PDF  -->
+                  <form method="post" action="{{route('dl-pdf-offer', $offer )}}">
+            @csrf
+            <button type="submit" class="btn btn-success float-right">
+            <i class="fa fa-download"></i>Download PDF  </button>
+         </form>
+         <!--  /Download PDF -->
          @endif
          @endisClient
       </div>

@@ -145,19 +145,20 @@ class QuoteController extends Controller
         ];
 
 
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required',        
+            'service_id'=> 'required',
+            'quote_id' => 'required',     
+        ]);
 
         if($validator->fails()){
-            return response()->json($validtaro->errors(), 422);
+            return response()->json($validator->errors(), 422);
         }
 
         else{
             $newService = QuoteService::create($request->all());
         }
        
-
-
     }
 
     public function updateServiceDoc(Request $request){

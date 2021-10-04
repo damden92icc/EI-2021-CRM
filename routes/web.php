@@ -175,6 +175,7 @@ Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('my-offer-by-state');
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');
 
+    Route::post('/pdf/{offer}', [App\Http\Controllers\OfferController::class, 'downloadPDF'])->name('dl-pdf-offer');
 
     // Action for client ask update
     Route::group(['middleware' => ['isClient']], function() {          
