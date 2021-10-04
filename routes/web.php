@@ -168,6 +168,9 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
 Route::group( ['prefix'=>'offers', 'middleware' => ['auth'] ], function(){     
 
     Route::get('/', [App\Http\Controllers\OfferController::class, 'index'])->name('listing-offer');
+    Route::get('/json', [App\Http\Controllers\OfferController::class, 'indexJson'])->name('listing-json-offer');
+    Route::get('/json/index-by-state/{state}', [App\Http\Controllers\OfferController::class, 'indexJsonByState'])->name('listing-json-offer-stater');
+
     Route::get('/single/{offer}', [App\Http\Controllers\OfferController::class, 'show'])->name('single-offer');
     Route::get('/states/{state}', [App\Http\Controllers\OfferController::class, 'documentByState'])->name('my-offer-by-state');
     Route::post('/action/{offer}/{state}', [App\Http\Controllers\OfferController::class, 'documentChangeState'])->name('change-state-offer');

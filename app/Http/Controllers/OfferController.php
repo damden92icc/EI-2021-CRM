@@ -223,11 +223,11 @@ class OfferController extends Controller
 
         // Check if user is client or maanger to get own offer
         if($user->role->id == 1){
-            $myOffer = Offer::where([['concerned_client', $user->id ], ['offer_state', $state]])->get();
+            $myOffer = Offer::where('concerned_client', $user->id )->where('offer_state', $state)->get();
         }
 
         else{
-            $myOffer = Offer::where([['owner_id', $user->id ], ['offer_state', $state]])->get();
+            $myOffer = Offer::where('owner_id', $user->id )->where('offer_state', $state)->get();
         }
         
     
@@ -316,6 +316,100 @@ class OfferController extends Controller
     }
 
 
+
+
+    public function indexJson(){
+
+        $result = [];
+
+        // Check role client to get listing of all offer
+        if(Auth::user()->checkRole(1) ){
+
+         $listing  = Offer::where('concerned_client', Auth::user()->id)->whereIn( 'offer_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();  
+            
+         $cpt = 1;  
+          foreach($listing as $data){
+            
+            // Adding needed value to tab
+              array_push($result,
+                [ 
+                    'row_id' => $cpt,
+                    'offer_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' =>  $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->offer_state ,
+                    'due_date' => $data->due_date ,
+                    'company' => $data->company->name 
+                ]) ;
+                $cpt= $cpt+1;
+            }
+        }
+
+        else {  // User is manager
+
+            $listing = Offer::whereIn( 'offer_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();
+            $cpt = 1;    
+
+            foreach($listing as $data){
+            
+                array_push($result,
+                [ 
+                    'row_id' => $cpt,
+                    'offer_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' =>  $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->offer_state ,
+                    'due_date' => $data->due_date ,
+                    'company' => $data->company->name 
+                ]) ;
+                  $cpt= $cpt+1;
+            }
+        }
+                
+        // return json tab with datatable method
+        return datatables($result)->setRowId('row_id')->toJson();
+    }
+
+
+    public function indexJsonByState(String $state){
+
+        $result = [];
+
+        // Check role client to get listing of all quote
+        if(Auth::user()->checkRole(1) ){
+
+         $listing  = Offer::where('concerned_client', Auth::user()->id)->where('offer_state', $state)->get();  
+       
+        }
+
+        else {
+            $listing = Offer::where('offer_state', $state)->get();
+        }
+
+         $cpt = 1;  
+          foreach($listing as $data){
+            
+            // Adding needed value to tab
+              array_push($result,
+                [ 
+                    'row_id' => $cpt,
+                    'offer_id' => $data->id, 
+                    'label' => $data->label ,
+                    'description' =>  $data->description , 
+                    'reference' =>$data->reference ,
+                    'state' => $data->offer_state ,
+                    'due_date' => $data->due_date ,
+                    'company' => $data->company->name 
+                ]) ;
+                $cpt= $cpt+1;
+          }
+      
+                
+        // return json tab with datatable method
+        return datatables($result)->setRowId('row_id')->toJson();
+    }
 
 
 }
