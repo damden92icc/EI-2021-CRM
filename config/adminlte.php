@@ -472,7 +472,7 @@ return [
             ],
             [
                 'text' => 'My quotes ',
-                'route'  => 'index-quote',
+              'route'  => 'index-quote',
                 'can'       => 'client-only',
             ],
             [

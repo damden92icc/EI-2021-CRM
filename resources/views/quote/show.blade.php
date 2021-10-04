@@ -222,28 +222,29 @@
             </button>
          </div>
          <div class="modal-body">
-            <form method="POST" role="form" action="{{ isset($qService) ? route('update-service-doc', $qService) : route('store-service-doc') }}">
-               @isset($qService)
-               @method('put')
-               @endisset
-               {{csrf_field()}}
-               <input type="hidden" id="quote_id" name="quote_id" value="{{$quote->id}}">
+            <form id="addNewService" >
+
+               <input type="hidden" name="quote_id" value="{{$quote->id}}">
+  
                <div class="form-group  {{$errors->has('service_id') ? 'has-error' : ''}}">
                   <label for="inputService">Service</label>
 
+                  <select  id="service_id" name="service_id">
+                        @foreach($services as $data)
+                        <option value="{{$data->id}}" id="{{$data->id}}"> {{$data->label}} -  {{$data->description}} </option>
+                        @endforeach             
+                   </select>
 
-                  <select id="selectorServices" class="js-example-basic form-select form-select-lg mb-3" name="service_id"  style="width:100%">>               
-               </select>
 
                </div>
                <div class="form-group {{$errors->has('label') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
-                  <input class="form-control form-control-lg" type="number" min="1" id="edit-quantity" name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
+                  <input class="form-control form-control-lg" type="number" min="1" required name="quantity" value="{{ isset($quote) ? $quote->quantity: old('quantity') }}" placeholder="service quantity">
                   @if($errors->has('quantity'))
                   <strong> {{$errors->first('quantity')}}</strong>
                   @endif
                </div>
-               <button type="submit" class="btn btn-primary">Submit</button>
+               <button type="submit" class="btn btn-primary " id="btn-submit-new-service">Submit</button>
             </form>
          </div>
          <div class="modal-footer justify-content-between">
@@ -295,6 +296,49 @@
 @stop
 @section('js')
 <script> 
+
+
+
+$("#btn-submit-new-service").click(function(event){
+      event.preventDefault();
+
+      var serviceID = $('#service_id').val()
+   
+      var serviceQT = $("input[name=quantity]").val();
+
+      var serviceQuoteID =  $("input[name=quote_id]").val();
+      let _token   = $('meta[name="csrf-token"]').attr('content');
+
+      $.ajax({
+         url:"{{ route('store-service-doc-quote') }}",
+         headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            },
+        type:"POST",
+        data:{
+         service_id:serviceID ,
+               quantity:serviceQT,
+               quote_id:serviceQuoteID,
+        },
+        success:
+         function(response){
+            console.log(response);
+            location.reload(); 
+          
+        }, 
+        error: function(e){
+               console.error(e);
+               console.log(e.status);
+               alert(e.responseText);      
+         },
+
+       });
+  });
+
+  
+
+
+
    $('.btn-edit-service').click(function() {
    
      $('#sl_id').val($(this).data('servicelist'));
@@ -306,26 +350,8 @@
             $('#modal-edit-service').modal('show');
          });
 
-
-         $('#selectorServices').select2({
-            placeholder: 'Select a service',
-            ajax: {
-               url:"{{route('services-selectable' )}}",
-               processResults: function (data) {
-               // Transforms the top-level key of the response object from 'items' to 'results'
-                  return {
-                     results: $.map(data, function(item) {
-                              return {
-                                 text :  item.service_name + ' ( ' + item.service_desc + ' )' ,
-                                 id: $.parseJSON(item.id ),
-                                 
-                              }
-                           })
-                        };
-                     }
-               }
-            });
-
+      
+      
 
 
 

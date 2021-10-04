@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendQuote;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
-
 class QuoteController extends Controller
 {
     public function index() {      
@@ -32,12 +31,13 @@ class QuoteController extends Controller
         $myCompany = Company::where('company_type', 'main_company')->first();
         $quote = Quote::where('id' , $id )->first();
 
+        $selectableService = Service::where('active', 1)->get();
         return view('quote.show', [
             'pageTitle' => 'Single quote',
             'pageTabTitle' => 'Listing service',
             'quote'=>  $quote,   
             'myCompany' =>   $myCompany,         
-     
+            'services' =>   $selectableService,        
         ]);
     }
 
@@ -53,6 +53,7 @@ class QuoteController extends Controller
 
     public function store(Request $request){
      
+        
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -130,25 +131,33 @@ class QuoteController extends Controller
 
     public function storeServiceDoc (Request $request){
 
-     
+
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
 
         $rules = [
-            'quantity' => 'required|int',        
-            'service_id'=> 'required|int',
-            'quote_id' => 'required|int',                    
+            'quantity' => 'required',        
+            'service_id'=> 'required',
+            'quote_id' => 'required',                    
         ];
 
 
-        $quote = $request['quote_id'];
-
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
-   
-        $newService = QuoteService::create($request->all());
+
+
+        if($validator->fails()){
+            return response()->json($validtaro->errors(), 422);
+        }
+
+        else{
+            $newService = QuoteService::create($request->all());
+        }
+       
      
-        return redirect()->route('single-quote', $quote);
+
+      //  return response()->json(['success'=>'Ajax request submitted successfully']);
+
     }
 
     public function updateServiceDoc(Request $request){
