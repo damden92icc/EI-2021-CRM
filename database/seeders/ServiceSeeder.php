@@ -129,6 +129,15 @@ class ServiceSeeder extends Seeder
             'category_id' => 2,
             'validity_delay' => 365
         ],
+
+        [
+            'label' => 'Website creation  ',
+            'description' => 'SLL certificate for e-commerce',          
+            'recurrent' => 0,
+            'active' => 1,
+            'category_id' => 3,
+            'validity_delay' => 0
+        ],
       
     ];
 

@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OfferController extends Controller
 {
-    public function index()
-    {      
+    public function index(){      
 
         // Return Offer based on the role (Client or Manager)
         $user= Auth::user();
@@ -48,16 +47,10 @@ class OfferController extends Controller
         ]);
     }
 
-
-
-
-    public function show($id)
-    {      
+    public function show($id){      
         $offer = Offer::where('id', $id)->first();  
 
         $total = count( OfferService::where('offer_id', $id)->get());
-
-
 
         $selectableServices = Service::all();
         $myCompany = Company::where('company_type', 'main_company')->first();
@@ -79,7 +72,6 @@ class OfferController extends Controller
            'companies' => $selectableCompanies ,
         ]);
     }
-
 
     public function store(Request $request){
      
@@ -174,10 +166,6 @@ class OfferController extends Controller
         $offer->total_cost_ht = $offer->total_cost_ht + ($request->quantity * $request->unit_cost_ht);
         $offer->save();
 
-
-    
-     
-
         return redirect()->intended('/offers/single/'.$request->offer_id);
     }
 
@@ -210,7 +198,8 @@ class OfferController extends Controller
            
             $sl->update($request->all());
     
-            $offer = Offer::where('id', $request['offer_id'])->first();
+            
+            $offer = Offer::where('id', $sl->offer_id)->first();
             $offer->total_sell_ht = $offer->total_sell_ht + ($request->quantity * $request->unit_sell_ht);
             $offer->total_cost_ht = $offer->total_cost_ht + ($request->quantity * $request->unit_cost_ht);
             $offer->save();
