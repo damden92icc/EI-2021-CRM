@@ -54,7 +54,6 @@
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-               <b> Offer Status </b> <br>
                <b>Offer State  : </b>   {{$offer->offer_state}}<br>
                @isManager    <b>Offer Priority : </b>  {{$offer->offer_priority_state}}<br> @endisManager
                <b>Last update Date:</b> {{$offer->updated_at}}  <br>
@@ -138,7 +137,7 @@
                         @isClient
                      <tr>
                         <th colspan="4"> Total HT</th>
-                        <td> {{$totalSell}} € </td>
+                        <td> {{$offer->total_sell_ht	}} € </td>
                      </tr>
                      @endisClient
                      @isManager
