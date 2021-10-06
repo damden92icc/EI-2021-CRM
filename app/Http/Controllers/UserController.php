@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {      
+    public function index(){      
 
         $users = User::all();
         return view('users.index', [
@@ -25,7 +24,6 @@ class UserController extends Controller
 
 
     public function show($id){  
-
 
         $user = User::where('id' , $id )->first();
         $countEmploy= count( Employe::where('user_id', $id)->get() );
@@ -124,59 +122,88 @@ class UserController extends Controller
 
     public function edit(User $user){
 
-     $roles = Role::all();
+
+        if(Auth::user()->checkRole(1) ){
+            return view('profil.form', [
+                'pageTitle' => 'Update users',
+               
+                'user'=> $user,
+       
+        ]);
+        }
+        else{
+            $roles = Role::all();
             return view('users.form', [
                 'pageTitle' => 'Update users',
                 'roles' => $roles,    
                 'user'=> $user,
                 'companies'=>    $companies = Company::all(),     
         ]);
+        }
+   
     }
 
     public function update(Request $request, User $user){
 
-       // $user = Auth::user();
-        $messages = [
-            'required' => 'Ce champs ne peut etre vide',
-        ];
+        if( (Auth::user()->checkRole(1) || Auth::user()->checkRole(2) || Auth::user()->checkRole(4)  )  ){
 
-        $rules = [
-            'name'=> 'required',        
-            'firstname'=> 'required',       
-            'phone'=> 'required',
-            'mobile'=> 'required',     
-            'password'=> 'required',          
-        ];
-               
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
+            $user = Auth::user();
+            $messages = [
+                'required' => 'Ce champs ne peut etre vide',
+            ];
+    
+            $rules = [
+                'name'=> 'required',        
+                'firstname'=> 'required',       
+                'phone'=> 'required',
+                'mobile'=> 'required',     
+                'password'=> 'required',          
+            ];
+                   
+            $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
+    
+            $user->update($request->all());
+            return redirect()->intended('/my-profil/');
+           
+        }
+        else{
+            
+            $messages = [
+                'required' => 'Ce champs ne peut etre vide',
+            ];
+    
+            $rules = [
+                'name'=> 'required',        
+                'firstname'=> 'required',
+                'email'=> 'required',
+                'password'=> 'required',
+                'phone'=> 'required',
+                'mobile'=> 'required',
+                'role_id'=> 'required',
+                'company_id'=> 'required',
+            ];
+    
+            // Add hash to create the password 
+            $request->merge([
+                'password' =>   Hash::make($request->get('password')),
+            ]);
+           
+            $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
+    
+    
+    
 
-        $user->update($request->all());
-        return redirect()->intended('/users/single/'.$user->id);
+            $user->update($request->all());
+
+          
+    
+            return redirect()->intended('/users/single/'.$user->id);
+        }
+
     }
 
 
 
-
-    public function updateMyProfil(Request $request){
-
-        $user = Auth::user();
-        $messages = [
-            'required' => 'Ce champs ne peut etre vide',
-        ];
-
-        $rules = [
-            'name'=> 'required',        
-            'firstname'=> 'required',       
-            'phone'=> 'required',
-            'mobile'=> 'required',     
-            'password'=> 'required',          
-        ];
-               
-        $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
-
-        $user->update($request->all());
-        return redirect()->intended('/my-profil/');
-    }
 
     public function askRemoveAccount(User $user){
         $user->user_state ="Remove Asked";

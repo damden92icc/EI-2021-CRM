@@ -101,8 +101,8 @@ Route::group( ['prefix'=>'managements','middleware' => ['auth', 'isAdmin']], fun
 Route::group( ['prefix'=>'my-profil', 'middleware' => ['auth'] ], function(){     
 
     Route::get('/', [App\Http\Controllers\UserController::class, 'myprofil'])->name('my-profil');
-    Route::get('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update-profil');  
-    Route::put('/store', [App\Http\Controllers\UserController::class, 'updateMyProfil'])->name('store-my-profil');  
+    Route::get('/edit/{user}', [App\Http\Controllers\UserController::class, 'edit'])->name('edit-profil');  
+    Route::put('/store', [App\Http\Controllers\UserController::class, 'update'])->name('store-my-profil');  
     Route::put('/ask-remove-account/{user}', [App\Http\Controllers\UserController::class, 'askRemoveAccount'])->name('ask-remove-account');
     
 });
