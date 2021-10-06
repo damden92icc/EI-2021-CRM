@@ -108,11 +108,11 @@
           select: true,
           "columns": [
            { "data": "DT_RowId" },
-           
+           { "data": "reference" },
+              { "data": "state" },
               { "data": "label" },
               { "data": "description" },
-              { "data": "reference" },
-              { "data": "state" },
+             
               { "data": "company" },
    
               {"render":function(data, type, row, meta){
