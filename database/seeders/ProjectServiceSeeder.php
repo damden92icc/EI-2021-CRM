@@ -16,842 +16,387 @@ class ProjectServiceSeeder extends Seeder
      */
     public function run()
     {
-        $projects = [
-            
-            // Service Seeder for Project 1
-            
+
+          
+        // Service Seeder for Project 1
+        $projectID = 1;
+        $projectServices = [          
+      
             [
-                'service_id' => '1' , // Hosting  CMS Plateform 
+                'service_id' => '1' , // Website Creation
                 'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 1,
-           
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 1400, 
+                'start_date' => Carbon::now()->subDays(180), 
+                'is_active' => 0,
+                'service_state' => 'ARCHIVED',
+                'recurrency_payement' => "NONE",           
+            ],
+            [
+                'service_id' => '3' , // Sketching website
+                'quantity' => '1',
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 400, 
+                'start_date' => Carbon::now()->subDays(180), 
+                'is_active' => 0,
+                'service_state' => "ARCHIVED",
+                'recurrency_payement' => "NONE" ,           
             ],
 
             [
-                'service_id' => '4' , // DNS Name
+                'service_id' => 5 , // hosting e-commerce
+                'quantity' => '1',
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 150, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+
+            [
+                'service_id' => 6 , // dns NAME
+                'quantity' => '1',
+                'unit_cost_ht' => 15, 
+                'unit_sell_ht' => 25, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 13 , // dns ssl e-commerce
                 'quantity' => '1',
                 'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
+                'unit_sell_ht' => 45, 
+                'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 1,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 1,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => false,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => null ,
-                'project_id' => 1,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => null ,
-                'project_id' => 1,
-           
-            ],
-
-
-            
-              // Service Seeder for Project 2
-            
-              [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 2,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'is_active' => 1,
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 2,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 2,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 2,
-           
-            ],
-
-            [
-                'service_id' => 9 , // Update website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 2,
-           
-            ],
-
-              // Service Seeder for Project 3
-           
-            
-              [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 3,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 3,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 3,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 3,
-           
-            ],
-
-            [
-                'service_id' => 10 , // Transfert to this company
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 3,
-           
-            ],
-
-
-            // Service Seeder for Project 4
-            
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 4,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 4,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 4,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 4,
-           
-            ],
-
-            // Service Seeder for Project 5
-                        
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 5,
-
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 5,
-
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 5,
-
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 5,
-
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
             ],
             
-              // Service Seeder for Project 6
-            
-              [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 6,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 6,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 6,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 6,
-           
-            ],
-
-            
-              // Service Seeder for Project 7
-            
-              [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 7,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 7,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "MONTHLY" ,
-                'project_id' => 7,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 7,
-           
-            ],
-
-            [
-                'service_id' => 9 , // Update website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 7,
-           
-            ],
-
-              // Service Seeder for Project 8
-           
-            
-              [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "MONTHLY" ,
-                'project_id' => 8,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40,
-                'start_date' => Carbon::parse('2021-01-01'),  
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 8,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 8,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 8,
-           
-            ],
-
-            [
-                'service_id' => 10 , // Transfert to this company
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 8,
-           
-            ],
-
-
-            // Service Seeder for Project 9
-            
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "MONTHLY" ,
-                'project_id' => 9,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "MONTHLY" ,
-                'project_id' => 9,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 9,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 9,
-           
-            ],
-
-            // Service Seeder for Project 10
-                        
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "MONTHLY" ,
-                'project_id' => 10,
-
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 10,
-
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 10,
-
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 10,
-
-            ],
-
-
-            // Service Seeder for Project 11
-            
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 11,
-           
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 11,
-           
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 9, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 11,
-           
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-01-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 11,
-           
-            ],
-
-            // Service Seeder for Project 12
-                        
-            [
-                'service_id' => '1' , // Hosting  CMS Plateform 
-                'quantity' => '1',
-                'unit_cost_ht' => 30, 
-                'unit_sell_ht' => 200, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 12,
-
-            ],
-
-            [
-                'service_id' => '4' , // DNS Name
-                'quantity' => '1',
-                'unit_cost_ht' => 20, 
-                'unit_sell_ht' => 40, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 12,
-
-            ],
-
-            [
-                'service_id' => 5 , // DNS Name
-                'quantity' => '5',
-                'unit_cost_ht' => 4, 
-                'unit_sell_ht' => 15, 
-                'start_date' => Carbon::parse('2020-09-01'), 
-                'is_active' => 1,
-                'service_state' => 'RUNNING',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "YEARLY" ,
-                'project_id' => 12,
-
-            ],
-
-            [
-                'service_id' => 8 , // Debugg website
-                'quantity' => '5',
-                'unit_cost_ht' => 100, 
-                'unit_sell_ht' => 250, 
-                'start_date' => Carbon::parse('2021-09-01'), 
-                'is_active' => 0,
-                'service_state' => 'ARCHIVED',
-                'payement_state' => 'PAY',
-                'recurrency_payement' => "NONE" ,
-                'project_id' => 12,
-
-            ],
         ];
 
+         $this->seedTable( $projectID, $projectServices);
+
+
+        // Service Seeder for Project 2
+     
+        $projectID = 2;
+        $projectServices = [          
       
-        foreach($projects as $data){
+            [
+                'service_id' => '1' , // Website Creation
+                'quantity' => '1',
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 1400, 
+                'start_date' => Carbon::now()->subDays(180), 
+                'is_active' => 0,
+                'service_state' => 'ARCHIVED',
+                'recurrency_payement' => "NONE",           
+            ],
+            [
+                'service_id' => '3' , // Sketching website
+                'quantity' => '1',
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 400, 
+                'start_date' => Carbon::now()->subDays(180), 
+                'is_active' => 0,
+                'service_state' => "ARCHIVED",
+                'recurrency_payement' => "NONE" ,           
+            ],
 
-            $currentDate = Carbon::now();
+            [
+                'service_id' => 4 , // hosting e-commerce
+                'quantity' => '1',
+                'unit_cost_ht' => 0, 
+                'unit_sell_ht' => 150, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
 
-            // Calcul next Pay date based on the start date and reccurency of payement
-            $npd = Carbon::parse($data['start_date']);
+            [
+                'service_id' => 6 , // dns NAME
+                'quantity' => '1',
+                'unit_cost_ht' => 15, 
+                'unit_sell_ht' => 25, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 12 , // dns ssl e-commerce
+                'quantity' => '1',
+                'unit_cost_ht' => 20, 
+                'unit_sell_ht' => 45, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+        ];
+        $this->seedTable( $projectID, $projectServices);
 
-        
-            switch ($data['recurrency_payement'] ) {
+
+         // Service Seeder for Project 3
+     
+         $projectID = 3;
+         $projectServices = [          
+       
+             [
+                 'service_id' => '1' , // Website Creation
+                 'quantity' => '1',
+                 'unit_cost_ht' => 0, 
+                 'unit_sell_ht' => 1400, 
+                 'start_date' => Carbon::now()->subDays(180), 
+                 'is_active' => 0,
+                 'service_state' => 'ARCHIVED',
+                 'recurrency_payement' => "NONE",           
+             ],
+             [
+                 'service_id' => '3' , // Sketching website
+                 'quantity' => '1',
+                 'unit_cost_ht' => 0, 
+                 'unit_sell_ht' => 400, 
+                 'start_date' => Carbon::now()->subDays(180), 
+                 'is_active' => 0,
+                 'service_state' => "ARCHIVED",
+                 'recurrency_payement' => "NONE" ,           
+             ],
+ 
+             [
+                 'service_id' => 4 , // hosting standard
+                 'quantity' => '1',
+                 'unit_cost_ht' => 0, 
+                 'unit_sell_ht' => 150, 
+                 'start_date' => Carbon::now()->subDays(90), 
+                 'is_active' => 1,
+                 'service_state' => "RUNNING",
+                 'recurrency_payement' => "YEARLY" ,           
+             ],
+ 
+             [
+                 'service_id' => 6 , // dns NAME
+                 'quantity' => '1',
+                 'unit_cost_ht' => 15, 
+                 'unit_sell_ht' => 25, 
+                 'start_date' => Carbon::now()->subDays(90), 
+                 'is_active' => 1,
+                 'service_state' => "RUNNING",
+                 'recurrency_payement' => "YEARLY" ,           
+             ],
+             
+             [
+                 'service_id' => 12 , // dns ssl standard
+                 'quantity' => '1',
+                 'unit_cost_ht' => 20, 
+                 'unit_sell_ht' => 45, 
+                 'start_date' => Carbon::now()->subDays(90), 
+                 'is_active' => 1,
+                 'service_state' => "RUNNING",
+                 'recurrency_payement' => "YEARLY" ,           
+             ],
+             
+         ];
+
+        $this->seedTable( $projectID, $projectServices);
+
+        // Service Seeder for Project 4
+     
+        $projectID = 4;
+        $projectServices = [          
+
+            [
+                'service_id' => 6 , // dns NAME
+                'quantity' => '1',
+                'unit_cost_ht' => 15, 
+                'unit_sell_ht' => 25, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 12 , // dns ssl standard
+                'quantity' => '1',
+                'unit_cost_ht' => 20, 
+                'unit_sell_ht' => 45, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+        ];
+
+       $this->seedTable( $projectID, $projectServices);
+
+        // Service Seeder for Project 5
+
+        $projectID = 5;
+        $projectServices = [          
+
+            [
+                'service_id' => 6 , // dns NAME
+                'quantity' => '1',
+                'unit_cost_ht' => 15, 
+                'unit_sell_ht' => 25, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 12 , // dns ssl standard
+                'quantity' => '1',
+                'unit_cost_ht' => 20, 
+                'unit_sell_ht' => 45, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+        ];
+
+        $this->seedTable( $projectID, $projectServices);
+
+
+        // Service Seeder for Project 6
+
+        $projectID = 6;
+        $projectServices = [          
+
+            [
+                'service_id' => 6 , // dns NAME
+                'quantity' => '1',
+                'unit_cost_ht' => 15, 
+                'unit_sell_ht' => 25, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 12 , // dns ssl standard
+                'quantity' => '1',
+                'unit_cost_ht' => 20, 
+                'unit_sell_ht' => 45, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            [
+                'service_id' => 7 , // dns ssl standard
+                'quantity' => 3,
+                'unit_cost_ht' => 5, 
+                'unit_sell_ht' => 12, 
+                'start_date' => Carbon::now()->subDays(90), 
+                'is_active' => 1,
+                'service_state' => "RUNNING",
+                'recurrency_payement' => "YEARLY" ,           
+            ],
+            
+            
+        ];
+
+        $this->seedTable( $projectID, $projectServices);
+    }
+
+        public function seedTable(Int $projectID , Array $projectServices){
+
+            foreach($projectServices as $data){
+
+                // check if service has reccurency
+                // Calcul next Pay date based on the start date and reccurency of payement
+                  // Check delay between start date and current date 
+                if( $data['recurrency_payement'] != "NONE" ){
+                        $npd= $this->calculNPD( $data['recurrency_payement'],  Carbon::parse($data['start_date'])  );                                
+                        $billableValue = $this->checkIfBillable($npd) ;
+                    
+                        if($billableValue == 1 ){
+                        $data['payement_state']  = "TO PAY";
+                        }
+                        else{
+                        $data['payement_state'] ="PAYED";
+                        }
+                } else{
+                    $npd = null ;
+                    $billableValue = 0;
+                    $data['payement_state'] ="PAYED";
+                }
+                 
+             
+    
+                DB::table('project_services')->insert([
+                    'quantity' => $data['quantity'],
+                    'unit_cost_ht' => $data['unit_cost_ht'],
+                    'unit_sell_ht' => $data['unit_sell_ht'],
+                    'is_active' =>  $data['is_active'],
+                    'service_state' => $data['service_state'] ,
+                    'start_date' => $data['start_date'] ,
+                    'last_payement_date' =>null,
+                    'payement_state' =>    $data['payement_state'] ,
+                    'recurrency_payement' => $data['recurrency_payement'] ,
+                    'next_payement_date' => $npd,
+                    'is_billable' => $billableValue,               
+                    'is_pay' => 1,
+                    'service_id' =>  $data['service_id'] ,
+                    'project_id'=>  $projectID,      
+                ]);
+            }
+        }
+       
+
+  
+
+
+        public function calculNPD(String $recurrency, Carbon $startDate ){
+
+            switch ($recurrency ) {
                 case "YEARLY":
-                    $data['next_payement_date'] =      $npd->addYear();
-
+                    return     $startDate->addYear();
                     break;
                 case "MONTHLY":
-                    $data['next_payement_date'] = $npd->addMonth();
+                    return $startDate->addMonth();
                     break;
                 case "HALF-YEARLY":
-                    $data['next_payement_date'] = $npd->addMonth();
-                    break;
+                    return  $npd->addMonth(6);                    
                 case "NONE":
-                    $npd = null;
+                    return null;
                     break;
                 default:
-                $npd  =    null;
+              return   null;
                     break;                
             }
-
-            // Check delay between start date and current date 
-            $delayBeforeNPD =  $currentDate->diffInDays(    $npd ); 
-
-            // Set value of billable service (1 - 0   ) 
-            // Set 1 only for billable and reccurent service 
-
-                if(  $delayBeforeNPD < 30 && $delayBeforeNPD != null){
-                    $data[  'is_billable' ] = 1;
-                   }
-
-                else{
-                    $data[  'is_billable' ] = 0;
-                }
-
-            
-            DB::table('project_services')->insert([
-                'quantity' => $data['quantity'],
-                'unit_cost_ht' => $data['unit_cost_ht'],
-                'unit_sell_ht' => $data['unit_sell_ht'],
-                'is_active' =>  $data['is_active'],
-                'service_state' => $data['service_state'] ,
-                'start_date' => $data['start_date'] ,
-                'last_payement_date' =>null,
-                'payement_state' =>    $data['payement_state'] ,
-                'recurrency_payement' => $data['recurrency_payement'] ,
-                'next_payement_date' => $npd,
-                'is_billable' =>  $data[  'is_billable' ] ,               
-                'is_pay' => 1,
-                'service_id' =>  $data['service_id'] ,
-                'project_id'=>   $data['project_id']          
-            ]);
         }
+
+
+        public function checkIfBillable(Carbon $date){
+            $currentDate = Carbon::now();
+
+            $delayBeforeNPD =  $currentDate->diffInDays(    $date ); 
+
+            if( $delayBeforeNPD < 30){
+                return true;
+            }
+
+            else{
+                return false;
+            }
+        }
+
+
     }
-}
+

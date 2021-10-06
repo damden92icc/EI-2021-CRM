@@ -196,7 +196,7 @@
                               @if(isset($data->last_payement_date ))
                               {{$data->last_payement_date}}
                               @else 
-                              <p> Never billed </p>
+                              <p> No data found<p>
                               @endif
                            </td>
                            @isManager
@@ -347,7 +347,7 @@
                               @if(isset($data->last_payement_date ))
                               {{$data->last_payement_date}}
                               @else 
-                              <p> Never billed </p>
+                              <p> No data found</p>
                               @endif
                            </td>
                            @isManager
@@ -427,7 +427,7 @@
                               @if(isset($data->last_payement_date ))
                               {{$data->last_payement_date}}
                               @else 
-                              <p> Never billed </p>
+                              <p> No data found</p>
                               @endif
                            </td>
                            @isManager
