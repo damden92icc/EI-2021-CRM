@@ -340,7 +340,7 @@ class OfferController extends Controller
 
         else {  // User is manager
 
-            $listing = Offer::whereIn( 'offer_state',   ["SENT", "TRAITED", "ARCHIVED"])->get();
+            $listing = Offer::all();
             $cpt = 1;    
 
             foreach($listing as $data){

@@ -31,12 +31,16 @@ class OfferSeeder extends Seeder
                 'description' => 'Offer details about ELM Agency service requierements in orderto deploy a new website in the cloud',
                 'reference' => 'EDF695',
                 'offer_state'=>  "ARCHIVED" ,
+                'total_cost_ht'=> 52,
+                'total_sell_ht'=> 1570,
             ],
             [
                 'label' => 'Offer new design  Immo website',
                 'description' => ' New design for the website Immo Agency, based on color red , mobile friendly and quote form simple design to ask quote ',
                 'reference' => 'A2015445',
                 'offer_state'=>  "SENT" ,
+                'total_cost_ht'=> 0,
+                'total_sell_ht'=> 400,
             
             ],
             [
@@ -44,6 +48,8 @@ class OfferSeeder extends Seeder
                 'description' => 'New offer relative to a new e-commerce website for Batishop. The offer include sketching, developpement and hosting solution to deploy it as soon is possible .',
                 'reference' => 'B201545',
                 'offer_state'=>  "SENT" ,
+                'total_cost_ht'=> 20,
+                'total_sell_ht'=> 2030,
   
             ],
             [
@@ -51,19 +57,26 @@ class OfferSeeder extends Seeder
                 'description' => 'Developpement and creationdesign of the website Aristo Painting, this offer is based on all standard requierement to deploy the website in the cloud',
                 'reference' => 'CAEZ201545',
                 'offer_state'=>  "SENT" ,
+                'total_cost_ht'=> 30,
+                'total_sell_ht'=> 1775,
             ],
             [
                 'label' => 'Offer Transfert website Cameleo',
                 'description' => 'Transfert the wordpress website Camaelo from this unknow provider to this company. The website will need an SSL certificate but the DNS will be keep by the client',
                 'reference' => 'CAZA201545',
                 'offer_state'=>  "SENT" ,
+                'total_cost_ht'=> 15,
+                'total_sell_ht'=> 190,
             ],
 
             [
+                // 6
                 'label' => 'Offer Hosting e-commerce DesignSX',
                 'description' => 'Offer to host an existing e-commerce plateform using prestashop. This plateform need an additional SSL certificate ',
                 'reference' => 'GF2AED901545',
                 'offer_state'=>  "DRAFT" ,
+                'total_cost_ht'=> 20,
+                'total_sell_ht'=> 210,
             ],
 
             [
@@ -71,6 +84,8 @@ class OfferSeeder extends Seeder
                 'description' => 'Offer concern the creation of the new e-shop for Peach Company. The website sell fresh product witth ecolabel. The owner need 3 email adresses to manage their business.',
                 'reference' => 'GF2AED01545',
                 'offer_state'=>  "DRAFT" ,
+                'total_cost_ht'=> 40,
+                'total_sell_ht'=> 265,
             ],
 
             [
@@ -78,6 +93,8 @@ class OfferSeeder extends Seeder
                 'description' => 'Creation of new e-commerce website based on provided design. The offer include de developpement and the solutions to deploy it on the cloud', 
                 'reference' => 'FAZ2EGNK01545',
                 'offer_state'=>  "DRAFT" ,
+                'total_cost_ht'=> 35,
+                'total_sell_ht'=> 235,
             ],
 
         ];
@@ -90,8 +107,8 @@ class OfferSeeder extends Seeder
                 'sended_date'=>  Carbon::parse('2021-08-01') ,
                 'offer_state'=>  $data['offer_state'],
                 'offer_priority_state'=> "Low",
-                'total_cost_ht'=> 200,
-                'total_sell_ht'=> 1000,
+                'total_cost_ht'=>  $data['total_cost_ht'],
+                'total_sell_ht'=>  $data['total_sell_ht'],
                 'validity_delay'=> 30,
                 'due_date'=>  Carbon::parse('2022-01-01') ,
                 'owner_id'=>1,
@@ -116,6 +133,8 @@ class OfferSeeder extends Seeder
                     'description' => 'New design for the purpose of a proposition of developpement in the futur. The offer include the sketching of the website in mobile and PC version', 
                     'reference' => 'FAZ27EGNK01545',
                     'offer_state'=>  "DRAFT" ,
+                    'total_cost_ht'=> 0,
+                    'total_sell_ht'=> 400,
                 ],
 
                 [
@@ -123,6 +142,8 @@ class OfferSeeder extends Seeder
                     'description' => 'Creation and developpemet of all design and implementation in order to run a new website in the cloud. This website will need an additional security provide by SSL', 
                     'reference' => 'FAPZ2EGNK01545',
                     'offer_state'=>  "DRAFT" ,
+                    'total_cost_ht'=> 30,
+                    'total_sell_ht'=> 635,
                 ],
 
             ];
@@ -136,8 +157,8 @@ class OfferSeeder extends Seeder
                 'sended_date'=>  Carbon::parse('2021-08-01') ,
                 'offer_state'=>  $data['offer_state'],
                 'offer_priority_state'=> "Low",
-                'total_cost_ht'=> 200,
-                'total_sell_ht'=> 1000,
+                'total_cost_ht'=>  $data['total_cost_ht'],
+                'total_sell_ht'=>  $data['total_sell_ht'],
                 'validity_delay'=> 30,
                 'due_date'=>  Carbon::parse('2022-01-01') ,
                 'owner_id'=>1,

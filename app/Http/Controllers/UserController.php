@@ -190,13 +190,8 @@ class UserController extends Controller
            
             $validator = \Validator::make($request->all(), $rules, $messages)->validate();   
     
-    
-    
-
             $user->update($request->all());
 
-          
-    
             return redirect()->intended('/users/single/'.$user->id);
         }
 

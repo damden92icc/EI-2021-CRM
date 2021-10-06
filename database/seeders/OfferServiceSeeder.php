@@ -140,7 +140,7 @@ class OfferServiceSeeder extends Seeder
             ]);
         }
 
-        // Service Seeder for Offer 4
+        // Service Seeder for Offer 4 - Offer website Aristo Painting
         $offerID = 4;
         $offerData = [   
             [
@@ -188,7 +188,7 @@ class OfferServiceSeeder extends Seeder
         }
 
 
-        // Service Seeder for Offer 5
+        // Service Seeder for Offer 5 - Offer Transfert website Cameleo
         $offerID = 5;
         $offerData = [   
             [
@@ -222,7 +222,7 @@ class OfferServiceSeeder extends Seeder
             ]);
         }
 
-            // Service Seeder for Offer 6
+            // Service Seeder for Offer 6 - Offer Hosting e-commerce DesignSX
             $offerID = 6;
             $offerData = [   
                 [
@@ -232,7 +232,7 @@ class OfferServiceSeeder extends Seeder
                     'unit_sell_ht' => 60,        
                 ],
                 [
-                    'service_id' => 45, // Hosting  ecomm
+                    'service_id' => 5, // Hosting  ecomm
                     'quantity' => 1,
                     'unit_cost_ht' => 0, 
                     'unit_sell_ht' => 100,        
@@ -257,7 +257,7 @@ class OfferServiceSeeder extends Seeder
             }
 
 
-            // Service Seeder for Offer 7
+            // Service Seeder for Offer 7 - new website Peach Ecommerce 
             $offerID = 7;
             $offerData = [   
                 [
@@ -267,7 +267,7 @@ class OfferServiceSeeder extends Seeder
                     'unit_sell_ht' => 60,        
                 ],
                 [
-                    'service_id' => 45, // Hosting  ecomm
+                    'service_id' => 5, // Hosting  ecomm
                     'quantity' => 1,
                     'unit_cost_ht' => 0, 
                     'unit_sell_ht' => 100,        
@@ -302,7 +302,7 @@ class OfferServiceSeeder extends Seeder
                 ]);
             }
 
-             // Service Seeder for Offer 8
+             // Service Seeder for Offer 8 - Offer new e-commerce ParkingLot
              $offerID = 8;
              $offerData = [   
                  [
@@ -312,7 +312,7 @@ class OfferServiceSeeder extends Seeder
                      'unit_sell_ht' => 60,        
                  ],
                  [
-                     'service_id' => 45, // Hosting  ecomm
+                     'service_id' => 5, // Hosting  ecomm
                      'quantity' => 1,
                      'unit_cost_ht' => 0, 
                      'unit_sell_ht' => 100,        
