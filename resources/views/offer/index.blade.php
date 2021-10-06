@@ -14,21 +14,15 @@
          </div>
          <div class="col-6">
          <select class="form-control " id="documentState"  onchange="reloadTabData()">
-               @isClient
-               <option value="ALL" > ALL</option>      
-               <option value="TRAITED" > TRAITED</option>
-               <option value="SENDED" > SENDED</option>
-               <option value="ACCEPTED" > ACCEPTED</option>
-               <option value="VALIDED" > VALIDED</option>
-               @endisClient
-               @isManager
-               <option value="ALL" > ALL</option>
-               <option value="DRAFT" > DRAFT</option>
-               <option value="SENDED" > SENDED</option>
-               <option value="ACCEPTED" > ACCEPTED</option>
-               <option value="TRAITED" > TRAITED</option>
-               <option value="VALIDED" > VALIDED</option>
-               @endisManager
+            <option value="ALL" > ALL</option>      
+            <option value="ARCHIVE" > ARCHIVE</option>
+            <option value="SENT" > SENT</option>
+            <option value="ACCEPTED" > ACCEPTED</option>
+            <option value="VALIDED" > VALIDED</option>
+            <option value="UPDATE ASKED" > UPDATE ASKED</option>
+            @isManager
+            <option value="DRAFT" > DRAFT</option>             
+            @endisManager
             </select>   
          </div>
       </div>
@@ -40,11 +34,10 @@
            
             <tr>
                <th ></th>
+               <th> Reference</th> 
+               <th>State</th>
                <th>name</th>
                <th>Desc</th>  
-               <th> Reference</th>           
-               <th>State</th>
-             
                <th> Company </th>
                <th> Due Date </th>
                <th></th>
@@ -78,11 +71,12 @@
           select: true,
           "columns": [
            { "data": "DT_RowId" },
-           
+           { "data": "reference" },
+           { "data": "state" },
               { "data": "label" },
               { "data": "description" },
-              { "data": "reference" },
-              { "data": "state" },
+          
+            
               { "data": "company" },
               { "data": "due_date" },
   

@@ -331,9 +331,13 @@ class ProjectServiceSeeder extends Seeder
                         else{
                         $data['payement_state'] ="PAYED";
                         }
+
+                        $data['last_payement_date']  = null ;
+
                 } else{
                     $npd = null ;
                     $billableValue = 0;
+                    $data['last_payement_date']  =Carbon::parse($data['start_date'])->addDays(30) ;
                     $data['payement_state'] ="PAYED";
                 }
                  
@@ -346,7 +350,7 @@ class ProjectServiceSeeder extends Seeder
                     'is_active' =>  $data['is_active'],
                     'service_state' => $data['service_state'] ,
                     'start_date' => $data['start_date'] ,
-                    'last_payement_date' =>null,
+                    'last_payement_date' =>      $data['last_payement_date'] ,
                     'payement_state' =>    $data['payement_state'] ,
                     'recurrency_payement' => $data['recurrency_payement'] ,
                     'next_payement_date' => $npd,
