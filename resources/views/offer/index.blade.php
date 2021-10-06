@@ -41,9 +41,10 @@
             <tr>
                <th ></th>
                <th>name</th>
-               <th>Desc</th>             
+               <th>Desc</th>  
+               <th> Reference</th>           
                <th>State</th>
-               <th> Reference</th>
+             
                <th> Company </th>
                <th> Due Date </th>
                <th></th>

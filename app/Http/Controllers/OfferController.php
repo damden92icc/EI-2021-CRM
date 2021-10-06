@@ -236,7 +236,7 @@ class OfferController extends Controller
     public function documentChangeState(Offer $offer , String $state){
         $offer->offer_state = $state    ;
 
-        if(  $offer->offer_state== "SENDED"){
+        if(  $offer->offer_state== "SENT"){
 
             $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
             Notification::send($notifTarget, new SendOffer($offer));
@@ -317,7 +317,7 @@ class OfferController extends Controller
         // Check role client to get listing of all offer
         if(Auth::user()->checkRole(1) ){
 
-         $listing  = Offer::where('concerned_client', Auth::user()->id)->whereIn( 'offer_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();  
+         $listing  = Offer::where('concerned_client', Auth::user()->id)->whereIn( 'offer_state',   ["SENT", "TRAITED", "ARCHIVED"])->get();  
             
          $cpt = 1;  
           foreach($listing as $data){
@@ -340,7 +340,7 @@ class OfferController extends Controller
 
         else {  // User is manager
 
-            $listing = Offer::whereIn( 'offer_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();
+            $listing = Offer::whereIn( 'offer_state',   ["SENT", "TRAITED", "ARCHIVED"])->get();
             $cpt = 1;    
 
             foreach($listing as $data){

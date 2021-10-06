@@ -64,7 +64,7 @@ class QuoteSeeder extends Seeder
                 'reference' => 'A00aDS4za1fg0',
                 'description' => 'The Calton hotel want to digital their activity, Their sell room they already have a working website but they need the SSL and a powerfull server. Their current website should be transfered to your service and hosted in your company',
                 'sended_date' => Carbon::parse('2021-03-01') ,             
-                'quote_state' => 'SENDED'
+                'quote_state' => 'SENT'
             ],
 
         ];
@@ -116,6 +116,8 @@ class QuoteSeeder extends Seeder
             ],
 
         ];
+
+
 
     // Seeding quote for client 2 working for 4-5
         $clienID = 3;
