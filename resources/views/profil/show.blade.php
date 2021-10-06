@@ -33,7 +33,7 @@
                         <p>{{$user->user_state}}</p>
                      </li>
                   </ul>
-                  <a  href="{{route('update-profil', $user->id )}}" class="btn btn-primary btn-block"><b>Update Profile</b></a>
+                  <a  href="{{route('edit-profil', $user->id )}}" class="btn btn-primary btn-block"><b>Update Profile</b></a>
                   <form method="POST" role="form" action="{{route('ask-remove-account', $user )}}">
                      @method('put')
                      {{csrf_field()}}

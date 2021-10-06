@@ -86,6 +86,7 @@
                   <tbody>
                      @forelse($offer->services as $data)       
                      <tr>
+                       
                         <td>{{$data->service->label}}</td>
                         <td>{{$data->quantity}}</td>
                         <td>
@@ -102,7 +103,7 @@
                         <td> {{ $data->quantity * $data->unit_sell_ht }} € </td>
                         @isManager
                         <td>
-                           @if($offer->offer_state != "SENDED" && $offer->offer_state != "DECLINED"   && $offer->offer_state != "VALIDED" && $offer->offer_state != "ACCEPTED" && $offer->offer_state != "ARCHIVED")
+                           @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATE ASKED")
                            <div class="btn-group">
                               <!--   Edit service -->
                               <button type="button" data-toggle="modal" data-target="modal-edit-service" class="btn btn-primary float-right btn-edit-service"  
@@ -136,7 +137,8 @@
                      <th>
                         @isClient
                      <tr>
-                        <th colspan="4"> Total HT</th>
+                        <th colspan="3"></th>
+                        <th> Total HT </th>
                         <td> {{$offer->total_sell_ht	}} € </td>
                      </tr>
                      @endisClient
@@ -173,7 +175,7 @@
                      @foreach ($offer->comments as $data )
                      <li>  {{$data->message}} </li>
                      @endforeach
-</ol>
+                  </ol>
                   @else
                   <p>No comments</p>
                   @endif

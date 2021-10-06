@@ -15,419 +15,250 @@ class QuoteServiceSeeder extends Seeder
      */
     public function run()
     {
-           // Service Seeder for Project 1
-            
-        $quoteSeeder = [    [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',    
-            'quote_id' => 1,
+          
+        // Service Seeder for Quote 1 - New website Paul&Co
        
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 1,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',      
-            'quote_id' => 1,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',          
-            'quote_id' => 1,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',           
-            'quote_id' => 1,
-       
-        ],
-
-
-        
-          // Service Seeder for Project 2
-        
-          [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',          
-            'quote_id' => 2,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',          
-            'quote_id' => 2,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',         
-            'quote_id' => 2,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',         
-            'quote_id' => 2,
-       
-        ],
-
-        [
-            'service_id' => 9 , // Update website
-            'quantity' => '5',           
-            'quote_id' => 2,
-       
-        ],
-
-          // Service Seeder for Project 3
-       
-        
-          [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-           
-            'quote_id' => 3,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',            
-            'quote_id' => 3,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',            
-            'quote_id' => 3,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',            
-            'quote_id' => 3,
-       
-        ],
-
-        [
-            'service_id' => 10 , // Transfert to this company
-            'quantity' => '5',           
-            'quote_id' => 3,
-       
-        ],
-
-
-        // Service Seeder for Project 4
-        
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',           
-            'quote_id' => 4,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',     
-            'quote_id' => 4,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',           
-            'quote_id' => 4,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 4,
-       
-        ],
-
-        // Service Seeder for Project 5
-                    
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 5,
-
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',       
-            'quote_id' => 5,
-
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 5,
-
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 5,
-
-        ],
-        
-          // Service Seeder for Project 6
-        
-          [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 6,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 6,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 6,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 6,
-        ],
-
-        
-          // Service Seeder for Project 7
-        
-          [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 7,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 7,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 7,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 7,
-       
-        ],
-
-        [
-            'service_id' => 9 , // Update website
-            'quantity' => '5',
-            'quote_id' => 7,
-       
-        ],
-
-          // Service Seeder for Project 8
-       
-        
-          [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 8,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 8,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 8,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 8,
-       
-        ],
-
-        [
-            'service_id' => 10 , // Transfert to this company
-            'quantity' => '5',
-            'quote_id' => 8,
-       
-        ],
-
-
-        // Service Seeder for Project 9
-        
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 9,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 9,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 9,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 9,
-       
-        ],
-
-        // Service Seeder for Project 10
-                    
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 10,
-
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 10,
-
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 10,
-
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 10,
-
-        ],
-
-
-        // Service Seeder for Project 11
-        
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 11,
-       
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 11,
-       
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 11,
-       
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 11,
-       
-        ],
-
-        // Service Seeder for Project 12
-                    
-        [
-            'service_id' => '1' , // Hosting  CMS Plateform 
-            'quantity' => '1',
-            'quote_id' => 12,
-
-        ],
-
-        [
-            'service_id' => '4' , // DNS Name
-            'quantity' => '1',
-            'quote_id' => 12,
-
-        ],
-
-        [
-            'service_id' => 5 , // DNS Name
-            'quantity' => '5',
-            'quote_id' => 12,
-
-        ],
-
-        [
-            'service_id' => 8 , // Debugg website
-            'quantity' => '5',
-            'quote_id' => 12,
-
-        ],
-        
-    ];
-
-
-    foreach($quoteSeeder as $data){
-        DB::table('quote_services')->insert([
-            'quantity' => $data['quantity'],
-            'service_id' =>  $data['service_id'] ,
-            'quote_id'=>   $data['quote_id']          
-        ]);
-    }
+        $quoteID = 1;
+        $quoteDatas = [
+            [
+                'service_id' => 1,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 3,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 4,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 6,
+                'quantity' => 1
+            ]
+        ];           
+
+        foreach($quoteDatas as $data){
+            DB::table('quote_services')->insert([
+                'quantity' => $data['quantity'],
+                'service_id' =>  $data['service_id'] ,
+                'quote_id'=>   $quoteID,       
+            ]);
+        }
+    
+        // Service Seeder for Quote 2 - Online coffee shop
+
+        $quoteID = 2;
+        $quoteDatas = [
+            [
+                'service_id' => 1,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 4,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 6,
+                'quantity' => 1
+            ]
+        ];           
+
+        foreach($quoteDatas as $data){
+            DB::table('quote_services')->insert([
+                'quantity' => $data['quantity'],
+                'service_id' =>  $data['service_id'] ,
+                'quote_id'=>   $quoteID,       
+            ]);
+        }
+
+        // Service Seeder for Quote 3 - Transfert and upgrade Pizza-shopa'
+
+        $quoteID = 3;
+        $quoteDatas = [
+            [
+                'service_id' => 11,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 5,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 12,
+                'quantity' => 1
+            ],
+            [
+                'service_id' => 6,
+                'quantity' => 1
+            ]
+        ];           
+
+        foreach($quoteDatas as $data){
+            DB::table('quote_services')->insert([
+                'quantity' => $data['quantity'],
+                'service_id' =>  $data['service_id'] ,
+                'quote_id'=>   $quoteID,       
+            ]);
+        }
+
+           // Service Seeder for Quote 4 - New website templated for terence-view 
+
+           $quoteID = 4;
+           $quoteDatas = [
+               [
+                   'service_id' => 3,
+                   'quantity' => 1
+               ],
+
+           ];           
+   
+           foreach($quoteDatas as $data){
+               DB::table('quote_services')->insert([
+                   'quantity' => $data['quantity'],
+                   'service_id' =>  $data['service_id'] ,
+                   'quote_id'=>   $quoteID,       
+               ]);
+           }
+
+           // Service Seeder for Quote 5 - New wordpress for sunny.be '
+
+           $quoteID = 5;
+           $quoteDatas = [
+                [
+                    'service_id' => 4,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 6,
+                    'quantity' => 1
+                ],          
+                [
+                    'service_id' => 12,
+                    'quantity' => 1
+                ],
+                [
+                    'service_id' => 10,
+                    'quantity' => 1
+                ],
+
+           ];           
+   
+           foreach($quoteDatas as $data){
+               DB::table('quote_services')->insert([
+                   'quantity' => $data['quantity'],
+                   'service_id' =>  $data['service_id'] ,
+                   'quote_id'=>   $quoteID,       
+               ]);
+           }
+
+
+           // Service Seeder for Quote 6 - Ecommerce website for Calton Hotel
+
+           $quoteID = 6;
+           $quoteDatas = [
+                [
+                    'service_id' => 5,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 11,
+                    'quantity' => 1
+                ],          
+                [
+                    'service_id' => 12,
+                    'quantity' => 1
+                ],
+
+           ];           
+   
+           foreach($quoteDatas as $data){
+               DB::table('quote_services')->insert([
+                   'quantity' => $data['quantity'],
+                   'service_id' =>  $data['service_id'] ,
+                   'quote_id'=>   $quoteID,       
+               ]);
+           }
+
+
+
+           // Client 2
+
+            // Service Seeder for Quote 7 - New design for futur website
+
+            $quoteID = 7;
+            $quoteDatas = [
+                [
+                    'service_id' => 3,
+                    'quantity' => 1
+                ],  
+
+            ];           
+    
+            foreach($quoteDatas as $data){
+                DB::table('quote_services')->insert([
+                    'quantity' => $data['quantity'],
+                    'service_id' =>  $data['service_id'] ,
+                    'quote_id'=>   $quoteID,       
+                ]);
+            }
+
+            // Service Seeder for Quote 8 - Transfert into a performante plateform
+
+            $quoteID = 8;
+            $quoteDatas = [
+                [
+                    'service_id' => 4,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 11,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 12,
+                    'quantity' => 1
+                ],  
+            ];           
+    
+            foreach($quoteDatas as $data){
+                DB::table('quote_services')->insert([
+                    'quantity' => $data['quantity'],
+                    'service_id' =>  $data['service_id'] ,
+                    'quote_id'=>   $quoteID,       
+                ]);
+            }
+    
+            // Service Seeder for Quote 9 - New website presentation H&L ice
+
+            $quoteID = 9;
+            $quoteDatas = [
+                [
+                    'service_id' => 1,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 3,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 4,
+                    'quantity' => 1
+                ],  
+                [
+                    'service_id' => 6,
+                    'quantity' => 1
+                ],  
+
+            ];           
+    
+            foreach($quoteDatas as $data){
+                DB::table('quote_services')->insert([
+                    'quantity' => $data['quantity'],
+                    'service_id' =>  $data['service_id'] ,
+                    'quote_id'=>   $quoteID,       
+                ]);
+            }
     
 }
 }

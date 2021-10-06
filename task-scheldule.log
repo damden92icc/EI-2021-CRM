@@ -1,2 +1,23 @@
 PHP Warning:  Module "mysqli" is already loaded in Unknown on line 0
-hellow my dear lord
+
+   Error 
+
+  Call to a member function subDays() on null
+
+  at app/Http/Controllers/ProjectController.php:440
+    436▕                                        
+    437▕                     $service->save();
+    438▕                  
+    439▕                     // update status of billable
+  ➜ 440▕                     if (   $service->next_payement_date->subDays(29)  <= Carbon::now()  ){
+    441▕                         $service->is_billable = 1;
+    442▕                         $service->is_pay = 0;
+    443▕                         $service->payement_state = "Billable";
+    444▕                         $service->save();
+
+  1   app/Console/Commands/UpdateServiceStateOnProject.php:43
+      App\Http\Controllers\ProjectController::updateServiceState()
+
+      [2m+13 vendor frames [22m
+  15  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
