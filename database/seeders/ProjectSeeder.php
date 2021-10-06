@@ -18,71 +18,44 @@ class ProjectSeeder extends Seeder
     {
         $offers = [
             [
-                'label' => 'Project Website Fimz',
+                'label' => 'Project  Website Alteria Corp.',
                 'reference' => 'A201EPM545',
-                'project_state' => 'in progress'
+                'description' => "Website to present Alteria company and service. Their service include to sell product over the website by providing brand design and attractive promotion on different produt. ",   
+                'project_state' => 'RUNNING'                
             ],
             [
-                'label' => 'Project Website XYZ',
+                'label' => 'Project Website Dance Station AL',
+                'description' => 'Website to show off all lesson they are possible to have in the Art Station. This project was made from screatch and running with all standard features',
                 'reference' => 'A201578MEZ445',
-                'project_state' => 'in progress'
-            
+                'project_state' => 'RUNNING'            
             ],
+ 
             [
-                'label' => 'Project Website ATD',
-                'reference' => 'B2PMPGDS1545',
-                'project_state' => 'in progress'
-  
-            ],
-            [
-                'label' => 'Project website Aristo',
-                'reference' => 'CA89785ZLP201545',
-                'project_state' => 'in progress'
-            ],
-            [
-                'label' => 'Project website Y&T ',
-                'reference' => 'CA2X54878601545',
-                'project_state' => 'in progress'
+                'label' => 'Project Website Mining Hairstayle',
+                'description' => 'Website describing all service provide by the hairstyle company. The project was started from scratch . This project requiere the standards service to running in the cloud.',
+                'reference' => 'A2015A7EZ8MEZ445',
+                'project_state' => 'RUNNING'            
             ],
 
             [
-                'label' => 'Project Ecom. Hmz',
-                'reference' => 'A201AZA745545',
-                'project_state' => 'in progress'
+                'label' => 'Hosting Website Coco Clothing ',
+                'description' => 'Website using a wordpress plateform and homeade by their owner. The service provided concern only the hosting and the security associate.',
+                'reference' => 'A2015A78MEZ445',
+                'project_state' => 'RUNNING'            
             ],
+
             [
-                'label' => 'Project Hosting CRM XYZ',
-                'reference' => 'A2015ZA7ZA445',
-                'project_state' => 'in progress'
-            
+                'label' => 'Hosting Website NKL Agency ',
+                'description' => 'Website using a wordpress plateform and homeade by their owner. The service included only the hosting and security by providing an SSL Certificate',
+                'reference' => 'A201ZA5A78MEZ445',
+                'project_state' => 'RUNNING'            
             ],
+
             [
-                'label' => 'Project Website XYZ',
-                'reference' => '78MPB20E1545',
-                'project_state' => 'in progress'
-  
-            ],
-            [
-                'label' => 'Project website Paula',
-                'reference' => 'CA201EJHYR545',
-                'project_state' => 'in progress'
-            ],
-            [
-                'label' => 'Project website G&T ',
-                'reference' => 'CA2AX01Z445545',
-                'project_state' => 'in progress'
-            ],
-            [
-                'label' => 'Project Hosting CRM XYZ',
-                'reference' => 'A2015ZA785445',
-                'project_state' => 'in progress'
-            
-            ],
-            [
-                'label' => 'Project Website Atea',
-                'reference' => 'B27840E1545',
-                'project_state' => 'in progress'
-  
+                'label' => 'Hosting And email Immo Trevor  ',
+                'description' => 'Website using a wordpress plateform and homeade by their owner. The service include the complete digital solution for the domaine and the hosting requiered.',
+                'reference' => 'A2015A7896MEZ445',
+                'project_state' => 'RUNNING'            
             ],
             
         ];
@@ -91,7 +64,7 @@ class ProjectSeeder extends Seeder
         foreach($offers as $data){
             DB::table('projects')->insert([
                 'label' => $data['label'],
-                'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",   
+                'description' => $data['description'],
                 'reference'=> $data['reference'],
                 'project_state' => $data['project_state'],
                 'start_date'=>  Carbon::parse('2000-01-01') ,               
