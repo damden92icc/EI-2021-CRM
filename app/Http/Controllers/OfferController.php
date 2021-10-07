@@ -243,6 +243,7 @@ class OfferController extends Controller
     public function documentChangeState(Offer $offer , String $state){
         $offer->offer_state = $state    ;
 
+
         if(  $offer->offer_state== "SENT"){
 
             $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
@@ -255,7 +256,8 @@ class OfferController extends Controller
             Notification::send($notifTarget, new AcceptanceOffer($offer));
         }
 
-        if($offer->offer_state == "VALIDED"  ){
+        if($offer->offer_state == "ARCHIVED"  ){
+       
             // notif Client + Offer owner
             $notifTarget =  User::where('id', $offer->concerned_client)->first(); 
             Notification::send($notifTarget, new AcceptanceOffer($offer));
