@@ -96,7 +96,7 @@ class OfferController extends Controller
         $date = Carbon::now();
         $cptRef = Offer::where('concerned_client', $user)->count();
         
-        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef;
+        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
 
 
         $request->merge( ['reference' =>     $reference] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
@@ -262,7 +262,7 @@ class OfferController extends Controller
             $notifTarget =  User::where('id', $offer->owner_id)->first(); 
             Notification::send($notifTarget, new AcceptanceOffer($offer));
         }
-        $offer->offer_state = $state;
+     
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);
     }
@@ -293,7 +293,14 @@ class OfferController extends Controller
 
     public function turnIntoOffer(Request $request, Quote $quote){
 
-        $quote->quote_state = "TRAITED";
+        $quote->quote_state = "ARCHIVED";
+        $user = $quote->owner_id ; 
+        $date = Carbon::now();
+        $cptRef = Offer::where('concerned_client', $user)->count();
+        
+        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
+
+        
          // Retrive main data
         $request->merge( ['label' => 'Offer from -  '.  $quote->label ]
                     +   ['description' => $quote->description] 
@@ -301,7 +308,7 @@ class OfferController extends Controller
                     +   ['due_date' => Carbon::now()->addMonths()] 
                     +   ['concerned_company' => $quote->company->id] 
                     +   ['concerned_client' => $quote->users->id] 
-                    +   ['reference' =>  Str::random(20)] 
+                    +   ['reference' =>  $reference] 
                     + [ 'owner_id' =>  auth()->user()->id] 
                 );
 

@@ -114,7 +114,15 @@ class ProjectController extends Controller
         ];
         
 
-        $request->merge( ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
+        $company = $request->concerned_company;
+        $date = Carbon::now();
+        $cptRef = Project::where('concerned_company', $company)->count();
+        
+  
+        $reference = "P" . $company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
+
+
+        $request->merge( ['reference' =>  $reference ] + [ 'owner_id' =>  auth()->user()->id] );
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
 
         $newProject =Project::create($request->all());
