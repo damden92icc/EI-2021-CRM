@@ -113,7 +113,7 @@
                                  Total HT
                               </td>
                               <td>
-                                 {{$totalSellHT}} €
+                                 {{$bill->total_sell_ht}} €
                               </td>
                            <tr>
                               </th>

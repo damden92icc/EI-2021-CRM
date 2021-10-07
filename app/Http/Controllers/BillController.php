@@ -106,8 +106,6 @@ class BillController extends Controller
 
     public function store(Request $request){
 
-
-
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -120,7 +118,14 @@ class BillController extends Controller
                     
         ];
 
-        $request->merge( ['due_date'=>  Carbon::now()->addDays($request->validity_delay) ] + ['reference' =>  Str::random(20)] + [ 'owner_id' =>  auth()->user()->id] );
+
+        $company = $request->concerned_company;
+        $date = Carbon::now();
+        $cptRef = Bill::where('concerned_company', $company)->count();
+        $reference = "B" . $company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
+
+
+        $request->merge( ['due_date'=>  Carbon::now()->addDays($request->validity_delay) ] + ['reference' =>    $reference ] + [ 'owner_id' =>  auth()->user()->id] );
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
        
