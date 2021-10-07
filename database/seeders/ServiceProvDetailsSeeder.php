@@ -207,9 +207,6 @@ class ServiceProvDetailsSeeder extends Seeder
 
         
         foreach($servicesProv as $data){
-
-          
-
             DB::table('service_prov_details')->insert([
                 'spd_unit_cost_ht' => $data['spd_unit_cost_ht'] ,            
                 'spd_is_active' => $data['spd_is_active'] ,   
