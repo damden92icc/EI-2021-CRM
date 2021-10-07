@@ -72,7 +72,7 @@
                      <tr>
                         <th>name</th>
                         <th>Quantity</th>
-                        <th>Is recurrent</th>
+                        <th>This service is recurrent</th>
                         @isManager
                         <th>Unit Cost  HT</th>
                         @endisManager
@@ -85,15 +85,14 @@
                   </thead>
                   <tbody>
                      @forelse($offer->services as $data)       
-                     <tr>
-                       
+                     <tr>     
                         <td>{{$data->service->label}}</td>
                         <td>{{$data->quantity}}</td>
                         <td>
                            @if($data->service->recurrent == true)
-                           True
+                          Yes
                            @else
-                           False
+                          No
                            @endif
                         </td>
                         @isManager  
@@ -204,7 +203,7 @@
    <div class="card-body">
       <div class="btn-group">
          @isManager
-         @if($offer->offer_state != "SENT" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
+         @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATED ASKED" )
          <!--  Update  -->
          <form method="get" action="{{route('edit-offer', $offer->id )}}">
             @csrf
@@ -229,31 +228,21 @@
          @endif
          @if($offer->offer_state == "ACCEPTED" )
          <!--  Valide  -->
-         <form method="post" action="{{route('change-state-offer', [$offer, 'VALIDED'] )}}">
+         <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Valide offer </button>
          </form>
          <!--  /Valide  -->
-         @endif
-         <!--  Archive  -->
-         @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENT" )
-         <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
-            @csrf
-            <button type="submit" class="btn btn-danger float-right">
-            <i class="fa fa-download"></i>Archive  </button>
-         </form>
-         <!--  /Archive  -->
-         @endif 
-         @if($offer->offer_state == "VALIDED")
-         <!--  Turn into project  -->
-         <form method="post" action="{{route('turn-into-project', $offer )}}">
+          <!--  Turn into project  -->
+          <form method="post" action="{{route('turn-into-project', $offer )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Turn into Project  </button>
          </form>
-         <!--  /Turn into projec  -->
+         <!--  /Turn into project  -->
          @endif
+   
          @endisManager
          @isClient
          @if($offer->offer_state == "SENT")
