@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             ProjectServiceSeeder::class,
             ServiceProvDetailsSeeder::class,
-           
-            
+            BillSeeder::class,
+            BillServiceSeeder::class,
             
        ]);
     }
