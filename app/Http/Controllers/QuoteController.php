@@ -55,6 +55,7 @@ class QuoteController extends Controller
 
     public function store(Request $request){
      
+        $user= Auth::user()->id;
         
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
@@ -66,8 +67,14 @@ class QuoteController extends Controller
             'concerned_company' => 'required|int',                    
         ];
 
+        
 
-        $request->merge( ['reference' =>  Str::random(10)] + [ 'owner_id' =>  Auth::user()->id] );
+        $date = Carbon::now();
+        $cptQuote = Quote::where('owner_id', $user)->count();
+        
+        $reference = "Q" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptQuote;
+
+        $request->merge( ['reference' =>  $reference] + [ 'owner_id' => $user]);
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
    

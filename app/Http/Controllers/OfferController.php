@@ -92,7 +92,14 @@ class OfferController extends Controller
         ];
 
 
-        $request->merge( ['reference' =>  Str::random(20)] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
+        $user = $request->concerned_client ; 
+        $date = Carbon::now();
+        $cptRef = Offer::where('concerned_client', $user)->count();
+        
+        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef;
+
+
+        $request->merge( ['reference' =>     $reference] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();     
     
@@ -255,7 +262,7 @@ class OfferController extends Controller
             $notifTarget =  User::where('id', $offer->owner_id)->first(); 
             Notification::send($notifTarget, new AcceptanceOffer($offer));
         }
-
+        $offer->offer_state = $state;
         $offer->save();    
         return redirect()->intended('/offers/single/'.$offer->id);
     }

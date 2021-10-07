@@ -180,7 +180,7 @@
                      <!--  /Archive Quote -->
                      @if ($quote->services()->exists())
                      <!--  Send Quote -->
-                     <form method="post" action="{{route('change-state-quote', [$quote, 'SENDED']  )}}">
+                     <form method="post" action="{{route('change-state-quote', [$quote, 'SENT']  )}}">
                         @csrf
                         <button type="submit" class="btn btn-primary float-right" >
                         <i class="fa fa-download"></i>Send  </button>

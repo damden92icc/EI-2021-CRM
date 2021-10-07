@@ -21,7 +21,7 @@ class QuoteSeeder extends Seeder
         $quotes = [
             [
                 'label' => 'New website Paul&Co',      
-                'reference' => 'A0010',
+                'reference' => 'Q2-OCT-21-01',
                 'sended_date' =>null ,             
                 'quote_state' => 'DRAFT',
                 'description' => 'My new client want a new website www.paul-co.be , could you send me an offer based on this quote ? He wants a new design based on the color blue and the theme bakery'
@@ -29,7 +29,7 @@ class QuoteSeeder extends Seeder
 
             [
                 'label' => 'Online coffee shop',
-                'reference' => 'A0015',
+                'reference' => 'Q2-OCT-21-02',
                 'description' => 'I work for a new coffee company, they want to digititalize their activity online, I will provide you a HTML front-end for this project',
                 'sended_date' =>null ,            
                 'quote_state' => 'DRAFT'
@@ -37,7 +37,7 @@ class QuoteSeeder extends Seeder
 
             [
                 'label' => 'Transfert and upgrade Pizza-shopa',
-                'reference' => 'A00410',
+                'reference' => 'Q2-OCT-21-03',
                 'description' => 'Hello , help ! My client need to transfert his website to a new hosting because they have a lot of timeout with their current provider. This an online plateforme to order pizza , I will need a new hosting and the security with it. The domaine will be also transfered to your service',
                 'sended_date' =>null ,          
                 'quote_state' => 'DRAFT'
@@ -45,7 +45,7 @@ class QuoteSeeder extends Seeder
           
             [
                 'label' => 'New website templated for terence-view ',
-                'reference' => 'A0890Z10',
+                'reference' => 'Q2-OCT-21-04',
                 'description' => 'My client want a new brand design for his website. He have a litle shop in the center of Brussel and create beautiful painting.',
                 'sended_date' =>null ,          
                 'quote_state' => 'DRAFT'
@@ -53,7 +53,7 @@ class QuoteSeeder extends Seeder
 
             [
                 'label' => 'New wordpress for sunny.be ',
-                'reference' => 'A00z10',
+                'reference' => 'Q2-OCT-21-05',
                 'description' => 'Hi , my client want to create a new website with wordpress. He needs the domaine name, hosting, security and the initial installation of wordpress. He want to design the website himself ',
                 'sended_date' =>null ,             
                 'quote_state' => 'DRAFT'
@@ -61,7 +61,7 @@ class QuoteSeeder extends Seeder
 
             [
                 'label' => 'Ecommerce website for Calton Hotel',
-                'reference' => 'A00aDS4za1fg0',
+                'reference' => 'Q2-OCT-21-06',
                 'description' => 'The Calton hotel want to digital their activity, Their sell room they already have a working website but they need the SSL and a powerfull server. Their current website should be transfered to your service and hosted in your company',
                 'sended_date' => Carbon::parse('2021-03-01') ,             
                 'quote_state' => 'SENT'

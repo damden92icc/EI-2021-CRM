@@ -214,7 +214,7 @@
          <!--  /Update  -->
          @if ($offer->services()->exists())
          <!--  SEND  -->
-         <form method="post" action="{{route('change-state-offer', [$offer, 'SENDED'] )}}">
+         <form method="post" action="{{route('change-state-offer', [$offer, 'SENT'] )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Send offer </button>
