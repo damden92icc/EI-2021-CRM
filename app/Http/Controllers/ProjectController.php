@@ -388,6 +388,10 @@ class ProjectController extends Controller
 
     public function turnIntoProject(Request $request, Offer $offer){
         
+
+     //   dd($offer->services);
+
+
          // Retrive main data
          $request->merge( ['label' => 'Project -  '.  $offer->label ]
          +   ['description' => $offer->description] 
@@ -400,17 +404,18 @@ class ProjectController extends Controller
      );
 
 
-     // create new project 
-     $newProject =Project::create($request->all());
+        // create new project 
+         $newProject =Project::create($request->all());
 
         // Add service 
-        foreach($offer->services as $data){       
+        foreach($offer->services as $data){      
+         //   dd($data); 
             $newService =ProjectService::create(['project_id'=> $newProject->id ,
                                         'quantity'=> $data->quantity,
-                                        'is_active' => false,
-                                        'service_state' => 'DRAFT',
+                                        'is_active' => true,
+                                        'service_state' => 'RUNNING',
                                         'start_date' =>Carbon::now(),
-                                        'next_payement_date'=> Carbon::now()->addYears(),
+                                        'next_payement_date'=> null,
                                         'unit_cost_ht'=> $data->unit_cost_ht,
                                         'unit_sell_ht' => $data->unit_sell_ht,
                                         'service_id' =>$data->service_id ]);
