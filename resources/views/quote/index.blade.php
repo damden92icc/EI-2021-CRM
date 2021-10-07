@@ -19,7 +19,8 @@
                @isClient
                <option value="DRAFT" > DRAFT</option>
                @endisClient
-               <option value="ARCHIVE" > ARCHIVE</option>
+               <option value="ARCHIVED" > ARCHIVED</option>
+               <option value="TRAITED" > TRAITED</option>
                <option value="SENT" > SENT</option>
                <option value="VALIDED" > VALIDED</option>
             </select>

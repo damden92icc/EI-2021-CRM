@@ -15,10 +15,11 @@
          <div class="col-6">
          <select class="form-control " id="documentState"  onchange="reloadTabData()">
             <option value="ALL" > ALL</option>      
-            <option value="ARCHIVE" > ARCHIVE</option>
+            <option value="ARCHIVED" > ARCHIVED</option>
             <option value="SENT" > SENT</option>
             <option value="ACCEPTED" > ACCEPTED</option>
             <option value="VALIDED" > VALIDED</option>
+            <option value="DECLINED" > DECLINED</option>
             <option value="UPDATE ASKED" > UPDATE ASKED</option>
             @isManager
             <option value="DRAFT" > DRAFT</option>             
@@ -31,7 +32,6 @@
    <div class="card-body p-0">
       <table class="table table-bordered table-striped dataTable dtr-inline" id="main-table">
          <thead>
-           
             <tr>
                <th ></th>
                <th> Reference</th> 

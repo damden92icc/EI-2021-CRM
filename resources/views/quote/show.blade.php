@@ -59,13 +59,13 @@
                <b>Quote Referance :</b>  {{$quote->reference}}  <br>
               
                <b>Quote State :  </b>{{$quote->quote_state}}</b><br>
-               <b>Created Date: </b> {{ \Illuminate\Support\Str::limit($quote->created_at, 10, $end='') }} <br>
-                  <b>Updated Date:</b> {{ \Illuminate\Support\Str::limit($quote->updated_at, 10, $end='') }}<br>
-                  <b>Sended date: </b>
+               <b>Created Date : </b> {{ \Illuminate\Support\Str::limit($quote->created_at, 10, $end='') }} <br>
+                  <b>Updated Date :</b> {{ \Illuminate\Support\Str::limit($quote->updated_at, 10, $end='') }}<br>
+                  <b>Sended date : </b>
                   @if(isset($quote->sended_date))
                   {{ \Illuminate\Support\Str::limit($quote->sended_date, 10, $end='') }}
                   @else 
-                     none 
+                     Never sent 
                   @endif   
             </div>
             <!-- /.col -->
@@ -149,7 +149,7 @@
                   <div class="btn-group">
                      @isManager
                      
-                     @if($quote->quote_state != "TRAITED" &&  $quote->quote_state == "SENDED")
+                     @if($quote->quote_state  == "SENT")
                      <!--  Mark as traite Quote -->
                      <form method="post" action="{{route('change-state-quote', [$quote, 'TRAITED'] )}}">
                         @csrf
@@ -170,7 +170,7 @@
                      @endisManager
 
                      @isClient
-                     @if($quote->quote_state != "SENDED" &&  $quote->quote_state != "ARCHIVED" && $quote->quote_state != "TRAITED"  )
+                     @if($quote->quote_state != "SENT" &&  $quote->quote_state != "ARCHIVED" && $quote->quote_state != "TRAITED"  )
                      <!--  Archive Quote -->
                      <form method="post" action="{{route('change-state-quote', [ $quote , 'ARCHIVED']  )}}">
                         @csrf
