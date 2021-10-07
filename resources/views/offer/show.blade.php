@@ -204,7 +204,7 @@
    <div class="card-body">
       <div class="btn-group">
          @isManager
-         @if($offer->offer_state != "SENDED" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
+         @if($offer->offer_state != "SENT" && $offer->offer_state != "VALIDED"  && $offer->offer_state != "ACCEPTED"   && $offer->offer_state != "DECLINED"  && $offer->offer_state != "ARCHIVED")
          <!--  Update  -->
          <form method="get" action="{{route('edit-offer', $offer->id )}}">
             @csrf
@@ -237,7 +237,7 @@
          <!--  /Valide  -->
          @endif
          <!--  Archive  -->
-         @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENDED" )
+         @if($offer->offer_state != "ARCHIVED" && $offer->offer_state != "SENT" )
          <form method="post" action="{{route('change-state-offer', [$offer, 'ARCHIVED'] )}}">
             @csrf
             <button type="submit" class="btn btn-danger float-right">
@@ -256,7 +256,7 @@
          @endif
          @endisManager
          @isClient
-         @if($offer->offer_state == "SENDED")
+         @if($offer->offer_state == "SENT")
          <!--  Accept  -->
          <form method="post" action="{{route('change-state-offer', [$offer, 'ACCEPTED'] )}}">
             @csrf

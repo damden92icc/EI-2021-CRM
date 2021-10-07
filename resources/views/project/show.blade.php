@@ -13,9 +13,17 @@
    <div class="card-body">
       <div class="row">
          <div class="col-5">
-            <strong>Project Owner :</strong>
+            <strong>Company owner :</strong>
             <br>
             <p> {{$project->company->name}}</p>
+            <strong>Company employement :</strong>
+
+            <p>
+            @foreach($project->company->companyEmploye as $data )
+            <br>   {{$data->users->name}} {{$data->users->firstname}} 
+            @endforeach
+            </p>
+            
             <strong>Projects description :</strong>
             <br>
             <p> {{$project->description}}</p>
@@ -263,7 +271,7 @@
                                  <form method="post" action="{{route('remove-service-doc-project', $data->id )}}">
                                     @csrf
                                     <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-                                    Remove  </button>
+                                  Archive</button>
                                  </form>
                                  <!--  /Remove service project -->
                                  @endisManager
@@ -427,7 +435,7 @@
                               @if(isset($data->last_payement_date ))
                               {{$data->last_payement_date}}
                               @else 
-                              <p> No data found</p>
+                              <p>No data found </p>
                               @endif
                            </td>
                            @isManager

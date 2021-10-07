@@ -14,17 +14,15 @@
          </div>
          <div class="col-6">
             <select class="form-control " id="documentState"  onchange="reloadTabData()">
-               @isClient
+            
                <option value="ALL" > ALL</option>
+               @isClient
                <option value="DRAFT" > DRAFT</option>
-               <option value="TRAITED" > TRAITED</option>
-               <option value="SENDED" > SENDED</option>
-               <option value="VALIDED" > VALIDED</option>
                @endisClient
-               @isManager
-               <option value="SENDED" > SENDED</option>
+               <option value="ARCHIVED" > ARCHIVED</option>
                <option value="TRAITED" > TRAITED</option>
-               @endisManager
+               <option value="SENT" > SENT</option>
+               <option value="VALIDED" > VALIDED</option>
             </select>
          </div>
       </div>
@@ -35,10 +33,11 @@
          <thead>
             <tr>
                <th>#</th>
-               <th>label</th>
-               <th>Desc</th>
                <th>reference</th>
                <th>state</th>
+               <th>label</th>
+               <th>Desc</th>
+             
                <th>company</th>
                <th>Action</th>
             </tr>
@@ -70,13 +69,11 @@
           select: true,
           "columns": [
            { "data": "DT_RowId" },
-           
-              { "data": "label" },
-              { "data": "description" },
-              { "data": "reference" },
+           { "data": "reference" },
               { "data": "state" },
+              { "data": "label" },
+              { "data": "description" },           
               { "data": "company" },
-  
               {"render":function(data, type, row, meta){
                 var link =  window.location + '/single/'+ row.quote_id ;
                 return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
@@ -112,11 +109,11 @@
           select: true,
           "columns": [
            { "data": "DT_RowId" },
-           
+           { "data": "reference" },
+              { "data": "state" },
               { "data": "label" },
               { "data": "description" },
-              { "data": "reference" },
-              { "data": "state" },
+             
               { "data": "company" },
    
               {"render":function(data, type, row, meta){

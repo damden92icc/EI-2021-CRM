@@ -317,7 +317,7 @@ class OfferController extends Controller
         // Check role client to get listing of all offer
         if(Auth::user()->checkRole(1) ){
 
-         $listing  = Offer::where('concerned_client', Auth::user()->id)->whereIn( 'offer_state',   ["SENT", "TRAITED", "ARCHIVED"])->get();  
+         $listing  = Offer::where('concerned_client', Auth::user()->id)->whereIn( 'offer_state',   ["SENT", "TRAITED", "ARCHIVED", "ACCEPTED"])->get();  
             
          $cpt = 1;  
           foreach($listing as $data){

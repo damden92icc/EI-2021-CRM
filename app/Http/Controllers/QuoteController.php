@@ -118,7 +118,7 @@ class QuoteController extends Controller
         $quote->quote_state  = $state;
 
 
-        if($quote->quote_state == "SENDED"){
+        if($quote->quote_state == "SENT"){
             $quote->sended_date =  Carbon::now();
            // $->notify();
             Notification::send($notifTarget, new SendQuote($quote));
@@ -228,7 +228,7 @@ class QuoteController extends Controller
         // User is manager
         else {
 
-            $listingQuotes = Quote::whereIn( 'quote_state',   ["SENDED", "TRAITED", "ARCHIVED"])->get();
+            $listingQuotes = Quote::whereIn( 'quote_state',   ["SENT", "TRAITED", "ARCHIVED"])->get();
             $cpt = 1;    
 
             foreach($listingQuotes as $data){
