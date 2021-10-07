@@ -57,7 +57,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 6 , // dns NAME
                 'quantity' => '1',
-                'unit_cost_ht' => 15, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 25, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -68,7 +68,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 13 , // dns ssl e-commerce
                 'quantity' => '1',
-                'unit_cost_ht' => 20, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 45, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -121,7 +121,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 6 , // dns NAME
                 'quantity' => '1',
-                'unit_cost_ht' => 15, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 25, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -132,7 +132,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 12 , // dns ssl e-commerce
                 'quantity' => '1',
-                'unit_cost_ht' => 20, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 45, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -184,7 +184,7 @@ class ProjectServiceSeeder extends Seeder
              [
                  'service_id' => 6 , // dns NAME
                  'quantity' => '1',
-                 'unit_cost_ht' => 15, 
+                 'unit_cost_ht' => 0, 
                  'unit_sell_ht' => 25, 
                  'start_date' => Carbon::now()->subDays(90), 
                  'is_active' => 1,
@@ -195,7 +195,7 @@ class ProjectServiceSeeder extends Seeder
              [
                  'service_id' => 12 , // dns ssl standard
                  'quantity' => '1',
-                 'unit_cost_ht' => 20, 
+                 'unit_cost_ht' => 0, 
                  'unit_sell_ht' => 45, 
                  'start_date' => Carbon::now()->subDays(90), 
                  'is_active' => 1,
@@ -215,7 +215,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 6 , // dns NAME
                 'quantity' => '1',
-                'unit_cost_ht' => 15, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 25, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -226,7 +226,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 12 , // dns ssl standard
                 'quantity' => '1',
-                'unit_cost_ht' => 20, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 45, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -246,7 +246,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 6 , // dns NAME
                 'quantity' => '1',
-                'unit_cost_ht' => 15, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 25, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -257,7 +257,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 12 , // dns ssl standard
                 'quantity' => '1',
-                'unit_cost_ht' => 20, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 45, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -278,7 +278,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 6 , // dns NAME
                 'quantity' => '1',
-                'unit_cost_ht' => 15, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 25, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -289,7 +289,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 12 , // dns ssl standard
                 'quantity' => '1',
-                'unit_cost_ht' => 20, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 45, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
@@ -300,7 +300,7 @@ class ProjectServiceSeeder extends Seeder
             [
                 'service_id' => 7 , // dns ssl standard
                 'quantity' => 3,
-                'unit_cost_ht' => 5, 
+                'unit_cost_ht' => 0, 
                 'unit_sell_ht' => 12, 
                 'start_date' => Carbon::now()->subDays(90), 
                 'is_active' => 1,
