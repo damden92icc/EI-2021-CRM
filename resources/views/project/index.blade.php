@@ -4,6 +4,8 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
+
+@isManager
 <div class="row">
           <div class="col-lg-4 col-4">
             <!-- small card -->
@@ -150,6 +152,7 @@
           </div>
           <!-- ./col -->
         </div> <!-- end row -->
+@endisManager
 
 
 
@@ -157,7 +160,7 @@
 
 
 
-<div class="card">
+        <div class="card">
    <div class="card-header">
       <h3 class="card-title">{{$pageTabTitle}}</h3>
    </div>
