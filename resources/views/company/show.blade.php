@@ -9,7 +9,7 @@
 <div class="row">
    <div class="col-6">
       <div class="card">
-      <h3 class="card-title">           {{$company->name}}</h3>
+         <h3 class="card-title">           {{$company->name}}</h3>
          {{$company}}
       </div>
    </div>
@@ -17,7 +17,7 @@
    <div class="col-6">
       <div class="card">
          <div class="card-header">
-         <h3 class="card-title">    Employe </h3>
+            <h3 class="card-title">    Employe </h3>
          </div>
          <div class="card-body">
             <table class="table table-striped">
@@ -30,21 +30,21 @@
                   </tr>
                </thead>
                <tbody>
-               @forelse($company->companyEmploye as $data)
-               <tr>
-                  <td> {{$data->users->id}} </td>
-                  <td> {{$data->users->name}} </td>
-                  <td> {{$data->users->firstname}} </td>
-                  <td>  
-                  <form method="post" action="{{route('remove-employe', $data )}}">
-   @method('put')
-   @csrf
-   <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-   Remove </button>
-</form>
-                  </td>
-               </tr>
-</tbody>
+                  @forelse($company->companyEmploye as $data)
+                  <tr>
+                     <td> {{$data->users->id}} </td>
+                     <td> {{$data->users->name}} </td>
+                     <td> {{$data->users->firstname}} </td>
+                     <td>
+                        <form method="post" action="{{route('remove-employe', $data )}}">
+                           @method('put')
+                           @csrf
+                           <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
+                           Remove </button>
+                        </form>
+                     </td>
+                  </tr>
+               </tbody>
                @empty
                no employe
                @endforelse
@@ -56,30 +56,30 @@
    <!-- end col -->
 </div>
 <!-- end row -->
-
 <div class="row">
-    <div class="col-12">
-        <div class="btn-group">
-<form method="post" action="{{route('archive-company', $company )}}">
-   @method('delete')
-   @csrf
-   <button type="submit" class="btn btn-danger " style="margin-right: 5px;">
-   <i class="fa fa-download"></i>Archive Company</button>
-</form>
-<form method="post" action="{{route('enable-company', $company )}}">
-   @csrf
-   <button type="submit" class="btn btn-success " style="margin-right: 5px;">
-   <i class="fa fa-download"></i>Enable Company</button>
-</form>
-<!--   Add service -->
-<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modal-default">
-<i class="fa fa-download"></i> Add Employe
-</button>
-
-</div> <!-- end btn group-->
-</div> <!-- end col-12 -->
-</div> <!-- end row -->
-
+   <div class="col-12">
+      <div class="btn-group">
+         <form method="post" action="{{route('archive-company', $company )}}">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger " style="margin-right: 5px;">
+            <i class="fa fa-download"></i>Archive Company</button>
+         </form>
+         <form method="post" action="{{route('enable-company', $company )}}">
+            @csrf
+            <button type="submit" class="btn btn-success " style="margin-right: 5px;">
+            <i class="fa fa-download"></i>Enable Company</button>
+         </form>
+         <!--   Add service -->
+         <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modal-default">
+         <i class="fa fa-download"></i> Add Employe
+         </button>
+      </div>
+      <!-- end btn group-->
+   </div>
+   <!-- end col-12 -->
+</div>
+<!-- end row -->
 <div class="modal fade" id="modal-default">
    <div class="modal-dialog">
       <div class="modal-content">
