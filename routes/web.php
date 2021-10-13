@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 
+
+Route::post('/valide-account/{user}', [App\Http\Controllers\UserController::class, 'validateLegalDoc'])->middleware(['auth'])->name('valide-account');
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

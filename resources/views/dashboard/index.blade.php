@@ -27,10 +27,20 @@
               </button>
             </div>
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
+            
+       
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-outline-light">Save changes</button>
+
+            
+
+
+            <form method="POST"  action="{{ route('valide-account', $user)}}">
+              @csrf
+   
+            <button type="submit" class="btn btn-outline-light">Acceppt CGU & GDPR compilance</button>
+            
+            </form>
             </div>
           </div>
           <!-- /.modal-content -->
