@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Models\Employe;
 class CompanyController extends Controller
 {
-    //
-
     public function index()
     {      
         return view('company.index', [
@@ -66,7 +64,7 @@ class CompanyController extends Controller
              
         $company->update($request->all());
     
-        return redirect()->intended('/company/single/'.$company->id);
+        return redirect()->intended('/managements/company/single/'.$company->id);
     }
 
     public function store(Request $request){
@@ -138,7 +136,7 @@ class CompanyController extends Controller
     public function removeEmploye(Employe $employe){
 
         $employe->delete();
-        return redirect()->intended('/company/single/'.$employe->company_id);
+        return redirect()->intended('/managements/company/single/'.$employe->company_id);
     }
 
 }

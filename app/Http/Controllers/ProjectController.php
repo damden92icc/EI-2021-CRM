@@ -24,10 +24,67 @@ class ProjectController extends Controller
 
         $projects = Project::all();  
 
+
+        $ap = Project::where('project_state', 'RUNNING')->get()->count();
+
+        $totClient = Project::select('concerned_company')->where('project_state', 'RUNNING')->distinct()->get()->count();
+
+        $activeService = ProjectService::where('service_state', 'RUNNING')->get();
+
+
+        $cptAS = count($activeService);
+
+        $totalSell = 0;
+        $totalCost = 0;
+        
+
+        $cptBillableService =0; 
+        $totalBillableServiceSell = 0; 
+        $totalBillableServiceCost = 0; 
+        foreach($activeService as $data){
+          
+
+            // Their is data provide by proivider
+                if($data->serviceProv != null ){
+                    $totalSell += $data->quantity* $data->unit_sell_ht;
+                    $totalCost += $data->quantity* ( $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht);
+                }
+
+                else{
+                    $totalSell += $data->quantity* $data->unit_sell_ht;
+                    $totalCost += $data->quantity* ( $data->unit_cost_ht);
+                }
+
+                // count if servuce is billable
+                if($data->is_billable == true){
+                    $cptBillableService =+1;
+
+                    // Calcul price if service and cost price
+                    if($data->serviceProv != null ){
+                        $totalBillableServiceCost += $data->quantity* ( $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht);
+                        $totalBillableServiceSell += $data->quantity* ( $data->unit_sell_ht );
+                    }
+
+                    else{
+                        $totalBillableServiceSell += $data->quantity* $data->unit_sell_ht;
+                        $totalBillableServiceCost= $data->quantity* ( $data->unit_cost_ht);
+                    }
+                }
+        }
+  
+
         return view('project.index', [
             'pageTitle' => 'Listing projects',
             'pageTabTitle' => 'Listing projects',
-            'projects'=>        $projects ,      
+            'projects'=>        $projects ,     
+            'totalAP'=>  $ap  , 
+            'totalAS' =>   $cptAS,
+            'totalSellAS' => $totalSell,
+            'totalCostAS' => $totalCost,
+            'cptClient' => $totClient,
+            'cptBillableService' =>  $cptBillableService, 
+            'totalSellPriceBillable' => $totalBillableServiceSell,
+            'totalCostPriceBillable' => $totalBillableServiceCost,
         ]);
     }
 
