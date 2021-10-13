@@ -123,20 +123,16 @@
                   <!-- /.col -->
                </div>
                <!-- /.row -->
-
-               
                <div class="row">
                   <div class="col-12">
-
-                  @if(isset($bill->billIssues))
+                     @if(isset($bill->billIssues))
                      Issues for this bill : 
                      <ol>
-                           @foreach($bill->billIssues as $data)
+                        @foreach($bill->billIssues as $data)
                         <li> {{$data->message}} </li>
                         @endforeach 
                      </ol>
-                  @endif
-              
+                     @endif
                   </div>
                </div>
             </div>
@@ -158,17 +154,15 @@
                   <i class="fa fa-download"></i>Send bill </button>
                </form>
                <!--  /send bill  -->
-              
                <!--   Add service -->
                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-default">
                <i class="fa fa-download"></i> Add billable service 
                </button>
                <!--   /Add service -->
-              
                @endif
                @if($bill->bill_state =="PAYED" || $bill->bill_state =="ISSUED")  
-                <!--  Valide  -->
-                <form method="post" action="{{route('valide-bill', $bill )}}">
+               <!--  Valide  -->
+               <form method="post" action="{{route('valide-bill', $bill )}}">
                   @csrf
                   <button type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
                   <i class="fa fa-download"></i>Valide bill </button>
@@ -195,22 +189,14 @@
                <!--  /Pay  -->
                @endif
                @endisClient
-
                @isAccount
                @if($bill->bill_state == "VALIDED" ||$bill->bill_state == "PAYED"  )  
-            
                <!--  Report issues  -->
-        
-             
-                  <button type="submit" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal-report-issue">
-                  <i class="fa fa-download"></i> Report issues  </button>
-  
+               <button type="submit" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal-report-issue">
+               <i class="fa fa-download"></i> Report issues  </button>
                <!--  /Report issues  -->
                @endif
                @endisAccount
-
-
-
             </div>
             <!-- end button -->
          </div>
@@ -244,7 +230,6 @@
    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 <!-- Modal ask update  Modal -->
 <div class="modal fade" id="modal-report-issue" style="display: none;">
 <div class="modal-dialog">

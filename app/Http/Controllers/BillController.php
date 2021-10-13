@@ -184,12 +184,12 @@ class BillController extends Controller
         $services = $request->get('serviceListing');
 
         $billID = $request->get('bill_id');
-        
+        $bill = Bill::where('id', $billID)->first();
+
         foreach($services as $data){
             
             $ps = ProjectService::where('id', $data)->first();
 
-          //  dd($ps);
             $totalSP = $ps->unit_sell_ht * $ps->quantity;
      
 
@@ -199,8 +199,15 @@ class BillController extends Controller
                 'ps_id' => $ps->id,
                 'bill_id' => $billID
             ]);
+
+            $bill->total_sell_ht += $newBillService->total_sp_ht;
+            $bill->save();
         }
 
+
+        
+
+       
         return redirect()->intended('/bills/single/'.$billID);
 
     }
@@ -211,7 +218,10 @@ class BillController extends Controller
 
         $service = BillService::where('id', $id)->first();
 
-        $bill = $service->bill_id;
+        $bill = Bill::where('id',  $service->bill_id)->first();
+
+        $bill->total_sell_ht =  $bill->total_sell_ht - ($service->total_sp_ht) ;
+        $bill->save();
 
         $service->delete();
 
