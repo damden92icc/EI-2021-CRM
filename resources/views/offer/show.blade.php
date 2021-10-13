@@ -90,13 +90,13 @@
                         <td>{{$data->quantity}}</td>
                         <td>
                            @if($data->service->recurrent == true)
-                           @if($data->service->validity_delay = 355)
-                           YEARLY
-                           @else 
-                           bY DEFAULT        : {{$data->service->validity_delay}}
-                           @endif
+                              @if($data->service->validity_delay = 355)
+                              YEARLY
+                              @else 
+                              bY DEFAULT        : {{$data->service->validity_delay}}
+                              @endif
                            @else
-                           ONE TIME Payement
+                              ONE TIME Payement
                            @endif
                         </td>
                         @isManager  
@@ -422,32 +422,19 @@
          </div>
          <div class="modal-body">
             <form action="" method="post" id="ServicesToTurn">
-               <table style="width:100%">
-                  <tr>
-                     <th>Service Name</th>
-                     <th>Info</th>
-                     <th>Action</th>
-                  </tr>
-                  @foreach($offer->services as $data)
-                  <tr>
-                
-                     <td> {{$data->service->label}}</td>
-                     <td>      <input type="text" id="service-{{$data->id}}" name="service-{{$data->id}}"></td>
-                     <td>  
-                          <button type="button"  class="btn btn-primary btn-turn-service" data-toggle="modal" data-target="#modal-add-data"
-                          data-service='{{$data->id}}' 
-                          data-service-id='{{$data->service->id}}'     
-                                 data-service-name='{{ $data->service->label}}'     
-                                 data-service-quantity='{{ $data->quantity}}'
-                                 data-service-cost-ht='{{ $data->unit_cost_ht}}'
-                                 data-service-sell-ht='{{ $data->unit_sell_ht}}'
-                          >add data
-
-                          </button>
-                        </td>
-                  </tr>
-                  @endforeach
-               </table>
+               @foreach($offer->services as $data)
+               <div class="row">
+                  <div class="col-6">
+                     <b> {{$data->service->label}} </b>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-6">
+                     <p> In Construction </p>
+                  </div>
+                  <!-- end col -->
+               </div>
+               <!-- end row -->   
+               @endforeach
             </form>
          </div>
          <div class="modal-footer justify-content-between">
@@ -462,229 +449,39 @@
    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-
-
-
-
-<div class="modal fade" id="modal-add-data">
-   <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h4 class="modal-title">Add new service</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-        
-
-         <form id="turnServiceData">
-         <input type="hidden" id="service_list" name="service_list" >
-         
-               <input type="hidden" id="service_id" name="service_id" >
-               <div class="row">
-                  <div class="col-3  {{$errors->has('service_id') ? 'has-error' : ''}}">
-                     <label for="inputService">Service</label>
-                     
-                     <input type="text" id="service_name" name="service_name" >
-                  </div>
-                  <div class="col-3 {{$errors->has('quantity') ? 'has-error' : ''}} ">
-                 
-                  <label for="quantity">Quantity</label>
-                     <input class="form-control form-control-lg" type="number" min="1" id="service_qt" name="service_qt" value="{{ isset($project) ? $project->quantity: old('quantity') }}" placeholder="service quantity">
-                  </div>
-
-
-                 
-
-                  <div class="col-3">
-                    
-                  <label for="costPrice"> Unit Cost Price</label>
-                     <input class="form-control form-control-lg" type="number" id="unit_cost_ht"" name="unit_cost_ht" value="{{ isset($project) ? $project->unit_cost_price: old('unit_cost_price') }}" placeholder="service cost price">
-                  </div>
-
-                  <div class="col-3  ">
-                     <label for="sellPrice"> Unit sell Price</label>
-                     <input class="form-control form-control-lg" type="number" id="unit_sell_ht" name="unit_sell_ht" value="{{ isset($project) ? $project->unit_sell_ht: old('unit_sell_ht') }}" placeholder="service sell price">
-               
-                  </div>
-               </div>
-               <!-- end roow -->
-               <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="checkFormSwitch()">
-                  <label class="custom-control-label" for="customSwitch1">Toggle if external provider</label>
-               </div>
-               <div id="form-external">
-                  <div class="row">
-                     <div class="col-12">
-                        <div class="row">
-                           <div class="col-4 {{$errors->has('provider_id') ? 'has-error' : ''}} ">
-                              <label for="costPrice">Provider Cost Price</label>
-                              <select class="form-control" id="provider_id" name="provider_id">
-                                 @foreach ($selectableProviders as $provider)                      
-                                 <option value="{{$provider->id}}" id="{{$provider->id}}">   {{$provider->name}}</option>
-                                 @endforeach
-                              </select>
-                           </div>
-                           <div class="col-4 {{$errors->has('spd_unit_cost_ht') ? 'has-error' : ''}} ">
-                              <label for="costPrice">Provider Cost Price</label>
-                              <input class="form-control form-control-lg" type="number" min="1" id="edit-cp" name="spd_unit_cost_ht" value="{{ isset($project) ? $project->spd_unit_cost_ht: old('spd_unit_cost_ht') }}" placeholder="Cost Provider HT">
-                              @if($errors->has('spd_unit_cost_ht'))
-                              <strong> {{$errors->first('spd_unit_cost_ht')}}</strong>
-                              @endif
-                           </div>
-                           <div class="col-4  {{$errors->has('spd_is_active') ? 'has-error' : ''}}">
-                              <label for="inputActive"> Service provider Active </label>
-                              <select class="form-control" id="spd_is_active" name="spd_is_active">
-                                 <option value="1" id="1"> True</option>
-                                 <option value="0" id="0"> False</option>
-                              </select>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-4 {{$errors->has('spd_start_date') ? 'has-error' : ''}} ">
-                              <label for="startDate">Start date</label>
-                              <input class="form-control form-control-lg" type="text" id="edit-cstp"  data-date-format="yyyy-mm-dd"  name="spd_start_date" value="{{ isset($project) ? $project->spd_start_date: old('spd_start_date') }}" placeholder="service start date">
-                              @if($errors->has('spd_start_date'))
-                              <strong> {{$errors->first('spd_start_date')}}</strong>
-                              @endif
-                           </div>
-                           <div class="col-4 {{$errors->has('spd_recurrency_payement') ? 'has-error' : ''}} ">
-                              <label for="recurrency">Reccurency payement</label>
-                              <select class="form-control" id="spd-recurrency" name="spd_recurrency_payement">
-                                 <option value="YEARLY" id="YEARLY"> YEARLY</option>
-                                 <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
-                                 <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
-                                 <option value="MONTHLY" id="MONTHLY"> Montlhy</option>
-                              </select>
-                              @if($errors->has('recurrency_payement'))
-                              <strong> {{$errors->first('recurrency_payement')}}</strong>
-                              @endif
-                           </div>
-                           <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
-                              <label for="inputState">State </label>
-                              <select class="form-control" id="spd_service_state" name="spd_service_state">
-                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                                 <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                                 <option value="TO PAY" id="TO PAY"> TO PAY</option>
-                              </select>
-                           </div>
-                        </div>
-                        <!-- end roow -->
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-6  {{$errors->has('is_active') ? 'has-error' : ''}}">
-                     <label for="inputActive">Active </label>
-                     <select class="form-control" id="is_active" name="is_active">
-                        <option value="1" id="1"> True</option>
-                        <option value="0" id="0"> False</option>
-                     </select>
-                  </div>
-                  <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
-                     <label for="inputState">State </label>
-                     <select class="form-control" id="service_state" name="service_state">
-                     <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>                       
-                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
-                     </select>
-                  </div>
-               </div>
-               <!-- end roow -->
-               <div class="row">
-                  <div class="col-6 {{$errors->has('start_date') ? 'has-error' : ''}} ">
-                     <label for="startDate">Start date</label>
-                     <input class="form-control form-control-lg" type="text" id="start_date"  data-date-format="yyyy-mm-dd"  name="start_date" value="{{ isset($project) ? $project->start_date: old('start_date') }}" placeholder="service start date">
-                     @if($errors->has('start_date'))
-                     <strong> {{$errors->first('start_date')}}</strong>
-                     @endif
-                  </div>
-                  <div class="col-6{{$errors->has('recurrency_payement') ? 'has-error' : ''}} ">
-                     <label for="recurrency">Reccurency payement</label>
-                     <select class="form-control" id="recurrency" name="recurrency_payement">
-                        <option value="YEARLY" id="YEARLY"> YEARLY</option>
-                        <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
-                        <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
-                        <option value="MONTHLY" id="MONTHLY"> Montlhy</option>
-                     </select>
-                     @if($errors->has('recurrency_payement'))
-                     <strong> {{$errors->first('recurrency_payement')}}</strong>
-                     @endif
-                  </div>
-               </div>
-               <!-- end roow -->
-               <button onclick="feddServiceValue()" class="btn btn-primary">Submit</button>
-         </form>   
-
-
-
-         </div>
-      </div>
-      <!-- /.modal-content -->
-   </div>
-   <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 @stop
 @section('css')
 <link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
 <script> 
-
-$('#form-external').hide();
-   
-   function checkFormSwitch() {
-           if (document.getElementById('customSwitch1').checked) {
-            $('#form-external').show();
-            $('#form-internal').hide();
-           } else {
-            $('#form-external').hide();
-            $('#form-internal').show();
-           }
-       }
-   
-
-
-
-
-
-
-$('.btn-turn-service').click(function(event){
-   $('#service_list').val($(this).data('service'));
-   $('#service_id').val($(this).data('service-id'));
-   $('#service_name').val($(this).data('service-name'));
-   $('#service_qt').val($(this).data('service-quantity'));
-   $('#unit_sell_ht').val($(this).data('service-sell-ht'));
-   $('#unit_cost_ht').val($(this).data('service-cost-ht'));
-
-});
-
-
-
    $('#turnIntoProject').click(function(event) {
    
-      event.preventDefault();
+     
    
       var form = document.getElementById('ServicesToTurn');
       var data = new FormData(form);
    
-
+      cpt=1;
+   
+   
    finalTab = [];
    
       tabServiceToAdd=[]  
    
       for (var [key, value] of data) {
    
-        
-         tabServiceToAdd.push( [key, value]);        
+         if(key == "Separator"){
+            cpt= cpt+1;
+            finalTab.push(tabServiceToAdd); 
+            tabServiceToAdd=[];  
+         }else{
+            tabServiceToAdd.push( key, value);
+         }             
       }
    
-
-
-
+      event.preventDefault();
+   
       $.ajax({
        url:"{{ route('turn-into-project') }}",
        headers: {
@@ -696,7 +493,7 @@ $('.btn-turn-service').click(function(event){
             offer_label : "{{$offer->label}}",
             concerned_company :  "{{$offer->concerned_company}}",
             offer_desc :  "{{$offer->description}}",
-            jsonData:  JSON.stringify(tabServiceToAdd)},
+            jsonData:  JSON.stringify(finalTab)},
        success: function(data) {
       alert(data); // apple
    },
@@ -750,33 +547,7 @@ $('.btn-turn-service').click(function(event){
                });
    
    
-       function feddServiceValue(){
-
-
-
-         event.preventDefault();
-
-            var form = document.getElementById('turnServiceData');
-            var data = new FormData(form);
-               
-            tabServiceToAdd=[]  
-            concernedService=0;
-               for (var [key, value] of data) {               
-                  tabServiceToAdd.push( [key, value]);
-               }
-
-              $serviceList = tabServiceToAdd[0].toString();
-
-             sLineToFeed =       $serviceList.replace('service_list,','service-')
-             console.log(            sLineToFeed )
-                     
-
-               document.getElementById(sLineToFeed ).value = tabServiceToAdd.toString();
-               $('#modal-add-data').modal('hide');
-           
-               }
-
-             
+            
 </script>
 @stop
 

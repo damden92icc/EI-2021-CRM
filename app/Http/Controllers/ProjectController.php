@@ -460,16 +460,20 @@ class ProjectController extends Controller
         );
 
 
-        return    $request->jsonData; 
+
+        $servicesListe =  json_decode($request->jsonData, true);
+
+      
 
 
 
 
-         foreach($newServices as $data){
+         foreach($servicesListe as $data){
                
-            return $data;
+          return $data['1']['service_name'];
 
             $newService =ProjectService::create(['project_id'=> $newProject->id ,
+            'service_id' => '1',
             'quantity'=>$data[3],
             'unit_cost_ht'=> $data->unit_cost_ht,
             'unit_sell_ht' => $data->unit_sell_ht,
