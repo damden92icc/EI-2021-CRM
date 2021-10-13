@@ -84,15 +84,15 @@ class CompanyController extends Controller
             'zip_code'=> 'required',
             'locality'=> 'required',
             'email'=> 'required|email',
+            'phone'=> 'required',
             'company_type'=> 'required',
             'active' => 'required',
         ];
 
-
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();         
         $newCompany = Company::create($request->all());        
     
-        return redirect()->intended('/company/single/'.$newCompany->id);
+        return redirect()->intended('/managements/company/single/'.$newCompany->id);
     }
 
     public function archive(Company $company){

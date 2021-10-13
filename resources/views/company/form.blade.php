@@ -85,12 +85,22 @@
                   @endif
                </div>
             </div>
-            <div class="col-4">
+            <div class="col-2">
                <div class="form-group {{$errors->has('email') ? 'has-error' : ''}} ">
                   <label for="companyEmail">Company email</label>
                   <input class="form-control form-control-lg" type="text" id="email" name="email" value="{{ isset($company) ? $company->email : old ('email') }}" placeholder="company_email">
                   @if($errors->has('email'))
                   <strong> {{$errors->first('email')}}</strong>
+                  @endif
+               </div>
+            </div>
+
+            <div class="col-2">
+               <div class="form-group {{$errors->has('phone') ? 'has-error' : ''}} ">
+                  <label for="companyEmail">Company phone</label>
+                  <input class="form-control form-control-lg" type="text" id="phone" name="phone" value="{{ isset($company) ? $company->phone : old ('phone') }}" placeholder="phone">
+                  @if($errors->has('phone'))
+                  <strong> {{$errors->first('phone')}}</strong>
                   @endif
                </div>
             </div>
