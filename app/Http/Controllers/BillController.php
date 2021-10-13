@@ -289,7 +289,7 @@ class BillController extends Controller
    
 
        // edit bill state 
-        $bill->bill_state = "SENDED";
+        $bill->bill_state = "SENT";
         $bill->sended_date =Carbon::now() ;
         $bill->save();    
         return redirect()->intended('/bills/single/'.$bill->id);

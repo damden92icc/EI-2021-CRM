@@ -358,11 +358,6 @@ class ProjectController extends Controller
             Notification::send($notifTarget, new AnswerRemovePS($project,   $service->service_state));
         }
 
-       
-       
-
-      
-
         return redirect()->route('single-project', $service->project_id);
        
     }
@@ -447,16 +442,11 @@ class ProjectController extends Controller
         
         $offer = Offer::where('id', $request->offer_id)->first();
        
-        $company = $request->concerned_company;
+
         $date = Carbon::now();
-        $cptRef = Project::where('concerned_company', $company)->count();
-        
-  
-        $reference = "P" . $company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
-
-
-
-
+        $cptRef = Project::where('concerned_company', $request->concerned_company)->count();
+          
+        $reference = "P" . $request->concerned_company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
 
             // Retrive main data
             $request->merge( ['label' => 'Project - from   '.  $request->offer_label ]
@@ -470,12 +460,10 @@ class ProjectController extends Controller
         );
 
 
-     //   $newProject =Project::create($request->all());
-        //  $offer->offer_state = "ARCHIVED";
-       // $offer->save();
-  
+        return    $request->jsonData; 
 
-         $newServices =    json_decode($request->jsonData, true); 
+
+
 
          foreach($newServices as $data){
                
@@ -488,10 +476,8 @@ class ProjectController extends Controller
             'start_date' =>Carbon::now(),
             'is_active' => true,
             'service_state' => 'RUNNING',           
-            'recurrency_payement'=> null,
-         
+            'recurrency_payement'=> null,         
             'service_id' =>$data->service_id ]);
-        
          }
 
 

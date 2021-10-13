@@ -38,6 +38,8 @@ class OfferController extends Controller
         else{
             $offers = Offer::all(); 
         }
+
+        
       
         return view('offer.index', [
             'pageTitle' => 'Listing Offers',
@@ -52,6 +54,10 @@ class OfferController extends Controller
 
         $total = count( OfferService::where('offer_id', $id)->get());
 
+
+        $selectableProviders = Company::where('company_type', "provider")->get();  
+
+
         $selectableServices = Service::all();
         $myCompany = Company::where('company_type', 'main_company')->first();
         return view('offer.show', [
@@ -60,7 +66,7 @@ class OfferController extends Controller
             'servicesSelectable' =>  $selectableServices,
             'myCompany' => $myCompany ,
             'offer'=>        $offer ,
-      
+            'selectableProviders' => $selectableProviders,
         ]);
     }
 

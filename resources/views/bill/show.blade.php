@@ -178,13 +178,13 @@
                @endif
                @endisManager
                @isClient
-               @if($bill->bill_state == "SENDED")  
+               @if($bill->bill_state == "SENT")  
                <!--  Update  -->
                <!--  Pay  -->
                <form method="post" action="{{route('pay-bill', $bill )}}">
                   @csrf
                   <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-                  <i class="fa fa-download"></i>Pay  </button>
+                  <i class="fa fa-download"></i>Pay (NO REAL PAYEMENT) </button>
                </form>
                <!--  /Pay  -->
                @endif
