@@ -253,4 +253,16 @@ class UserController extends Controller
 
         return    $tabWorker ;
     }
+
+
+
+    public function validateLegalDoc(User $user){
+        $user->cgu_valided = 1;
+        $user->gdpr_valided = 1;
+        $user->user_state = "ACTIVE";
+        $user->save();
+        return redirect()->intended('/users/single/'.$user->id);
+    }
+
+
 }

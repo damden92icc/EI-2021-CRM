@@ -22,6 +22,7 @@ class Service extends Model
         'recurrent',
         'active',
         'validity_delay',
+        'category_id',
     ];
 
 

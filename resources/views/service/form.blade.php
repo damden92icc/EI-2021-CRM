@@ -28,17 +28,17 @@
    <div class="form-group">
       <label for="inputReccurent">Service is recurrent</label>
       @if(isset($service))
-          @if($service->recurrent == 0)
-          <select class="form-control" id="recurrent-service" name="recurrent">
-            <option value="0" id="0" selected> False</option>
-            <option value="1" id="1"> True </option>
-          </select>
-          @else
-          <select class="form-control" id="recurrent-service" name="recurrent">
-            <option value="0" id="0"> False</option>
-            <option value="1" id="1"  selected> True </option>
-          </select>
-          @endif
+      @if($service->recurrent == 0)
+      <select class="form-control" id="recurrent-service" name="recurrent">
+         <option value="0" id="0" selected> False</option>
+         <option value="1" id="1"> True </option>
+      </select>
+      @else
+      <select class="form-control" id="recurrent-service" name="recurrent">
+         <option value="0" id="0"> False</option>
+         <option value="1" id="1"  selected> True </option>
+      </select>
+      @endif
       @else
       <select class="form-control" id="recurrent-service" name="recurrent">
          <option value="0" id="0"> False</option>
@@ -48,43 +48,44 @@
    </div>
    <div class="form-group">
       <label for="inputReccurent">Service Active</label>
-
-
-
       @if(isset($service))
-          @if($service->active == 0)
-          <select class="form-control" id="active" name="active">
+      @if($service->active == 0)
+      <select class="form-control" id="active" name="active">
          <option value="0" id="0" selected> False</option>
          <option value="1" id="1"> True </option>
       </select>
-          @else 
-          <select class="form-control" id="active" name="active">
+      @else 
+      <select class="form-control" id="active" name="active">
          <option value="0" id="0"> False</option>
          <option value="1" id="1" selected> True </option>
       </select>
-          @endif 
-          @else 
-          <select class="form-control" id="active" name="active">
+      @endif 
+      @else 
+      <select class="form-control" id="active" name="active">
          <option value="0" id="0"> False</option>
          <option value="1" id="1"> True </option>
       </select>
-       @endif      
-    
+      @endif      
    </div>
    <div class="form-group {{$errors->has('validity_delay') ? 'has-error' : ''}} ">
       <label for="serviceValidity">Default validity delay</label>
-
       @if(isset($service))
       <input class="form-control form-control-lg" type="number" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="{{$service->validity_delay}}">
       @else
       <input class="form-control form-control-lg" type="number" id="validity_delay" name="validity_delay" value="{{ isset($service) ? $service->validity_delay: old('validity_delay') }}" placeholder="service validity">
       @endif
-
-
-     
       @if($errors->has('validity_delay'))
       <strong> {{$errors->first('validity_delay')}}</strong>
       @endif
+   </div>
+   <div class="form-group {{$errors->has('category_id') ? 'has-error' : ''}} ">
+      <select class="form-control" id="category_id" name="category_id">
+         @forelse($categories as $data )
+         <option value="{{$data->id}}" id="{{$data->id}}" > {{$data->label}}</option>
+         @empty
+         no categories
+         @endforelse
+      </select>
    </div>
    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

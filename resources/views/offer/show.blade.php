@@ -72,7 +72,7 @@
                      <tr>
                         <th>name</th>
                         <th>Quantity</th>
-                        <th>This service is recurrent</th>
+                        <th>Payement recurrency</th>
                         @isManager
                         <th>Unit Cost  HT</th>
                         @endisManager
@@ -85,14 +85,18 @@
                   </thead>
                   <tbody>
                      @forelse($offer->services as $data)       
-                     <tr>     
+                     <tr>
                         <td>{{$data->service->label}}</td>
                         <td>{{$data->quantity}}</td>
                         <td>
                            @if($data->service->recurrent == true)
-                          Yes
+                              @if($data->service->validity_delay = 355)
+                              YEARLY
+                              @else 
+                              bY DEFAULT        : {{$data->service->validity_delay}}
+                              @endif
                            @else
-                          No
+                              ONE TIME Payement
                            @endif
                         </td>
                         @isManager  
@@ -168,7 +172,6 @@
                <!-- /.col -->
                <div class="col-6">
                   <h4> Comments : </h4>
-          
                   @if($offer->comments)
                   <ol>
                      @foreach ($offer->comments as $data )
@@ -234,16 +237,14 @@
             <i class="fa fa-download"></i>Valide offer </button>
          </form>
          <!--  /Valide  -->
-          <!--  Turn into project  -->
-         
-            @csrf
-            <button type="submit" class="btn btn-success float-right"  data-toggle="modal" data-target="#modal-xl">
-            <i class="fa fa-download"></i>Turn into Project  </button>
-            <form method="post" action="{{route('turn-into-project', $offer )}}">
+         <!--  Turn into project  -->
+         @csrf
+         <button type="submit" class="btn btn-success float-right"  data-toggle="modal" data-target="#modal-turn-into">
+         <i class="fa fa-download"></i>Turn into Project  </button>
+         <form method="post" action="{{route('turn-into-project', $offer )}}">
          </form>
          <!--  /Turn into project  -->
          @endif
-   
          @endisManager
          @isClient
          @if($offer->offer_state == "SENT")
@@ -266,8 +267,8 @@
          <i class="fa fa-download"></i>Ask update
          </button>
          <!--   /Add service -->
-                  <!--  Download PDF  -->
-                  <form method="post" action="{{route('dl-pdf-offer', $offer )}}">
+         <!--  Download PDF  -->
+         <form method="post" action="{{route('dl-pdf-offer', $offer )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Download PDF  </button>
@@ -275,7 +276,6 @@
          <!--  /Download PDF -->
          @endif
          @endisClient
-         
       </div>
    </div>
    <!-- end card body -->
@@ -300,8 +300,7 @@
                <div class="form-group  {{$errors->has('service_id') ? 'has-error' : ''}}">
                   <label for="inputService">Service</label>
                   <select id="selectorServices" class="js-example-basic form-select form-select-lg mb-3" name="service_id"  style="width:100%">>               
-               </select>
-
+                  </select>
                </div>
                <div class="form-group {{$errors->has('quantity') ? 'has-error' : ''}} ">
                   <label for="quantity">Quantity</label>
@@ -381,111 +380,174 @@
 </div>
 <!-- Modal ask update  Modal -->
 <div class="modal fade" id="modal-update-service" style="display: none;">
-<div class="modal-dialog">
-   <div class="modal-content">
-      <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">×</span></button>
-         <h4 class="modal-title">Comment Offer</h4>
-      </div>
-      <!-- formService Modal -->
-      <form method="post" action="{{route('ask-update-service-doc-offer', $offer->id)}}">
-         @csrf
-         <div class="modal-body">
-            <div class="form-group {{$errors->has('comments') ? 'has-error' : ''}} ">
-               <label for="offerComments">Offer comments</label>
-               <textarea class="form-control form-control-lg" type="text" id="message" name="message"  placeholder="comments">
-               </textarea>
-               @if($errors->has('message'))
-               <strong> {{$errors->first('message')}}</strong>
-               @endif
-            </div>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">Comment Offer</h4>
          </div>
-         <!-- end Modal body -->
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="sumbit" class="btn btn-primary">Save changes</button>
-         </div>
-      </form>
-   </div>
-   <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div>
-
-
-
-<div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add info </h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+         <!-- formService Modal -->
+         <form method="post" action="{{route('ask-update-service-doc-offer', $offer->id)}}">
+            @csrf
             <div class="modal-body">
-              <p>In construction ... </p>
+               <div class="form-group {{$errors->has('comments') ? 'has-error' : ''}} ">
+                  <label for="offerComments">Offer comments</label>
+                  <textarea class="form-control form-control-lg" type="text" id="message" name="message"  placeholder="comments">
+                  </textarea>
+                  @if($errors->has('message'))
+                  <strong> {{$errors->first('message')}}</strong>
+                  @endif
+               </div>
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- end Modal body -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+               <button type="sumbit" class="btn btn-primary">Save changes</button>
             </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+         </form>
       </div>
-      <!-- /.modal -->
-
-
-
-
-
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-turn-into">
+   <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Add extra service info </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form action="" method="post" id="ServicesToTurn">
+               @foreach($offer->services as $data)
+               <div class="row">
+                  <div class="col-6">
+                     <b> {{$data->service->label}} </b>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-6">
+                     <p> In Construction </p>
+                  </div>
+                  <!-- end col -->
+               </div>
+               <!-- end row -->   
+               @endforeach
+            </form>
+         </div>
+         <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" id="turnIntoProject" class="btn btn-primary">Save changes</button>
+            <form>
+            </form>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 @stop
 @section('css')
 <link rel="stylesheet" href="../css/admin_custom.css">
 @stop
 @section('js')
 <script> 
-   $('.btn-edit-service').click(function() {
+   $('#turnIntoProject').click(function(event) {
    
-     $('#sl_id').val($(this).data('servicelist'));
-           $('#service_id').val($(this).data('id'));
-           $('#service_name').val($(this).data('name'));
-           $('#quantity').val($(this).data('quantity'));
-           $('#cost-ht').val($(this).data('cost-ht'));
-           $('#sell-ht').val($(this).data('sell-ht'));
+     
    
-           $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));
+      var form = document.getElementById('ServicesToTurn');
+      var data = new FormData(form);
+   
+      cpt=1;
    
    
-             $('#modal-edit-service').modal('show');
-             $('#ask-update-service').modal('show');
-         });
+   finalTab = [];
+   
+      tabServiceToAdd=[]  
+   
+      for (var [key, value] of data) {
+   
+         if(key == "Separator"){
+            cpt= cpt+1;
+            finalTab.push(tabServiceToAdd); 
+            tabServiceToAdd=[];  
+         }else{
+            tabServiceToAdd.push( key, value);
+         }             
+      }
+   
+      event.preventDefault();
+   
+      $.ajax({
+       url:"{{ route('turn-into-project') }}",
+       headers: {
+                   'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+               },
+       method:'POST',
+       data: {
+            offer_id : "{{$offer->id}}" ,
+            offer_label : "{{$offer->label}}",
+            concerned_company :  "{{$offer->concerned_company}}",
+            offer_desc :  "{{$offer->description}}",
+            jsonData:  JSON.stringify(finalTab)},
+       success: function(data) {
+      alert(data); // apple
+   },
+       error: function() {
+               alert('Error occured');
+           }
+   });
+   
+   
           
    
-         $('#selectorServices').select2({
-            placeholder: 'Select a service',
-            ajax: {
-               url:"{{route('services-selectable' )}}",
-               processResults: function (data) {
-               // Transforms the top-level key of the response object from 'items' to 'results'
-                  return {
-                     results: $.map(data, function(item) {
-                              return {
-                                 text :  item.service_name + ' ( ' + item.service_desc + ' )' ,
-                                 id: $.parseJSON(item.id ),
-                                 
-                              }
-                           })
-                        };
-                     }
-               }
+               });
+   
+   
+   
+   
+      $('.btn-edit-service').click(function() {
+      
+        $('#sl_id').val($(this).data('servicelist'));
+              $('#service_id').val($(this).data('id'));
+              $('#service_name').val($(this).data('name'));
+              $('#quantity').val($(this).data('quantity'));
+              $('#cost-ht').val($(this).data('cost-ht'));
+              $('#sell-ht').val($(this).data('sell-ht'));
+      
+              $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));
+      
+      
+                $('#modal-edit-service').modal('show');
+                $('#ask-update-service').modal('show');
             });
-
-
-
+             
+      
+            $('#selectorServices').select2({
+               placeholder: 'Select a service',
+               ajax: {
+                  url:"{{route('services-selectable' )}}",
+                  processResults: function (data) {
+                  // Transforms the top-level key of the response object from 'items' to 'results'
+                     return {
+                        results: $.map(data, function(item) {
+                                 return {
+                                    text :  item.service_name + ' ( ' + item.service_desc + ' )' ,
+                                    id: $.parseJSON(item.id ),
+                                    
+                                 }
+                              })
+                           };
+                        }
+                  }
+               });
+   
+   
+            
 </script>
 @stop
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 
 use Illuminate\Http\Request;
 
@@ -28,9 +29,12 @@ class ServiceController extends Controller
     }
 
     public function create(){
+
+        $categories = ServiceCategory::all();
+
         return view('service.form', [
             'pageTitle' => 'Create service',
-           
+           'categories' => $categories,
         ]);
     }
 
@@ -46,6 +50,7 @@ class ServiceController extends Controller
 
     public function store(Request $request){
      
+    
         $messages = [
             'required' => 'Ce champs ne peut etre vide',
         ];
@@ -55,11 +60,13 @@ class ServiceController extends Controller
             'description'=> 'required',
             'recurrent'=> 'required',
             'active'=> 'required',
-            'validity_delay'=> 'required',           
+            'validity_delay'=> 'required', 
+            'category_id'  => 'required',        
         ];
 
         $validator = \Validator::make($request->all(), $rules, $messages)->validate();         
        
+    
         $newService = Service::create($request->all());        
     
         return redirect()->intended('/managements/services/single/'.$newService->id);

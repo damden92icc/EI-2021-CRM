@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+
+
+
+Route::post('/valide-account/{user}', [App\Http\Controllers\UserController::class, 'validateLegalDoc'])->middleware(['auth'])->name('valide-account');
+
 
 
 Route::get('/dashboard', function () {
@@ -238,7 +243,7 @@ Route::group( ['prefix'=>'projects', 'middleware' => ['auth'] ], function(){
           
         });
 
-        Route::post('/turn-into-project/{offer}', [App\Http\Controllers\ProjectController::class, 'turnIntoProject'])->name('turn-into-project');
+        Route::post('/turn-into-project', [App\Http\Controllers\ProjectController::class, 'turnIntoProject'])->name('turn-into-project');
     
     });
 

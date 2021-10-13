@@ -386,40 +386,58 @@ class ProjectController extends Controller
         }
     }
 
-    public function turnIntoProject(Request $request, Offer $offer){
+    public function turnIntoProject(Request $request){
         
-
-     //   dd($offer->services);
-
-
-         // Retrive main data
-         $request->merge( ['label' => 'Project -  '.  $offer->label ]
-         +   ['description' => $offer->description] 
-         +   ['is_active' => true] 
-         +   ['project_state' =>"DRAFT"] 
-         +   ['start_date' => Carbon::now()] 
-         +   ['concerned_company' => $offer->company->id] 
-         +   ['reference' =>  Str::random(20)] 
-         + [ 'owner_id' =>  auth()->user()->id] 
-     );
+        $offer = Offer::where('id', $request->offer_id)->first();
+       
+        $company = $request->concerned_company;
+        $date = Carbon::now();
+        $cptRef = Project::where('concerned_company', $company)->count();
+        
+  
+        $reference = "P" . $company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
 
 
-        // create new project 
-         $newProject =Project::create($request->all());
 
-        // Add service 
-        foreach($offer->services as $data){      
-         //   dd($data); 
+
+
+            // Retrive main data
+            $request->merge( ['label' => 'Project - from   '.  $request->offer_label ]
+            +   ['description' => $request->offer_desc] 
+            +   ['is_active' => true] 
+            +   ['project_state' =>"DRAFT"] 
+            +   ['start_date' => Carbon::now()] 
+            +   ['concerned_company' => $request->company_id] 
+            +   ['reference' =>$reference ] 
+            + [ 'owner_id' =>  auth()->user()->id] 
+        );
+
+
+     //   $newProject =Project::create($request->all());
+        //  $offer->offer_state = "ARCHIVED";
+       // $offer->save();
+  
+
+         $newServices =    json_decode($request->jsonData, true); 
+
+         foreach($newServices as $data){
+               
+            return $data;
+
             $newService =ProjectService::create(['project_id'=> $newProject->id ,
-                                        'quantity'=> $data->quantity,
-                                        'is_active' => true,
-                                        'service_state' => 'RUNNING',
-                                        'start_date' =>Carbon::now(),
-                                        'next_payement_date'=> null,
-                                        'unit_cost_ht'=> $data->unit_cost_ht,
-                                        'unit_sell_ht' => $data->unit_sell_ht,
-                                        'service_id' =>$data->service_id ]);
-                                    }
+            'quantity'=>$data[3],
+            'unit_cost_ht'=> $data->unit_cost_ht,
+            'unit_sell_ht' => $data->unit_sell_ht,
+            'start_date' =>Carbon::now(),
+            'is_active' => true,
+            'service_state' => 'RUNNING',           
+            'recurrency_payement'=> null,
+         
+            'service_id' =>$data->service_id ]);
+        
+         }
+
+
 
 
         return redirect()->intended('/projects/single/'.$newProject->id);
@@ -463,4 +481,6 @@ class ProjectController extends Controller
         }
       
     }
+
+
 }

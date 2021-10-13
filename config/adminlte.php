@@ -351,7 +351,7 @@ return [
         'submenu' => [
             [
                 'text' => 'Listing',
-                'url'  => '/company',
+                'url'  => '/managements/company',
                 
             ],
             [
