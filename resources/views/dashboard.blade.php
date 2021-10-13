@@ -8,11 +8,6 @@
 
 @section('content')
     <p>Welcome to this beautiful admin panel.</p>
-
-
-{{$user}}
-
-
 @stop
 
 @section('css')
