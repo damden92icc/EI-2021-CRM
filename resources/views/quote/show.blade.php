@@ -80,7 +80,7 @@
                         <th>name</th>
                         <th>Quantity</th>
                         <th>Description</th>
-                        <th>This service is recurrent</th>
+                        <th>Payement Recurrency</th>
                         <th></th>
                      </tr>
                   </thead>
@@ -92,10 +92,14 @@
                         <td> {{$data->quantity}} </td>
                         <td>{{$data->service->description}}</td>
                         <td>
-                           @if($data->service->recurrent == true)
-                          Yes 
+                        @if($data->service->recurrent == true)
+                              @if($data->service->validity_delay = 355)
+                              YEARLY
+                              @else 
+                              bY DEFAULT        : {{$data->service->validity_delay}}
+                              @endif
                            @else
-                       No
+                       Payement once 
                            @endif
                         </td>
                         <td>

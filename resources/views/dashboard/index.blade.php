@@ -7,12 +7,12 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <p>Welcome {{$user->firstname}}</p>
 
 
-{{$user}}
+{{$user->gdpr_valided }}
 
-
+{{$user->cgu_valided}}
 @stop
 
 @section('css')
