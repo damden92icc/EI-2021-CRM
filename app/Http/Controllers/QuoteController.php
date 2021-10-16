@@ -259,8 +259,7 @@ class QuoteController extends Controller
         return datatables($result)->setRowId('row_id')->toJson();
     }
 
-
-    public function indexJsonByState(String $state){
+    public function indexJsonByState(Request $request, String $state){
 
         $result = [];
 
@@ -275,7 +274,7 @@ class QuoteController extends Controller
             // Adding needed value to tab
               array_push($result,
                 [ 
-                    'row_id' => $cpt,
+                    'row_id' =>    $cpt ,
                     'quote_id' => $data->id, 
                     'label' => $data->label ,
                     'description' =>  $data->description , 
@@ -292,7 +291,7 @@ class QuoteController extends Controller
         // User is manager
         else {
 
-            $listingQuotes = Quote::where('quote_state', $state)->get();
+            $listingQuotes = Quote::where('quote_state', $request->$state)->get();
             $cpt = 1;    
 
             foreach($listingQuotes as $data){

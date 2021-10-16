@@ -472,7 +472,7 @@ return [
             ],
             [
                 'text' => 'Sended quotes ',
-                'route' => ['listing-json-quote-state', ['state' => 'SENDED']],
+                'route' => 'listing-json-quote',
                 'can'       => 'manager-only',
             ],
            

@@ -267,13 +267,13 @@
          <i class="fa fa-download"></i>Ask update
          </button>
          <!--   /Add service -->
-         <!--  Download PDF  -->
+         <!--  Download PDF  
          <form method="post" action="{{route('dl-pdf-offer', $offer )}}">
             @csrf
             <button type="submit" class="btn btn-success float-right">
             <i class="fa fa-download"></i>Download PDF  </button>
          </form>
-         <!--  /Download PDF -->
+      /Download PDF -->
          @endif
          @endisClient
       </div>
