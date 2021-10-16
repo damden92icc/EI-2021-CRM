@@ -132,7 +132,7 @@ Route::group( ['prefix'=>'quotes', 'middleware' => ['auth'] ], function(){
     Route::group( ['prefix'=>'json' ], function() {
     
         Route::get('/index-quote',  [App\Http\Controllers\QuoteController::class, 'indexJson'])->name('listing-json-quote');      
-        Route::get('/index-quote-state/{user}/{state}',  [App\Http\Controllers\QuoteController::class, 'indexJsonByState'])->name('listing-json-quote-state');   
+        Route::get('/index-quote-state/{state}',  [App\Http\Controllers\QuoteController::class, 'indexJsonByState'])->name('listing-json-quote-state');   
       
     });
 

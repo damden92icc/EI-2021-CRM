@@ -34,7 +34,7 @@
       <table class="table table-striped" id="main-table">
          <thead>
             <tr>
-               <th>#</th>
+               <th></th>
                <th>reference</th>
                <th>state</th>
                <th>label</th>
@@ -59,8 +59,6 @@ var uID =     $('#user-id').val();
 
    $(document).ready(function () {   
          seedTabData();   
-         
-         
 
       });
    
@@ -104,6 +102,7 @@ var uID =     $('#user-id').val();
    
       var  choiceState = document.getElementById('documentState');
 
+
       if(choiceState.value == "ALL"){
          $('#main-table').dataTable().fnDestroy();
          seedTabData();
@@ -112,11 +111,14 @@ var uID =     $('#user-id').val();
     else{
       $('#main-table').dataTable().fnDestroy();
       $('#main-table').DataTable( {
-         retrieve: true,
-       paging: false,
-          "ajax": '/quotes/json/index-quote-state/'+choiceState.value,
-        
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            },
+
+            "ajax": '/quotes/json/index-quote-state/'+choiceState.value,
           "processing": true,
+          retrieve: true,
+         paging: false,
           "serverSide": true,
           select: true,
           "columns": [
@@ -124,17 +126,15 @@ var uID =     $('#user-id').val();
            { "data": "reference" },
               { "data": "state" },
               { "data": "label" },
-              { "data": "description" },
-             
+              { "data": "description" },           
               { "data": "company" },
-   
               {"render":function(data, type, row, meta){
                 var link =  window.location + '/single/'+ row.quote_id ;
                 return "<a class='btn btn-block btn-info' href='"+link+"'> Detail </a> "; 
               }},
           ],
-   
-   
+  
+  
       } );
     }
       
