@@ -21,6 +21,7 @@ class QuoteController extends Controller
         
    
         return view('quote.index', [
+            'user' => Auth::user(),
             'pageTitle' => 'Listing Quotes',
             'pageTabTitle' => 'Listing of quotes',
     
@@ -203,8 +204,8 @@ class QuoteController extends Controller
     }
 
 
-    public function indexJson(){
-
+    public function indexJson(Request $request){
+   
         $result = [];
 
         // Check role client to get listing of all quote
