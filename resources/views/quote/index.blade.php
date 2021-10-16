@@ -6,6 +6,8 @@
 <h1> {{$pageTitle}} </h1>
 @stop
 @section('content')
+
+<input type="hidden" id="user-id" value="{{$user->id}}">
 <div class="card">
    <div class="card-header">
       <div class="row">
@@ -52,16 +54,26 @@
 @stop
 @section('js')
 <script> 
+
+var uID =     $('#user-id').val();
+
    $(document).ready(function () {   
          seedTabData();   
+         
+         
+
       });
    
 
    function seedTabData(){
          $('#main-table').DataTable( {
-          
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            },
           "ajax": "{{route('listing-json-quote' )}}",
-        
+         data:{
+            "UID" : uID,
+         },
           "processing": true,
           retrieve: true,
          paging: false,

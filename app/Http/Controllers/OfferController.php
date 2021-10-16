@@ -22,28 +22,10 @@ class OfferController extends Controller
 {
     public function index(){      
 
-        // Return Offer based on the role (Client or Manager)
-        $user= Auth::user();
-
-        if($user->role->id == 2){
-
-            $offers = Offer::where('owner_id',$user->id)->get();  
-        }
-
-        elseif($user->role->id == 1){
-
-            $offerState = ['ARCHIVED', 'SENDED', 'ACCEPTED'];
-            $offers = Offer::where([['concerned_client', $user->id ]])->whereIn('offer_state', $offerState)->get();
-        }
-        else{
-            $offers = Offer::all(); 
-        }
-      
         return view('offer.index', [
             'pageTitle' => 'Listing Offers',
             'pageTabTitle' => 'Listing Offers',
-            'offers'=>        $offers ,
-      
+
         ]);
     }
 
@@ -51,6 +33,10 @@ class OfferController extends Controller
         $offer = Offer::where('id', $id)->first();  
 
         $total = count( OfferService::where('offer_id', $id)->get());
+
+
+        $selectableProviders = Company::where('company_type', "provider")->get();  
+
 
         $selectableServices = Service::all();
         $myCompany = Company::where('company_type', 'main_company')->first();
@@ -60,7 +46,7 @@ class OfferController extends Controller
             'servicesSelectable' =>  $selectableServices,
             'myCompany' => $myCompany ,
             'offer'=>        $offer ,
-      
+            'selectableProviders' => $selectableProviders,
         ]);
     }
 
@@ -326,7 +312,7 @@ class OfferController extends Controller
     }
 
 
-    public function indexJson(){
+    public function indexJson(Request $request){
 
         $result = [];
 
@@ -354,6 +340,8 @@ class OfferController extends Controller
             }
         }
 
+
+        
         else {  // User is manager
 
             $listing = Offer::all();

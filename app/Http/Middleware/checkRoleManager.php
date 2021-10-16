@@ -22,6 +22,6 @@ class checkRoleManager
         if($user && $user->checkRole(2) ){
             return $next($request);
         }
-        return redirect()->route('home');
+        return redirect()->route('dashboard');
     }
 }

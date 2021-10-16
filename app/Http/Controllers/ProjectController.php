@@ -24,10 +24,67 @@ class ProjectController extends Controller
 
         $projects = Project::all();  
 
+
+        $ap = Project::where('project_state', 'RUNNING')->get()->count();
+
+        $totClient = Project::select('concerned_company')->where('project_state', 'RUNNING')->distinct()->get()->count();
+
+        $activeService = ProjectService::where('service_state', 'RUNNING')->get();
+
+
+        $cptAS = count($activeService);
+
+        $totalSell = 0;
+        $totalCost = 0;
+        
+
+        $cptBillableService =0; 
+        $totalBillableServiceSell = 0; 
+        $totalBillableServiceCost = 0; 
+        foreach($activeService as $data){
+          
+
+            // Their is data provide by proivider
+                if($data->serviceProv != null ){
+                    $totalSell += $data->quantity* $data->unit_sell_ht;
+                    $totalCost += $data->quantity* ( $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht);
+                }
+
+                else{
+                    $totalSell += $data->quantity* $data->unit_sell_ht;
+                    $totalCost += $data->quantity* ( $data->unit_cost_ht);
+                }
+
+                // count if servuce is billable
+                if($data->is_billable == true){
+                    $cptBillableService =+1;
+
+                    // Calcul price if service and cost price
+                    if($data->serviceProv != null ){
+                        $totalBillableServiceCost += $data->quantity* ( $data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht);
+                        $totalBillableServiceSell += $data->quantity* ( $data->unit_sell_ht );
+                    }
+
+                    else{
+                        $totalBillableServiceSell += $data->quantity* $data->unit_sell_ht;
+                        $totalBillableServiceCost= $data->quantity* ( $data->unit_cost_ht);
+                    }
+                }
+        }
+  
+
         return view('project.index', [
             'pageTitle' => 'Listing projects',
             'pageTabTitle' => 'Listing projects',
-            'projects'=>        $projects ,      
+            'projects'=>        $projects ,     
+            'totalAP'=>  $ap  , 
+            'totalAS' =>   $cptAS,
+            'totalSellAS' => $totalSell,
+            'totalCostAS' => $totalCost,
+            'cptClient' => $totClient,
+            'cptBillableService' =>  $cptBillableService, 
+            'totalSellPriceBillable' => $totalBillableServiceSell,
+            'totalCostPriceBillable' => $totalBillableServiceCost,
         ]);
     }
 
@@ -301,11 +358,6 @@ class ProjectController extends Controller
             Notification::send($notifTarget, new AnswerRemovePS($project,   $service->service_state));
         }
 
-       
-       
-
-      
-
         return redirect()->route('single-project', $service->project_id);
        
     }
@@ -390,16 +442,11 @@ class ProjectController extends Controller
         
         $offer = Offer::where('id', $request->offer_id)->first();
        
-        $company = $request->concerned_company;
+
         $date = Carbon::now();
-        $cptRef = Project::where('concerned_company', $company)->count();
-        
-  
-        $reference = "P" . $company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
-
-
-
-
+        $cptRef = Project::where('concerned_company', $request->concerned_company)->count();
+          
+        $reference = "P" . $request->concerned_company. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
 
             // Retrive main data
             $request->merge( ['label' => 'Project - from   '.  $request->offer_label ]
@@ -413,28 +460,28 @@ class ProjectController extends Controller
         );
 
 
-     //   $newProject =Project::create($request->all());
-        //  $offer->offer_state = "ARCHIVED";
-       // $offer->save();
-  
 
-         $newServices =    json_decode($request->jsonData, true); 
+        $servicesListe =  json_decode($request->jsonData, true);
 
-         foreach($newServices as $data){
+      
+
+
+
+
+         foreach($servicesListe as $data){
                
-            return $data;
+          return $data['1']['service_name'];
 
             $newService =ProjectService::create(['project_id'=> $newProject->id ,
+            'service_id' => '1',
             'quantity'=>$data[3],
             'unit_cost_ht'=> $data->unit_cost_ht,
             'unit_sell_ht' => $data->unit_sell_ht,
             'start_date' =>Carbon::now(),
             'is_active' => true,
             'service_state' => 'RUNNING',           
-            'recurrency_payement'=> null,
-         
+            'recurrency_payement'=> null,         
             'service_id' =>$data->service_id ]);
-        
          }
 
 

@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Models\Employe;
 class CompanyController extends Controller
 {
-    //
-
     public function index()
     {      
         return view('company.index', [
@@ -66,7 +64,7 @@ class CompanyController extends Controller
              
         $company->update($request->all());
     
-        return redirect()->intended('/company/single/'.$company->id);
+        return redirect()->intended('/managements/company/single/'.$company->id);
     }
 
     public function store(Request $request){
@@ -99,25 +97,22 @@ class CompanyController extends Controller
 
         $company->active = 0;
         $company->save();
-        return redirect()->intended('/company/'.$company->id);
+        return redirect()->intended('/managements/company/single/'.$company->id);
     }
 
     public function enable(Company $company){
 
         $company->active = 1;
         $company->save();
-        return redirect()->intended('/company/'.$company->id);
+        return redirect()->intended('/managements/company/single/'.$company->id);
     }
 
 
 
     public function assignEmploye(Request $request){
-
-
         $company = Company::where('id', $request->company_id)->first();
         $newWorker =  Employe::where('user_id', $request->user_id)->where('company_id', $company->id)->first() ;
         
-
         // If user already exist will not add it
         if(!isset($newWorker)){
 
@@ -134,14 +129,14 @@ class CompanyController extends Controller
                 $newEmploye =  Employe::create($request->all());
         }
 
-         return redirect()->intended('/company/single/'.$request->company_id);
+         return redirect()->intended('/managements/company/single/'.$request->company_id);
 
     }
 
     public function removeEmploye(Employe $employe){
 
         $employe->delete();
-        return redirect()->intended('/company/single/'.$employe->company_id);
+        return redirect()->intended('/managements/company/single/'.$employe->company_id);
     }
 
 }

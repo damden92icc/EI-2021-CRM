@@ -19,10 +19,11 @@ class checkRoleAdministrator
          
         $user = $request->user();
 
+        // 3 = role Admin
         if($user && $user->checkRole(3) ){
 
             return $next($request);
         }
-        return redirect()->route('home');
+        return redirect()->route('dashboard');
     }
 }
