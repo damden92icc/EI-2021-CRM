@@ -82,7 +82,7 @@ class OfferController extends Controller
         $date = Carbon::now();
         $cptRef = Offer::where('concerned_client', $user)->count();
         
-        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
+        $reference = "O" + $user + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
 
 
         $request->merge( ['reference' =>     $reference] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
@@ -286,7 +286,7 @@ class OfferController extends Controller
         $date = Carbon::now();
         $cptRef = Offer::where('concerned_client', $user)->count();
         
-        $reference = "O" . $user. "-" .  strtoupper( $date->shortEnglishMonth) . "-". $date->year . "-00" . $cptRef+1;
+        $reference = "O" + $user + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
 
         
          // Retrive main data
