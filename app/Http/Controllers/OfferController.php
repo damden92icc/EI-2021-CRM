@@ -82,6 +82,11 @@ class OfferController extends Controller
         $date = Carbon::now();
         $cptRef = Offer::where('concerned_client', $user)->count();
         
+
+        if($cptRef == null ){
+            $cptRef = 0;
+        }
+        
         $reference = "O" + $user + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
 
 

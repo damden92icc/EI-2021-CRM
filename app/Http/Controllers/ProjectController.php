@@ -459,7 +459,11 @@ class ProjectController extends Controller
 
         $date = Carbon::now();
         $cptRef = Project::where('concerned_company', $request->concerned_company)->count();
-          
+        
+        if($cptRef == null ){
+            $cptRef = 0;
+        }
+
         $reference = "P" + $request->concerned_company + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
 
             // Retrive main data
