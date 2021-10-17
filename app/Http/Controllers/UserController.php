@@ -261,7 +261,7 @@ class UserController extends Controller
         $user->gdpr_valided = 1;
         $user->user_state = "ACTIVE";
         $user->save();
-        return redirect()->intended('/users/single/'.$user->id);
+        return redirect()->intended('my-profil');
     }
 
 
