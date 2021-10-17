@@ -458,13 +458,16 @@ class ProjectController extends Controller
        
 
         $date = Carbon::now();
-        $cptRef = Project::where('concerned_company', $request->concerned_company)->count();
+
         
-        if($cptRef == null ){
+        if(Project::where('concerned_company', $request->concerned_company)->count() == null){
             $cptRef = 0;
         }
-
-        $reference = "P" + $request->concerned_company + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
+        else{
+            $cptRef =   Project::where('concerned_company', $request->concerned_company)->count();
+        }
+        
+        $reference = "P" . $request->concerned_company . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . $cptRef+1;
 
             // Retrive main data
             $request->merge( ['label' => 'Project - from   '.  $request->offer_label ]

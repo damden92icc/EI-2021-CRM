@@ -121,12 +121,15 @@ class BillController extends Controller
 
         $company = $request->concerned_company;
         $date = Carbon::now();
-        $cptRef = Bill::where('concerned_company', $company)->count();
 
-        if($cptRef == null ){
+
+        if(Bill::where('concerned_company', $company)->count() == null ){
             $cptRef = 0;
         }
-        
+        else{
+            $cptRef = Bill::where('concerned_company', $company)->count();
+        }
+
         $reference = "B" + $company + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
 
 
