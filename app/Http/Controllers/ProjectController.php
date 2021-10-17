@@ -123,7 +123,6 @@ class ProjectController extends Controller
         
                 $data->next_payement_date =    $this->calculNextPayDate(Carbon::parse($data->last_payement_date),  $data->recurrency_payement ) ;
                 $data->save();
-            //    dd($data->next_payement_date);
 
                 $data->is_billable = $this->calculServiceIsBillable(           $data->next_payement_date );
                 $data->save();
