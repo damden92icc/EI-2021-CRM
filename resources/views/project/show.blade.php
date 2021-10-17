@@ -581,6 +581,7 @@
                            <div class="col-4 {{$errors->has('spd_recurrency_payement') ? 'has-error' : ''}} ">
                               <label for="recurrency">Reccurency payement</label>
                               <select class="form-control" id="spd-recurrency" name="spd_recurrency_payement">
+                              <option value="NONE" id="NONE"> NONE</option>
                                  <option value="YEARLY" id="YEARLY"> YEARLY</option>
                                  <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
                                  <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
@@ -593,9 +594,10 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                             
                                  <option value="RUNNING" id="RUNNING"> RUNNING</option>
                                  <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                               </select>
                            </div>
                         </div>
@@ -614,9 +616,10 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                     
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                      </select>
                   </div>
                </div>
@@ -632,6 +635,7 @@
                   <div class="col-6{{$errors->has('recurrency_payement') ? 'has-error' : ''}} ">
                      <label for="recurrency">Reccurency payement</label>
                      <select class="form-control" id="recurrency" name="recurrency_payement">
+                     <option value="NONE" id="NONE"> NONE</option>
                         <option value="YEARLY" id="YEARLY"> YEARLY</option>
                         <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
                         <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
@@ -694,9 +698,10 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
-                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                      
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                      </select>
                   </div>
                </div>
@@ -712,6 +717,7 @@
                   <div class="col-6 {{$errors->has('recurrency_payement') ? 'has-error' : ''}} ">
                      <label for="recurrency">Reccurency payement</label>
                      <select class="form-control" id="recurrency" name="recurrency_payement">
+                     <option value="NONE" id="NONE"> NONE</option>
                         <option value="YEARLY" id="YEARLY"> YEARLY</option>
                         <option value="HALF-YEARLY" id="HALF-YEARLY"> Half-yearly</option>
                         <option value="SEMESTRIAL" id="SEMESTRIAL"> Semestrial</option>
@@ -831,8 +837,9 @@
                            <div class="col-4  {{$errors->has('spd_service_state') ? 'has-error' : ''}}">
                               <label for="inputState">State </label>
                               <select class="form-control" id="spd_service_state" name="spd_service_state">
-                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                               
                                  <option value="RUNNING" id="RUNNING"> RUNNING</option>
+                                 <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
                                  <option value="TO PAY" id="TO PAY"> TO PAY</option>
                               </select>
                            </div>
@@ -852,8 +859,9 @@
                   <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
+                     <option value="RUNNING" id="RUNNING"> RUNNING</option>
                         <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-                        <option value="RUNNING" id="RUNNING"> RUNNING</option>
+               
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
                   </div>

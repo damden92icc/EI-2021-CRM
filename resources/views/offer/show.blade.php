@@ -238,7 +238,9 @@
          </form>
          <!--  /Valide  -->
          <!--  Turn into project  -->
+         @endif
          @csrf
+         @if($offer->offer_state == "VALIDED" )
          <button type="submit" class="btn btn-success float-right"  data-toggle="modal" data-target="#modal-turn-into">
          <i class="fa fa-download"></i>Turn into Project  </button>
          <form method="post" action="{{route('turn-into-project', $offer )}}">
