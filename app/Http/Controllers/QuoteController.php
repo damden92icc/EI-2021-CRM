@@ -71,13 +71,19 @@ class QuoteController extends Controller
         
 
         $date = Carbon::now();
-        $cptQuote = Quote::where('owner_id', $user)->count();
+       
 
-        if($cptQuote == null){
+        if(Quote::where('owner_id', $user)->count() == null){
             $cptQuote = 0;
         }
+        else{
+            $cptQuote =   Quote::where('owner_id', $user)->count();
+        }
         
-        $reference = "Q" + $user + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + ($cptQuote+1);
+      
+    
+
+        $reference = "Q" . $user . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . ($cptQuote+1);
 
         $request->merge( ['reference' =>  $reference] + [ 'owner_id' => $user]);
 
