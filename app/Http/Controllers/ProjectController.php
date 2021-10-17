@@ -41,6 +41,7 @@ class ProjectController extends Controller
         $cptBillableService =0; 
         $totalBillableServiceSell = 0; 
         $totalBillableServiceCost = 0; 
+       
         foreach($activeService as $data){
           
 
@@ -95,7 +96,7 @@ class ProjectController extends Controller
         // Get active service
         $queryAS = ProjectService::where('project_id', $id)->where('service_state', "RUNNING")->get();
         // get active reccurent service
-        $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', null)->where('service_state', 'RUNNING')->get();
+        $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', "NONE")->where('service_state', 'RUNNING')->get();
        
         // somme all price * qt foreach active recc service
         $totalPriceASR=0.0;
@@ -252,12 +253,26 @@ class ProjectController extends Controller
         $reccurency = $request->get("recurrency_payement");
      
 
-        $npd =   $this->calculNextPayDate(Carbon::parse($startDate), $reccurency );
+        if( $reccurency != "NONE") {
+            $npd =   $this->calculNextPayDate(Carbon::parse($startDate), $reccurency );
 
-        $request->merge([
+            $request->merge([
+                'next_payement_date' => $npd,          
+                'is_billable' => $this->calculServiceIsBillable($npd),
+            ]);
+        }
+
+        else{
+            $npd =   null;
+
+            $request->merge([
+                'payement_state' => 'PAYEMENT AWAITING',
             'next_payement_date' => $npd,          
-            'is_billable' => $this->calculServiceIsBillable($npd),
-        ]);
+            'is_billable' => 1,
+             ]);
+        }
+
+        
 
 
 
