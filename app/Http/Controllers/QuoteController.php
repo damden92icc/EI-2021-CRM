@@ -136,6 +136,13 @@ class QuoteController extends Controller
         $quote->quote_state  = $state;
 
 
+        if($state == "TRAITED"){
+          
+            $quote->quote_state = "ARCHIVED";
+           // $->notify();
+            Notification::send($notifTarget, new SendQuote($quote));
+        }
+
         if($quote->quote_state == "SENT"){
             $quote->sended_date =  Carbon::now();
            // $->notify();

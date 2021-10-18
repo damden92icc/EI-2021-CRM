@@ -168,13 +168,6 @@
                   <i class="fa fa-download"></i>Valide bill </button>
                </form>
                <!--  /Valide  -->
-               <!--  Archive  -->
-               <form method="post" action="{{route('archive-bill', $bill )}}">
-                  @csrf
-                  <button type="submit" class="btn btn-danger float-right" style="margin-right: 5px;">
-                  <i class="fa fa-download"></i>Archive  </button>
-               </form>
-               <!--  /Archive  -->
                @endif
                @endisManager
                @isClient

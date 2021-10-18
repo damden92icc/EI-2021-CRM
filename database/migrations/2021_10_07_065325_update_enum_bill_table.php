@@ -20,7 +20,7 @@ class UpdateEnumBillTable extends Migration
         });
 
         Schema::table('bills', function (Blueprint $table) {          
-            $table->enum('bill_state', ['DRAFT','SENT', 'ISSUED', 'DELAYED', 'PAYED','ARCHIVED']);     
+            $table->enum('bill_state', ['DRAFT','SENT', 'ISSUED', 'DELAYED', 'PAYED', 'VALIDED','ARCHIVED']);     
         });
     }
 

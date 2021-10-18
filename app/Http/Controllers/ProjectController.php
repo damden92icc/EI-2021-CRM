@@ -247,10 +247,19 @@ class ProjectController extends Controller
         ];
 
     
- 
+        // provider_id
+
+
         $startDate = $request->get("start_date"); 
         $reccurency = $request->get("recurrency_payement");
-     
+        $serviceState = $request->get("service_state");
+
+        if($serviceState == "TO+PAY"){
+            $serviceState = "TO PAY";
+        }
+
+
+
 
         if( $reccurency != "NONE") {
             $npd =   $this->calculNextPayDate(Carbon::parse($startDate), $reccurency );
@@ -264,11 +273,18 @@ class ProjectController extends Controller
         else{
             $npd =   null;
 
-            $request->merge([
-                'payement_state' => 'PAYEMENT AWAITING',
-            'next_payement_date' => $npd,          
-            'is_billable' => 1,
-             ]);
+            if( $request->get("payement_state") == "TO PAY"){
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' => 1,
+                     ]);
+            } else{
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' => 0,
+                     ]);
+            }
+       
         }
 
         
