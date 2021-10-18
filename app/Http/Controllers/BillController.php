@@ -130,7 +130,7 @@ class BillController extends Controller
             $cptRef = Bill::where('concerned_company', $company)->count();
         }
 
-        $reference = "B" + $company + "-" +  strtoupper( $date->shortEnglishMonth) + "-" + $date->year + "-00" + $cptRef+1;
+        $reference = "B" . $company . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . ($cptRef+1);
 
 
         $request->merge( ['due_date'=>  Carbon::now()->addDays($request->validity_delay) ] + ['reference' =>    $reference ] + [ 'owner_id' =>  auth()->user()->id] );
