@@ -38,6 +38,7 @@ class ProjectController extends Controller
         $totalCost = 0;
         
 
+        $cptAllBillableService = ProjectService::where('is_billable', true)->get()->count(); 
         $cptBillableService =0; 
         $totalBillableServiceSell = 0; 
         $totalBillableServiceCost = 0; 
@@ -83,6 +84,7 @@ class ProjectController extends Controller
             'totalSellAS' => $totalSell,
             'totalCostAS' => $totalCost,
             'cptClient' => $totClient,
+            'cptAllBillableService' =>  $cptAllBillableService, 
             'cptBillableService' =>  $cptBillableService, 
             'totalSellPriceBillable' => $totalBillableServiceSell,
             'totalCostPriceBillable' => $totalBillableServiceCost,
@@ -99,11 +101,25 @@ class ProjectController extends Controller
         $queryARS = ProjectService::where('project_id', $id)->where('recurrency_payement', '!=', "NONE")->where('service_state', 'RUNNING')->get();
        
         // somme all price * qt foreach active recc service
+ 
         $totalPriceASR=0.0;
 
-        foreach($queryARS  as $data){
 
-             $totalPriceASR  += $data->unit_sell_ht * $data->quantity;
+        foreach($queryARS  as $data){
+           
+            if(!isset($data->serviceProv ) ){
+            $total =  ($data->unit_sell_ht * $data->quantity)  - ($data->unit_cost_ht * $data->quantity)  ;
+            $totalPriceASR += $total;
+            }
+            else {
+                $total  ==  ($data->unit_sell_ht * $data->quantity) - ( ( $data->serviceProv->spd_unit_cost_ht  + $data->unit_cost_ht) * $data->quantity)   ;
+                $totalPriceASR += $total;
+            }
+         
+        }
+
+
+        foreach($queryARS  as $data){
 
              // Check and calcul date for recurrent service 
              // change state if become billable
@@ -119,7 +135,6 @@ class ProjectController extends Controller
 
              else{
 
-              //  dd($data->next_payement_date);
         
                 $data->next_payement_date =    $this->calculNextPayDate(Carbon::parse($data->last_payement_date),  $data->recurrency_payement ) ;
                 $data->save();

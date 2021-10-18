@@ -8,7 +8,7 @@
 @section('content')
 @isManager
 <div class="row">
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-info">
          <div class="inner">
@@ -21,7 +21,7 @@
       </div>
    </div>
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-success">
          <div class="inner">
@@ -34,7 +34,7 @@
       </div>
    </div>
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-danger">
          <div class="inner">
@@ -48,7 +48,7 @@
    </div>
    <!-- ./col -->
    <!-- .col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-warning">
          <div class="inner">
@@ -62,7 +62,7 @@
    </div>
    <!-- ./col -->
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-warning">
          <div class="inner">
@@ -76,7 +76,7 @@
    </div>
    <!-- ./col -->
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-danger">
          <div class="inner">
@@ -90,12 +90,26 @@
    </div>
    <!-- ./col -->
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-primary">
          <div class="inner">
             <h3>{{$cptBillableService}}</h3>
-            <p>Billable Service</p>
+            <p>Billable Rec. Service</p>
+         </div>
+         <div class="icon">
+            <i class="fas fa-chart-pie"></i>
+         </div>
+      </div>
+   </div>
+   <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-3">
+      <!-- small card -->
+      <div class="small-box bg-primary">
+         <div class="inner">
+            <h3>{{$cptAllBillableService}}</h3>
+            <p>Total Billable  Service</p>
          </div>
          <div class="icon">
             <i class="fas fa-chart-pie"></i>
@@ -104,7 +118,7 @@
    </div>
    <!-- ./col -->
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-primary">
          <div class="inner">
@@ -118,7 +132,7 @@
    </div>
    <!-- ./col -->
    <!-- ./col -->
-   <div class="col-lg-4 col-4">
+      <div class="col-lg-3 col-3">
       <!-- small card -->
       <div class="small-box bg-primary">
          <div class="inner">
