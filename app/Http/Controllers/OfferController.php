@@ -302,7 +302,7 @@ class OfferController extends Controller
         
       
         
-        $reference = "O" . $user . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . $cptRef+1;
+        $reference = "O" . $user . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . ($cptRef+1);
 
         
          // Retrive main data
