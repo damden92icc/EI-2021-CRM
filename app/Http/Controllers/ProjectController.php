@@ -242,14 +242,24 @@ class ProjectController extends Controller
             'unit_cost_ht' => 'required',   
             'unit_sell_ht' => 'required',   
             'service_id'=> 'required',
-            'project_id' => 'required',                    
+            'project_id' => 'required',
+                    
         ];
 
     
- 
+        // provider_id
+
+
         $startDate = $request->get("start_date"); 
         $reccurency = $request->get("recurrency_payement");
-     
+        $serviceState = $request->get("service_state");
+
+        if($serviceState == "TO+PAY"){
+            $serviceState = "TO PAY";
+        }
+
+
+
 
         if( $reccurency != "NONE") {
             $npd =   $this->calculNextPayDate(Carbon::parse($startDate), $reccurency );
@@ -263,8 +273,7 @@ class ProjectController extends Controller
         else{
             $npd =   null;
 
-            if( $request->get("service_state") == "TO PAY" ){
-                
+            if( $request->get("payement_state") == "TO PAY"){
                 $request->merge([
                     'next_payement_date' => $npd,          
                     'is_billable' => 1,
@@ -272,11 +281,10 @@ class ProjectController extends Controller
             } else{
                 $request->merge([
                     'next_payement_date' => $npd,          
-                    'is_billable' => 1,
+                    'is_billable' => 0,
                      ]);
             }
-
-          
+       
         }
 
         

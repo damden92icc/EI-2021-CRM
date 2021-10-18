@@ -22,7 +22,7 @@ class UpdateEnumProjectServicesTable extends Migration
 
     
         Schema::table('project_services', function (Blueprint $table) {          
-            $table->enum('service_state', ['RUNNING', 'INACTIVE', 'CANCELLATION ASKED', 'PAUSED', 'ARCHIVED', 'TO PAY']);   
+            $table->enum('service_state', ['RUNNING',  'IN CREATION', 'INACTIVE', 'CANCELLATION ASKED', 'PAUSED', 'ARCHIVED', 'TO PAY']);   
             $table->enum('payement_state', ['PAYED','PAYEMENT AWAITING', 'TO PAY','DELAYED', 'BILLABLE']);     
         });
     

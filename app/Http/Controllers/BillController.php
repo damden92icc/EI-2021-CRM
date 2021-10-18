@@ -252,7 +252,7 @@ class BillController extends Controller
 
         foreach($projects as $data){
 
-            $ps = ProjectService::where('project_id', $data->id)->where('is_billable', true)->where('service_state', 'RUNNING')->get();
+            $ps = ProjectService::where('project_id', $data->id)->where('is_billable', true)->get();
 
             foreach($ps as $service){
 

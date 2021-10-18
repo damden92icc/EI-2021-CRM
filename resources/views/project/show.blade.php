@@ -126,7 +126,7 @@
             <h3 class="card-title p-3">Tabs</h3>
             <ul class="nav nav-pills ml-auto p-2">
                <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Service Active</a></li>
-               <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Service Archived</a></li>
+    
                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Cancellation Asked</a></li>
             </ul>
          </div>
@@ -159,7 +159,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @forelse($project->services->whereIn('service_state', ['RUNNING', 'CANCELLATION ASKED']) as $data)       
+                        @forelse($project->services->whereIn('service_state', ['RUNNING','IN CREATION' ,  'CANCELLATION ASKED','ARCHIVED', 'TO PAY']) as $data)       
                         <tr>
                            <td>  {{$data->service->label}}  </td>
                            <td>{{$data->quantity}} </td>
@@ -294,86 +294,7 @@
                   </table>
                </div>
                <!-- /.tab-pane -->
-               <div class="tab-pane" id="tab_3">
-                  <table class="table table-striped" id="second-table">
-                     <thead>
-                        <tr>
-                           <th> Name  </th>
-                           <th>QT.   </th>
-                           <th>Recc.</th>
-                           <th> State </th>
-                           <th> Payement State </th>
-                           @isManager
-                           <th> Unit Cost HT </th>
-                           <th> Total cost HT </th>
-                           @endisManager
-                           <th>Unit @isManager sell @endisManager </th>
-                           <th> Total  @isManager sell @endisManager  </th>
-                           <th  > Start Date </th>
-                           <th  > Last Payement date </th>
-                           @isManager
-                           <th> Benefits </th>
-                           @endisManager
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @forelse($project->services->where('service_state', 'CANCELLATION ASKED') as $data)        
-                        <tr>
-                           <td>  {{$data->service->label}}  </td>
-                           <td>{{$data->quantity}} </td>
-                           <td>
-                              @isset($data->recurrency_payement)
-                              {{$data->recurrency_payement}}
-                              @else
-                              none
-                              @endisset
-                           </td>
-                           <td>{{$data->service_state}}</td>
-                           <td>{{$data->payement_state}}</td>
-                           @isManager
-                           @if(isset($data->serviceProv ))
-                           <td> {{$data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht}} €<br>
-                              {{$data->unit_cost_ht}} € +         <strong>    {{$data->serviceProv->spd_unit_cost_ht}}€  ({{$data->serviceProv->provided->name}} ) </strong>
-                           </td>
-                           @else
-                           <td>{{$data->unit_cost_ht }} €  </td>
-                           @endif
-                           <td>
-                              @if(isset($data->serviceProv ))
-                              {{($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * $data->quantity}}€ <br>
-                              @else 
-                              {{ (  $data->unit_cost_ht ) * ($data->quantity) }} €
-                              @endif      
-                           </td>
-                           @endisManager
-                           <td>{{$data->unit_sell_ht }}€</td>
-                           <td>
-                              {{$data->unit_sell_ht * $data->quantity }} €
-                           </td>
-                           <td  >{{$data->start_date}}</td>
-                           <td>
-                              @if(isset($data->last_payement_date ))
-                              {{$data->last_payement_date}}
-                              @else 
-                              <p> No data found</p>
-                              @endif
-                           </td>
-                           @isManager
-                           <td>
-                              @if(isset($data->serviceProv ))
-                              {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht + $data->serviceProv->spd_unit_cost_ht) * ($data->quantity)) }} € <br/>
-                              @else 
-                              {{ ($data->unit_sell_ht * $data->quantity) - (   ($data->unit_cost_ht ) * ($data->quantity)) }} € <br/>
-                              @endif      
-                           </td>
-                           @endisManager
-                        </tr>
-                        @empty
-                        <td colspan="5"> no service currently </td>
-                        @endforelse
-                     </tbody>
-                  </table>
-               </div>
+               
                <div class="tab-pane" id="tab_2">
                   <table class="table table-striped" id="second-table">
                      <thead>
@@ -543,6 +464,8 @@
                   <input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="checkFormSwitch()">
                   <label class="custom-control-label" for="customSwitch1">Toggle if external provider</label>
                </div>
+               
+               
                <div id="form-external">
                   <div class="row">
                      <div class="col-12">
@@ -605,21 +528,31 @@
                      </div>
                   </div>
                </div>
+
+               
                <div class="row">
-                  <div class="col-6  {{$errors->has('is_active') ? 'has-error' : ''}}">
+                  <div class="col-4 {{$errors->has('is_active') ? 'has-error' : ''}}">
                      <label for="inputActive">Active </label>
                      <select class="form-control" id="is_active" name="is_active">
                         <option value="1" id="1"> True</option>
                         <option value="0" id="0"> False</option>
                      </select>
                   </div>
-                  <div class="col-6  {{$errors->has('service_state') ? 'has-error' : ''}}">
-                     <label for="inputState">State </label>
+                  <div class="col-4  {{$errors->has('service_state') ? 'has-error' : ''}}">
+                     <label for="inputState">Service State </label>
                      <select class="form-control" id="service_state" name="service_state">
                      
                         <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                        <option value="INACTIVE" id="INACTIVE"> INACTIVE</option>
+                        <option value="IN CREATION" id="IN CREATION"> IN CREATION</option>
                         <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
+                     </select>
+                  </div>
+                  <div class="col-4  {{$errors->has('service_state') ? 'has-error' : ''}}">
+                     <label for="inputState">Payement State </label>
+                     <select class="form-control" id="payement_state" name="payement_state">               
+                        <option value="TO PAY" id="TO PAY"> TO PAY</option>
+                        <option value="PAYED" id="PAYED"> PAYED</option>
                      </select>
                   </div>
                </div>
@@ -925,8 +858,12 @@
            $('#sell-ht').val($(this).data('sell-ht'));
            $('#cost-ht').val($(this).data('cost-ht'));
            $('#recurrency').val($(this).data('recurrency'));
+           $('#payement_state').val($(this).data('payement_state'));
            $('#start-date').val($(this).data('start-date'));
-   
+       
+           
+           $('#start-date').val($(this).data('start-date'));
+       
            $("#choose-service").append(new Option( $(this).data('name') , $(this).data('id') , true, true ));
    
    
@@ -935,7 +872,8 @@
    
    
          $('.btn-edit-service-prov').click(function() {
-            $("#choose-service-prov").append(new Option( $(this).data('service-name') , $(this).data('id') , true, true ));
+
+           // $("#choose-service-prov").append(new Option( $(this).data('service-name') , $(this).data('id') , true, true ));
            
             $('#sl-id').val($(this).data('servicelist'));
             $('#slp-id').val($(this).data('slp-id'));
