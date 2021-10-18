@@ -13,7 +13,6 @@ use App\Notifications\SendOffer;
 use App\Notifications\AcceptanceOffer;
 use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -91,7 +90,7 @@ class OfferController extends Controller
         
       
 
-        $reference = "O" . $user . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . $date->year . "-00" . $cptRef+1;
+        $reference = "O" . $user . "-" .  strtoupper( $date->shortEnglishMonth) . "-" . ($date->year) . "-00" . ($cptRef+1);
 
 
         $request->merge( ['reference' =>     $reference] + ['validity_delay' => $validityDelay] + [ 'owner_id' =>  auth()->user()->id] );
