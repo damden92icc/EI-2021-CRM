@@ -860,8 +860,7 @@
                      <label for="inputState">State </label>
                      <select class="form-control" id="service_state" name="service_state">
                      <option value="RUNNING" id="RUNNING"> RUNNING</option>
-                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>
-               
+                        <option value="ARCHIVED" id="ARCHIVED"> ARCHIVED</option>               
                         <option value="TO PAY" id="TO PAY"> TO PAY</option>
                      </select>
                   </div>

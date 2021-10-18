@@ -242,8 +242,7 @@ class ProjectController extends Controller
             'unit_cost_ht' => 'required',   
             'unit_sell_ht' => 'required',   
             'service_id'=> 'required',
-            'project_id' => 'required',
-                    
+            'project_id' => 'required',                    
         ];
 
     
@@ -264,11 +263,20 @@ class ProjectController extends Controller
         else{
             $npd =   null;
 
-            $request->merge([
-                'payement_state' => 'PAYEMENT AWAITING',
-            'next_payement_date' => $npd,          
-            'is_billable' => 1,
-             ]);
+            if( $request->get("service_state") == "TO PAY" ){
+                
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' => 1,
+                     ]);
+            } else{
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' => 1,
+                     ]);
+            }
+
+          
         }
 
         

@@ -206,7 +206,7 @@
    <div class="card-body">
       <div class="btn-group">
          @isManager
-         @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATED ASKED" )
+         @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATE ASKED" )
          <!--  Update  -->
          <form method="get" action="{{route('edit-offer', $offer->id )}}">
             @csrf
