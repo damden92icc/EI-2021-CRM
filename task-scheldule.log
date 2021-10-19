@@ -1,1 +1,24 @@
 PHP Warning:  Module "mysqli" is already loaded in Unknown on line 0
+
+   ParseError 
+
+  syntax error, unexpected token "}"
+
+  at app/Http/Controllers/ProjectController.php:480
+    476▕ 
+    477▕ 
+    478▕         foreach($employements as $data){
+    479▕             array_push($workFor, $data->company_id)
+  ➜ 480▕         }
+    481▕ 
+    482▕         dd($workFor);
+    483▕         
+    484▕         $projects =   Project::where('concerned_company', [$employements])->get();
+
+      [2m+1 vendor frames [22m
+  2   app/Console/Commands/UpdateServiceStateOnProject.php:42
+      Composer\Autoload\ClassLoader::loadClass()
+
+      [2m+13 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()

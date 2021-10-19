@@ -201,10 +201,17 @@ class OfferController extends Controller
     
             
             $offer = Offer::where('id', $sl->offer_id)->first();
-            $offer->total_sell_ht = $offer->total_sell_ht + ($request->quantity * $request->unit_sell_ht);
-            $offer->total_cost_ht = $offer->total_cost_ht + ($request->quantity * $request->unit_cost_ht);
-            $offer->save();
 
+
+            $offer->total_sell_ht  = 0 ;
+            $offer->total_cost_ht  = 0 ;
+            foreach($offer->services as $data){
+            
+                $offer->total_sell_ht   += $data->quantity * $data->unit_sell_ht;
+                $offer->total_cost_ht   += $data->quantity * $data->unit_cost_ht;
+            }  
+            
+            $offer->save();
 
             return redirect()->intended('/offers/single/'.$sl->offer_id);
         }
