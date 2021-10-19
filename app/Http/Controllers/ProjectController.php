@@ -479,8 +479,7 @@ class ProjectController extends Controller
             array_push($workFor, $data->company_id);
         }
 
-
-        $projects =   Project::where('concerned_company', $workFor)->get(); 
+        $projects =  Project::whereIn('concerned_company', $workFor)->get();
 
 
 
