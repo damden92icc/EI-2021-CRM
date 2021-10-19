@@ -39,7 +39,7 @@
       <div class="small-box bg-danger">
          <div class="inner">
             <h3>{{$cptClient}}</h3>
-            <p>Number of clients</p>
+            <p>Number of Companies</p>
          </div>
          <div class="icon">
             <i class="fas fa-chart-pie"></i>

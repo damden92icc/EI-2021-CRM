@@ -112,37 +112,37 @@ class ProjectController extends Controller
             $totalPriceASR += $total;
             }
             else {
-                $total  ==  ($data->unit_sell_ht * $data->quantity) - ( ( $data->serviceProv->spd_unit_cost_ht  + $data->unit_cost_ht) * $data->quantity)   ;
+                $total  = ($data->unit_sell_ht * $data->quantity) - ( ( $data->serviceProv->spd_unit_cost_ht  + $data->unit_cost_ht) * $data->quantity)   ;
                 $totalPriceASR += $total;
             }
          
         }
 
 
-        foreach($queryARS  as $data){
+        // foreach($queryARS  as $data){
 
-             // Check and calcul date for recurrent service 
-             // change state if become billable
-             if($data->last_payement_date == null ){
+        //      // Check and calcul date for recurrent service 
+        //      // change state if become billable
+        //      if($data->last_payement_date == null ){
         
-                $npd =   $this->calculNextPayDate(Carbon::parse($data->start_date),  $data->recurrency_payement );
+        //         $npd =   $this->calculNextPayDate(Carbon::parse($data->start_date),  $data->recurrency_payement );
 
-                $data->next_payement_date = $npd ;
-                $data->save();
-                $data->is_billable = $this->calculServiceIsBillable($npd);
-                $data->save();
-             }
+        //         $data->next_payement_date = $npd ;
+        //         $data->save();
+        //         $data->is_billable = $this->calculServiceIsBillable($npd);
+        //         $data->save();
+        //      }
 
-             else{
+        //      else{
 
         
-                $data->next_payement_date =    $this->calculNextPayDate(Carbon::parse($data->last_payement_date),  $data->recurrency_payement ) ;
-                $data->save();
+        //         $data->next_payement_date =    $this->calculNextPayDate(Carbon::parse($data->last_payement_date),  $data->recurrency_payement ) ;
+        //         $data->save();
 
-                $data->is_billable = $this->calculServiceIsBillable(           $data->next_payement_date );
-                $data->save();
-             }
-        }     
+        //         $data->is_billable = $this->calculServiceIsBillable(           $data->next_payement_date );
+        //         $data->save();
+        //      }
+        // }     
  
         // Get all service available and providers
         $selectableServices = Service::all();
@@ -267,22 +267,30 @@ class ProjectController extends Controller
 
         $startDate = $request->get("start_date"); 
         $reccurency = $request->get("recurrency_payement");
-        $serviceState = $request->get("service_state");
+      
 
-        if($serviceState == "TO+PAY"){
-            $serviceState = "TO PAY";
-        }
-
+   
 
 
 
         if( $reccurency != "NONE") {
             $npd =   $this->calculNextPayDate(Carbon::parse($startDate), $reccurency );
 
-            $request->merge([
-                'next_payement_date' => $npd,          
-                'is_billable' => $this->calculServiceIsBillable($npd),
-            ]);
+
+            if(     $request->get("payement_state") == "TO PAY" ){
+          
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' =>1,
+                ]);
+            }
+            else{
+                $request->merge([
+                    'next_payement_date' => $npd,          
+                    'is_billable' => $this->calculServiceIsBillable($npd),
+                ]);
+            }
+          
         }
 
         else{
@@ -461,12 +469,19 @@ class ProjectController extends Controller
 
         $user = Auth::user();
 
-        $employements=  Employe::where('user_id', $user->id)->get();
+        $employements=  Employe::select('company_id')->where('user_id', $user->id)->get();
+
+       
+        $workFor = [];
 
 
-        foreach($employements as $employ){
-            $projects = Project::where('concerned_company', $employ->company_id)->get();  
+        foreach($employements as $data){
+            array_push($workFor, $data->company_id);
         }
+
+
+        $projects =   Project::where('concerned_company', $workFor)->get(); 
+
 
 
         return view('project.index', [
@@ -514,10 +529,6 @@ class ProjectController extends Controller
 
 
         $servicesListe =  json_decode($request->jsonData, true);
-
-      
-
-
 
 
          foreach($servicesListe as $data){

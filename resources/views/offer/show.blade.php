@@ -117,14 +117,14 @@
                                  data-sell-ht='{{ $data->unit_sell_ht}}'
                                  data-id='{{$data->service->id}}' 
                                  >
-                              <i class="fa fa-download"></i> edit service 
+                          edit service 
                               </button>
                               <!--   /Edit service -->
                               <!--  Remove service Quote -->
                               <form method="post" action="{{route('remove-service-doc-offer', $data->id )}}">
                                  @csrf
                                  <button type="submit" class="btn btn-danger float-right">
-                                 <i class="fa fa-download"></i>Remove  </button>
+                            Remove  </button>
                               </form>
                               <!--  /Remove service Quote -->
                            </div>
@@ -206,7 +206,7 @@
    <div class="card-body">
       <div class="btn-group">
          @isManager
-         @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATE ASKED" )
+         @if($offer->offer_state == "DRAFT" || $offer->offer_state == "UPDATED ASKED" )
          <!--  Update  -->
          <form method="get" action="{{route('edit-offer', $offer->id )}}">
             @csrf
@@ -457,58 +457,6 @@
 @stop
 @section('js')
 <script> 
-   $('#turnIntoProject').click(function(event) {
-   
-     
-   
-      var form = document.getElementById('ServicesToTurn');
-      var data = new FormData(form);
-   
-      cpt=1;
-   
-   
-   finalTab = [];
-   
-      tabServiceToAdd=[]  
-   
-      for (var [key, value] of data) {
-   
-         if(key == "Separator"){
-            cpt= cpt+1;
-            finalTab.push(tabServiceToAdd); 
-            tabServiceToAdd=[];  
-         }else{
-            tabServiceToAdd.push( key, value);
-         }             
-      }
-   
-      event.preventDefault();
-   
-      $.ajax({
-       url:"{{ route('turn-into-project') }}",
-       headers: {
-                   'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-               },
-       method:'POST',
-       data: {
-            offer_id : "{{$offer->id}}" ,
-            offer_label : "{{$offer->label}}",
-            concerned_company :  "{{$offer->concerned_company}}",
-            offer_desc :  "{{$offer->description}}",
-            jsonData:  JSON.stringify(finalTab)},
-       success: function(data) {
-      alert(data); // apple
-   },
-       error: function() {
-               alert('Error occured');
-           }
-   });
-   
-   
-          
-   
-               });
-   
    
    
    
